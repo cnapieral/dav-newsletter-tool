@@ -1,0 +1,95 @@
+/* ============================================
+   Newsletter Editor Styles
+   ============================================ */
+
+/* ============================================
+   Block List Styles (Editor)
+   ============================================ */
+.block-item {
+    @apply bg-white border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition;
+}
+
+.block-header {
+    @apply flex items-center justify-between mb-2 pb-2 border-b border-gray-100;
+}
+
+.block-title {
+    @apply font-semibold text-gray-800 text-sm;
+}
+
+.block-actions {
+    @apply flex gap-2;
+}
+
+.block-action-btn {
+    @apply p-1.5 rounded hover:bg-gray-200 text-gray-600 transition;
+}
+
+.block-content {
+    @apply mt-3 pl-4 border-l-2 border-blue-100;
+}
+
+/* ============================================
+   Sortable Ghost / Dragging Styles
+   ============================================ */
+.sortable-ghost {
+    @apply opacity-50 bg-blue-50 border-2 border-blue-300 rounded-lg;
+}
+
+.sortable-drag {
+    @apply bg-white shadow-xl z-50;
+}
+
+/* ============================================
+   Block Form Styles (for editing)
+   ============================================ */
+.block-form label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.block-form input,
+.block-form textarea,
+.block-form select {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.block-form textarea {
+    @apply min-h-[80px] resize-y;
+}
+
+/* ============================================
+   Preview Container Styles
+   ============================================ */
+.preview-desktop .email-container {
+    max-width: 600px !important;
+    width: 600px !important;
+}
+
+.preview-mobile .email-container {
+    width: 100% !important;
+    max-width: 480px !important;
+}
+
+/* ============================================
+   Block Type Specific Styles (Editor)
+   ============================================ */
+.block-freitext { border-left-color: #3B82F6; }
+.block-artikel { border-left-color: #8B5CF6; }
+.block-termin { border-left-color: #10B981; }
+.block-divider { border-left-color: #EF4444; }
+.block-social { border-left-color: #EC4899; }
+.block-image { border-left-color: #F59E0B; }
+
+/* ============================================
+   Palette Item Hover Effects
+   ============================================ */
+.palette-item:hover {
+    @apply border-blue-600 bg-blue-100;
+}
+
+/* ============================================
+   Utility for hidden elements
+   ============================================ */
+.hidden-content {
+    display: none !important;
+}
