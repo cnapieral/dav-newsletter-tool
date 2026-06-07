@@ -14,9 +14,7 @@ const Preview = (function() {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td style="vertical-align:middle;">
-          <div style="font-size:24px;font-weight:bold;color:#2D2D2D;letter-spacing:-0.5px;">
-            Deutscher<br /><span style="color:#E30613;">Asphaltverband</span> e.V.
-          </div>
+          <img src="https://asphalt.de/wp-content/uploads/2025/03/cropped-DAV_asphalt_Logo.png" alt="DAV Logo" width="200" style="display:block;margin:0 auto;" />
         </td>
         <td align="right" style="vertical-align:middle;font-size:12px;color:#999999;padding-top:8px;">
           Newsletter | Juni 2026
