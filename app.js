@@ -155,16 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePreview() {
         const html = Preview.createPreviewHTML(blocks);
-
-        // Vorschau in iframe oder div darstellen
-        // Für MVP: Direktes Einbinden der HTML-Inhalte (ohne iframe für einfachere Interaktion)
-        elements.previewContent.innerHTML = `
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                ${html.replace(/.*<body[^>]*>([\s\S]*)<\/body>.*/i, '$1')}
-            </table>
-        `;
-
-        // ODER: Ganze HTML in preview-content (einfacher für MVP)
         elements.previewContent.innerHTML = html;
     }
 
