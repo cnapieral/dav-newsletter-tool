@@ -67,17 +67,17 @@ const Preview = (function() {
     </p>
 
     <!-- Footer Links -->
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
       <tr>
-        <td style="padding:4px;">
+        <td style="padding:4px;text-align:center;">
           <a href="https://asphalt.de/impressum/" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Impressum</a>
         </td>
-        <td style="padding:4px;color:#CCCCCC;">|</td>
-        <td style="padding:4px;">
+        <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
+        <td style="padding:4px;text-align:center;">
           <a href="#" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Abmelden</a>
         </td>
-        <td style="padding:4px;color:#CCCCCC;">|</td>
-        <td style="padding:4px;">
+        <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
+        <td style="padding:4px;text-align:center;">
           <a href="https://asphalt.de/direktkontakt/" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Kontakt</a>
         </td>
       </tr>
@@ -315,6 +315,8 @@ const Preview = (function() {
           <tr>
             <td style="height:5px;background-color:#E30613;font-size:0;line-height:0;">&nbsp;</td>
           </tr>
+
+${HEADER}
 
 ${contentHtml}
 
