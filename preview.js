@@ -74,7 +74,7 @@ const Preview = (function() {
         </td>
         <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
         <td style="padding:4px;text-align:center;">
-          <a href="#" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Abmelden</a>
+          <a href="{{UNSUBSCRIBE_URL}}" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Abmelden</a>
         </td>
         <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
         <td style="padding:4px;text-align:center;">

@@ -88,6 +88,23 @@
 }
 
 /* ============================================
+   Modal Styles
+   ============================================ */
+#block-editor-modal .modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+#block-editor-modal .modal-body::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 3px;
+}
+
+/* Form field for show/hide title toggle */
+#field-title-wrap[style*="display: none"] {
+    display: none !important;
+}
+
+/* ============================================
    Utility for hidden elements
    ============================================ */
 .hidden-content {
