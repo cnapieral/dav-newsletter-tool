@@ -17,7 +17,7 @@ const Preview = (function() {
           <img src="https://asphalt.de/wp-content/uploads/2025/03/cropped-DAV_asphalt_Logo.png" alt="DAV Logo" width="200" style="display:block;margin:0 auto;" />
         </td>
         <td align="right" style="vertical-align:middle;font-size:12px;color:#999999;padding-top:8px;">
-          Newsletter | Juni 2026
+          Newsletter | {{DATE}}
         </td>
       </tr>
     </table>
@@ -71,10 +71,6 @@ const Preview = (function() {
       <tr>
         <td style="padding:4px;text-align:center;">
           <a href="https://asphalt.de/impressum/" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Impressum</a>
-        </td>
-        <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
-        <td style="padding:4px;text-align:center;">
-          <a href="{{UNSUBSCRIBE_URL}}" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Abmelden</a>
         </td>
         <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
         <td style="padding:4px;text-align:center;">
@@ -270,12 +266,34 @@ const Preview = (function() {
     }
 
     /**
+     * Newsletter-Einstellungen (global, per Setter konfigurierbar)
+     */
+    var settings = {
+        date: 'Juni 2026'
+    };
+
+    /**
+     * Setzt den Header-Datumsstring
+     */
+    function setDate(dateStr) {
+        settings.date = dateStr || '';
+    }
+
+    /**
+     * Gibt die aktuellen Einstellungen zurück
+     */
+    function getSettings() {
+        return settings;
+    }
+
+    /**
      * Erstellt das vollständige HTML für die Vorschau
      */
     function createPreviewHTML(blocks) {
         const contentHtml = blocksToHTML(blocks);
+        const dateStr = settings.date || '';
 
-        return `<!DOCTYPE html>
+        var html = `<!DOCTYPE html>
 <html lang="de" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8" />
@@ -330,6 +348,8 @@ ${contentHtml}
   </table>
 </body>
 </html>`;
+
+        return html.replace('{{DATE}}', dateStr);
     }
 
     /**
@@ -350,6 +370,8 @@ ${contentHtml}
         createPreviewHTML,
         blocksToHTML,
         escapeHtml,
+        setDate,
+        getSettings,
         HEADER,
         FOOTER
     };

@@ -31,6 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
         modalSaveBtn: document.getElementById('modal-save-btn')
     };
 
+    // Toast notification system — replaces alert() for non-blocking feedback
+    function showToast(message, type) {
+        var colors = { success: 'bg-green-600', error: 'bg-red-600', info: 'bg-blue-600' };
+        var t = document.createElement('div');
+        t.className = 'fixed top-4 right-4 ' + (colors[type] || colors.info) + ' text-white px-4 py-2 rounded-md shadow-lg z-[999] transition-opacity duration-300';
+        t.textContent = message;
+        document.body.appendChild(t);
+        setTimeout(function() { t.style.opacity = '0'; }, 2800);
+        setTimeout(function() { t.remove(); }, 3100);
+    }
+
     // Track which block is being edited
     let editingBlockId = null;
 
@@ -44,6 +55,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
         // Sortable.js für Block-Liste initialisieren
         initSortable();
+
+        // Resizable split pane initialisieren
+        initResizableSplit();
+
+        // Preview responsiv anpassen bei Fenster-Resize
+        window.addEventListener('resize', function() {
+            var previewContainer = document.getElementById('preview-container');
+            if (previewContainer && !previewContainer.classList.contains('preview-mobile')) {
+                previewContainer.style.width = '';
+            }
+        });
 
         // Event Listeners hinzufügen
         setupEventListeners();
@@ -121,12 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function initSortable() {
         new Sortable(elements.blockList, {
-            animation: 150,
+            animation: 200,
             handle: '.block-header',
             ghostClass: 'sortable-ghost',
             dragClass: 'sortable-drag',
+            chosenClass: 'sortable-chosen',
             onEnd: function(event) {
-                // Blocks neu ordnen
+                // Blocks neu ordnen (nur Preview aktualisieren, nicht full DOM rebuild)
                 reorderBlocks(event.oldIndex, event.newIndex);
             }
         });
@@ -144,23 +167,71 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Block hinzugefügt:', type);
     }
 
+
+    // ========== Resizable Split Pane ==========
+
+    function initResizableSplit() {
+        var resizer = document.getElementById('split-resizer');
+        var blocksPanel = document.getElementById('blocks-panel');
+        var previewPanel = document.getElementById('preview-panel');
+        var mainEl = document.querySelector('main');
+        var isResizing = false;
+
+        if (!resizer || !blocksPanel) return;
+
+        resizer.addEventListener('mousedown', function(e) {
+            isResizing = true;
+            resizer.classList.add('active');
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isResizing) return;
+
+            var mainRect = mainEl.getBoundingClientRect();
+            var sidebarWidth = mainEl.querySelector('aside').getBoundingClientRect().width;
+            var resizerWidth = 6;
+            var offsetX = e.clientX - mainRect.left - sidebarWidth;
+            var availableWidth = mainRect.width - sidebarWidth - resizerWidth;
+
+            // Clamp: minimum 180px for blocks panel, minimum 250px for preview
+            var newBlocksWidth = Math.max(180, Math.min(availableWidth - 250, offsetX));
+
+            // Blocks-Panel bekommt die neue feste Breite, Preview füllt den Rest via flex-grow:1
+            blocksPanel.style.width = newBlocksWidth + 'px';
+            blocksPanel.style.flexGrow = '0';
+            blocksPanel.style.flexShrink = '0';
+
+            // Preview container passt sich responsiv an (CSS max-width: 600px)
+            var previewContainer = document.getElementById('preview-container');
+            if (previewContainer && !previewContainer.classList.contains('preview-mobile')) {
+                previewContainer.style.width = '';
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (isResizing) {
+                isResizing = false;
+                resizer.classList.remove('active');
+            }
+        });
+    }
+
+
     function deleteBlock(id) {
         const index = blocks.findIndex(b => b.id === id);
         if (index > -1) {
             blocks.splice(index, 1);
             renderBlockList();
             updatePreview();
-            console.log('Block gelöscht:', id);
         }
     }
 
     function reorderBlocks(fromIndex, toIndex) {
         const [removed] = blocks.splice(fromIndex, 1);
         blocks.splice(toIndex, 0, removed);
-        renderBlockList();
-        // Preview wird durch renderBlockList nicht aktualisiert
+        // Sortable.js hat die DOM-Elemente bereits bewegt — nur Preview aktualisieren
         updatePreview();
-        console.log('Block verschoben:', fromIndex, '->', toIndex);
     }
 
     function editBlock(id) {
@@ -240,15 +311,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const result = Storage.saveDraft(currentDraftName, blocks);
 
         if (result.success) {
-            alert(`Entwurf "${currentDraftName}" gespeichert!`);
+            showToast('Entwurf "' + currentDraftName + '" gespeichert!', 'success');
         } else {
-            alert('Fehler beim Speichern: ' + result.error);
+            showToast('Fehler beim Speichern: ' + result.error, 'error');
         }
     }
 
     function duplicateCurrentDraft() {
         if (!currentDraftName || blocks.length === 0) {
-            alert('Kein zu duplizierender Entwurf vorhanden.');
+            showToast('Kein zu duplizierender Entwurf vorhanden.', 'info');
             return;
         }
 
@@ -258,10 +329,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const result = Storage.duplicateDraft(currentDraftName, newName);
 
         if (result.success) {
-            alert(`Entwurf "${newName}" erfolgreich dupliziert!`);
+            showToast('Entwurf "' + newName + '" dupliziert!', 'success');
             loadLatestDraft();
         } else {
-            alert('Fehler beim Duplizieren: ' + result.error);
+            showToast('Fehler beim Duplizieren: ' + result.error, 'error');
         }
     }
 
@@ -280,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
 
-        console.log('HTML exportiert');
+        showToast('HTML exportiert!', 'success');
     }
 
     function loadLatestDraft() {
@@ -358,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderDraftsList();
             console.log('Entwurf geladen:', name);
         } else {
-            alert('Fehler beim Laden: ' + result.error);
+            showToast('Fehler beim Laden: ' + result.error, 'error');
         }
     }
 
@@ -374,9 +445,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 updatePreview();
             }
             renderDraftsList();
-            console.log('Entwurf gelöscht:', name);
+            showToast('Entwurf "' + name + '" gelöscht.', 'info');
         } else {
-            alert('Fehler beim Löschen: ' + result.error);
+            showToast('Fehler beim Löschen: ' + result.error, 'error');
         }
     }
 
@@ -566,12 +637,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = urlInput ? urlInput.value.trim() : '';
 
         if (!url) {
-            alert('Bitte zuerst eine URL eingeben.');
+            showToast('Bitte zuerst eine URL eingeben.', 'info');
             return;
         }
 
         fetchBtn.textContent = '⏳ Laden...';
         fetchBtn.disabled = true;
+        showToast('Teaser wird geladen...', 'info');
 
         // Try direct fetch first, fallback to CORS proxy
         const tryFetchWithProxy = (proxyUrl) => {
@@ -581,12 +653,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(teaserText => {
                     if (contentArea) contentArea.value = teaserText;
                     fetchBtn.textContent = '✅ Geladen';
+                    showToast('Teaser geladen!', 'success');
                 })
                 .catch(() => {
-                    alert('Fehler beim Laden des Teasers. Die Seite könnte CORS-blockieren oder nicht erreichbar sein.');
+                    showToast('Fehler: Seite nicht erreichbar oder CORS-blockiert.', 'error');
                     fetchBtn.textContent = '🔗 Teaser laden';
-                })
-                .finally(() => { fetchBtn.disabled = false; });
+                    fetchBtn.disabled = false;
+                });
         };
 
         fetch(url)
@@ -595,10 +668,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(teaserText => {
                 if (contentArea) contentArea.value = teaserText;
                 fetchBtn.textContent = '✅ Geladen';
+                showToast('Teaser geladen!', 'success');
                 fetchBtn.disabled = false;
             })
-            .catch(() => tryFetchWithProxy('https://api.allorigins.win/raw?url='))
-            .finally(() => { if (fetchBtn.disabled === false) {/* already handled */ } });
+            .catch(() => tryFetchWithProxy('https://api.allorigins.win/raw?url='));
     }
 
     function extractTeaserFromHTML(html) {

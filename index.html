@@ -64,7 +64,7 @@
     <main class="flex flex-1 overflow-hidden">
 
         <!-- Sidebar Links (8.5%) - Block Palette -->
-        <aside class="w-[8.5%] flex flex-col border-r border-gray-200 bg-white overflow-hidden">
+        <aside id="sidebar" style="width: 8.5%; min-width: 8.5%; max-width: 8.5%; flex-shrink: 0; flex-grow: 0;" class="flex flex-col border-r border-gray-200 bg-white overflow-hidden">
             <div class="p-3 border-b border-gray-200 bg-gray-50 min-h-[60px]">
                 <h2 class="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">Blöcke</h2>
                 <div id="block-palette" class="grid grid-cols-1 gap-2">
@@ -90,8 +90,8 @@
             </div>
         </aside>
 
-        <!-- Mitte (45.75%) - Aktive Blöcke -->
-        <section class="w-[45.75%] flex flex-col border-r border-gray-200 bg-gray-50 overflow-hidden">
+        <!-- Mitte - Aktive Blöcke -->
+        <section id="blocks-panel" class="flex flex-col border-r border-gray-200 bg-gray-50 overflow-hidden" style="width: 48%; min-width: 180px; max-width: calc(100% - 300px); flex-shrink: 0;">
             <div class="p-3 border-b border-gray-200 bg-white min-h-[60px]">
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Aktive Blöcke</h2>
             </div>
@@ -102,8 +102,11 @@
             </div>
         </section>
 
-        <!-- Preview Rechts (45.75%) -->
-        <section class="w-[45.75%] flex flex-col bg-gray-100 overflow-hidden">
+        <!-- Split Resizer -->
+        <div id="split-resizer"></div>
+
+        <!-- Preview Rechts -->
+        <section id="preview-panel" class="flex flex-col bg-gray-100 overflow-hidden" style="min-width: 250px; flex-grow: 1;">
             <!-- Preview Header mit Toggle -->
             <div class="p-3 border-b border-gray-200 bg-white flex items-center justify-between min-h-[60px]">
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Live-Vorschau</h2>
@@ -114,7 +117,7 @@
 
             <!-- Preview Container -->
             <div class="flex-1 overflow-auto p-4 flex justify-center bg-gray-50">
-                <div id="preview-container" class="bg-white shadow-lg w-full max-w-[600px] min-h-[80vh]" style="width: 600px;">
+                <div id="preview-container" class="bg-white shadow-lg w-full min-h-[80vh] preview-desktop">
                     <!-- Vorschau-Inhalt hier (mit Header/Footer) -->
                     <div id="preview-content" class="p-8">
                         <div class="text-center text-gray-400 py-20">

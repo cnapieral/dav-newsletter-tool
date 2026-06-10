@@ -19,7 +19,7 @@ const Blocks = (function() {
                 title: ''
             },
             createBlockElement: function(id, data) {
-                return createTextBlock(id, 'text', data);
+                return createTextBlock(id, 'freitext', data);
             }
         },
         artikel: {
@@ -33,7 +33,7 @@ const Blocks = (function() {
                 showImage: true
             },
             createBlockElement: function(id, data) {
-                return createTextBlock(id, 'article', data);
+                return createTextBlock(id, 'artikel', data);
             }
         },
         termin: {
