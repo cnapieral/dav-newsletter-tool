@@ -22,28 +22,6 @@ const Preview = (function() {
       </tr>
     </table>
   </td>
-</tr>
-
-<!-- HERO SECTION -->
-<tr>
-  <td style="background:linear-gradient(135deg,#2D2D2D 0%,#4A4A4A 100%);padding:48px 32px;text-align:center;">
-    <h1 class="hero-title" style="margin:0;font-size:26px;line-height:34px;color:#FFFFFF;font-weight:bold;">
-      Aus der Verbandswelt
-    </h1>
-    <p style="margin:8px 0 0 0;font-size:15px;line-height:22px;color:#CCCCCC;">
-      LCA-Ergebnisse, neue Stellen &amp; wichtige Kl&auml;rungen<br />Das sind die aktuellen Meldungen vom DAV.
-    </p>
-  </td>
-</tr>
-
-<!-- EINLEITUNG -->
-<tr>
-  <td class="content-padding" style="padding:32px 32px 8px 32px;">
-    <p style="font-size:15px;line-height:24px;color:#333333;margin:0;">
-      <strong>Liebe Kolleginnen und Kollegen,</strong><br /><br />
-      die letzten Wochen haben im DAV viel bewegt &mdash; von neuen LCA-Ergebnissen f&uuml;r polymermodifiziertes Bitumen bis hin zur endg&uuml;ltigen Kl&auml;rung der EBV-Frage. In dieser Ausgabe bringen wir Sie auf den neuesten Stand und informieren Sie au&szlig;erdem &uuml;ber unser Wachstum: Wir stellen ein!
-    </p>
-  </td>
 </tr>`;
 
     const FOOTER = `<!-- DIVIDER -->
@@ -248,6 +226,42 @@ const Preview = (function() {
     }
 
     /**
+     * Wandelt einen Hero-Block in HTML um
+     */
+    function heroToHTML(data) {
+        const title = escapeHtml(data.title || 'Aus der Verbandswelt');
+        const subtitle = data.subtitle || '';
+
+        return `
+<tr>
+  <td style="background:linear-gradient(135deg,#2D2D2D 0%,#4A4A4A 100%);padding:48px 32px;text-align:center;">
+    <h1 class="hero-title" style="margin:0;font-size:26px;line-height:34px;color:#FFFFFF;font-weight:bold;">
+      ${title}
+    </h1>
+    <p style="margin:8px 0 0 0;font-size:15px;line-height:22px;color:#CCCCCC;">
+      ${subtitle}
+    </p>
+  </td>
+</tr>`;
+    }
+
+    /**
+     * Wandelt einen Intro-Block in HTML um
+     */
+    function introToHTML(data) {
+        const content = data.content || '';
+
+        return `
+<tr>
+  <td class="content-padding" style="padding:32px 32px 8px 32px;">
+    <p style="font-size:15px;line-height:24px;color:#333333;margin:0;">
+      ${content}
+    </p>
+  </td>
+</tr>`;
+    }
+
+    /**
      * Konvertiert alle Blocks in HTML
      */
     function blocksToHTML(blocks) {
@@ -260,6 +274,8 @@ const Preview = (function() {
                 case 'divider': return dividerToHTML(data);
                 case 'social': return socialToHTML(data);
                 case 'image': return imageToHTML(data);
+                case 'hero': return heroToHTML(data);
+                case 'intro': return introToHTML(data);
                 default: return '';
             }
         }).join('\n');

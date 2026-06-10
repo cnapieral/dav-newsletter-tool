@@ -89,6 +89,29 @@ const Blocks = (function() {
             createBlockElement: function(id, data) {
                 return createImageBlock(id, data);
             }
+        },
+        hero: {
+            id: 'hero',
+            label: 'Hero Section',
+            icon: '🎯',
+            defaultData: {
+                title: 'Aus der Verbandswelt',
+                subtitle: 'LCA-Ergebnisse, neue Stellen &amp; wichtige Klärungen<br />Das sind die aktuellen Meldungen vom DAV.'
+            },
+            createBlockElement: function(id, data) {
+                return createHeroBlock(id, data);
+            }
+        },
+        intro: {
+            id: 'intro',
+            label: 'Einleitung',
+            icon: '✉️',
+            defaultData: {
+                content: '<strong>Liebe Kolleginnen und Kollegen,</strong><br /><br />die letzten Wochen haben im DAV viel bewegt — von neuen LCA-Ergebnissen für polymermodifiziertes Bitumen bis hin zur endgültigen Klärung der EBV-Frage. In dieser Ausgabe bringen wir Sie auf den neuesten Stand und informieren Sie außerdem über unser Wachstum: Wir stellen ein!'
+            },
+            createBlockElement: function(id, data) {
+                return createIntroBlock(id, data);
+            }
         }
     };
 
@@ -267,6 +290,58 @@ const Blocks = (function() {
         return wrapper;
     }
 
+    /**
+     * Hero-Block
+     */
+    function createHeroBlock(id, data) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'block-item block-hero';
+        wrapper.setAttribute('data-block-id', id);
+        wrapper.setAttribute('draggable', 'true');
+
+        wrapper.innerHTML = `
+            <div class="block-header">
+                <span class="block-title">Hero Section</span>
+                <div class="block-actions">
+                    <button class="block-action-btn btn-edit" title="Bearbeiten">✏️</button>
+                    <button class="block-action-btn btn-delete" title="Löschen">🗑️</button>
+                </div>
+            </div>
+            <div class="block-content text-sm text-gray-600">
+                ${truncate(data.title || '', 80)}<br/>${truncate((data.subtitle || '').replace(/<[^>]*>/g, ''), 80)}
+            </div>
+        `;
+
+        return wrapper;
+    }
+
+    /**
+     * Intro-Block (Einleitung)
+     */
+    function createIntroBlock(id, data) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'block-item block-intro';
+        wrapper.setAttribute('data-block-id', id);
+        wrapper.setAttribute('draggable', 'true');
+
+        var previewText = (data.content || '').replace(/<[^>]*>/g, '');
+
+        wrapper.innerHTML = `
+            <div class="block-header">
+                <span class="block-title">Einleitung</span>
+                <div class="block-actions">
+                    <button class="block-action-btn btn-edit" title="Bearbeiten">✏️</button>
+                    <button class="block-action-btn btn-delete" title="Löschen">🗑️</button>
+                </div>
+            </div>
+            <div class="block-content text-sm text-gray-600">
+                ${truncate(previewText, 100)}
+            </div>
+        `;
+
+        return wrapper;
+    }
+
     // Hilfsfunktionen
     function truncate(str, maxLength) {
         if (!str) return '';
@@ -279,6 +354,9 @@ const Blocks = (function() {
         BLOCK_TYPES,
         createBlock,
         createBlockElement,
+        hasType: function(type) {
+            return typeof BLOCK_TYPES[type] !== 'undefined';
+        },
         BLOCK_ID_COUNTER: () => blockIdCounter
     };
 

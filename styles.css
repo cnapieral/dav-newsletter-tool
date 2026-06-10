@@ -109,10 +109,39 @@
     border-radius: 0 0 8px 8px;
 }
 
-#preview-container.preview-mobile .email-container {
+#preview-container.preview-mobile .email-container,
+#preview-container.preview-mobile #preview-content table {
     max-width: 100% !important;
     width: 100% !important;
     font-size: 12px;
+}
+
+/* Reduce inner padding in mobile preview to prevent overflow */
+#preview-container.preview-mobile #preview-content {
+    padding: 4px !important;
+}
+
+/* Prevent long text from overflowing the phone frame */
+#preview-container.preview-mobile td,
+#preview-container.preview-mobile th {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+#preview-container.preview-mobile img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Buttons/links inside mobile preview must wrap too */
+#preview-container.preview-mobile a {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
 }
 
 /* ============================================
@@ -124,6 +153,8 @@
 .block-divider { border-left-color: #EF4444; }
 .block-social { border-left-color: #EC4899; }
 .block-image { border-left-color: #F59E0B; }
+.block-hero { border-left-color: #2D2D2D; }
+.block-intro { border-left-color: #6366F1; }
 
 /* ============================================
    Palette Item Hover Effects

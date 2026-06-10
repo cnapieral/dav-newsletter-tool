@@ -50,6 +50,17 @@
                         <button id="btn-toggle-drafts" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition">
                             📂 Entwürfe laden
                         </button>
+                        <!-- Datum Einstellungen -->
+                        <div id="settings-section" class="hidden px-2 py-1 border-t mt-1 pt-1">
+                            <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1 px-2">Newsletter-Datum</p>
+                            <div class="px-2 pb-1 flex gap-2 items-center">
+                                <input id="settings-month" type="text" placeholder="Monat (z.B. Juni)" class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                                <input id="settings-year" type="number" placeholder="Jahr" min="2000" max="2099" class="w-16 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                            </div>
+                        </div>
+                        <button id="btn-toggle-settings" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 transition">
+                            📅 Datum einstellen
+                        </button>
                         <div class="border-t my-1"></div>
                         <button id="btn-export" class="block w-full text-left px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 transition">
                             📄 HTML Export
@@ -68,6 +79,13 @@
             <div class="p-3 border-b border-gray-200 bg-gray-50 min-h-[60px]">
                 <h2 class="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">Blöcke</h2>
                 <div id="block-palette" class="grid grid-cols-1 gap-2">
+                    <button data-block-type="hero" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🎯</span> Hero Section
+                    </button>
+                    <button data-block-type="intro" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>✉️</span> Einleitung
+                    </button>
+                    <div class="border-t border-gray-200 my-1"></div>
                     <button data-block-type="freitext" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
                         <span>📝</span> Freitext
                     </button>
@@ -116,10 +134,10 @@
             </div>
 
             <!-- Preview Container -->
-            <div class="flex-1 overflow-auto p-4 flex justify-center bg-gray-50">
-                <div id="preview-container" class="bg-white shadow-lg w-full min-h-[80vh] preview-desktop">
+            <div class="flex-1 overflow-auto p-4 flex flex-col items-center bg-gray-50">
+                <div id="preview-container" class="bg-white shadow-lg w-full preview-desktop">
                     <!-- Vorschau-Inhalt hier (mit Header/Footer) -->
-                    <div id="preview-content" class="p-8">
+                     <div id="preview-content" class="p-8">
                         <div class="text-center text-gray-400 py-20">
                             <p>Der Newsletter ist noch leer.<br>Füge Blöcke hinzu, um zu beginnen.</p>
                         </div>

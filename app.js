@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     // DOM-Elemente
-    const elements = {
+   const elements = {
         blockList: document.getElementById('block-list'),
         previewContent: document.getElementById('preview-content'),
         toggleViewMode: document.getElementById('toggle-view-mode'),
@@ -28,7 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
         modalForm: document.getElementById('modal-form'),
         modalCloseBtn: document.getElementById('modal-close-btn'),
         modalCancelBtn: document.getElementById('modal-cancel-btn'),
-        modalSaveBtn: document.getElementById('modal-save-btn')
+        modalSaveBtn: document.getElementById('modal-save-btn'),
+        btnToggleSettings: document.getElementById('btn-toggle-settings'),
+        settingsSection: document.getElementById('settings-section'),
+        settingsMonth: document.getElementById('settings-month'),
+        settingsYear: document.getElementById('settings-year')
     };
 
     // Toast notification system — replaces alert() for non-blocking feedback
@@ -71,7 +75,10 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEventListeners();
 
         // Ersten Entwurf laden oder leeren Start
-        loadLatestDraft();
+        if (!loadLatestDraft()) {
+            // Keine Entwürfe → Standard-Hero + Intro anlegen
+            seedDefaultBlocks();
+        }
 
         // Initiale Vorschau rendern
         updatePreview();
@@ -99,6 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
             elements.draftsSection.classList.toggle('hidden');
         });
 
+        // Settings Toggle (Date)
+        elements.btnToggleSettings.addEventListener('click', (e) => {
+            e.stopPropagation();
+            elements.settingsSection.classList.toggle('hidden');
+        });
+
         // View Mode Toggle
         elements.toggleViewMode.addEventListener('click', toggleViewMode);
 
@@ -111,6 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Close drafts section when clicking outside burger menu
             if (!elements.draftsSection.contains(e.target) && !elements.btnToggleDrafts.contains(e.target)) {
                 elements.draftsSection.classList.add('hidden');
+            }
+            // Close settings section when clicking outside
+            if (!elements.settingsSection.contains(e.target) && !elements.btnToggleSettings.contains(e.target)) {
+                elements.settingsSection.classList.add('hidden');
             }
         });
 
@@ -131,6 +148,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Auto-teaser fetch button (added dynamically for artikel blocks)
         document.addEventListener('click', handleTeaserFetch);
+
+        // Date settings inputs – update preview on change
+        elements.settingsMonth.addEventListener('input', applyDateSettings);
+        elements.settingsYear.addEventListener('input', applyDateSettings);
+
+        // Prevent clicks inside settings section from closing the menu
+        elements.settingsSection.addEventListener('click', (e) => e.stopPropagation());
     }
 
     function toggleBurgerMenu() {
@@ -140,6 +164,30 @@ document.addEventListener('DOMContentLoaded', function() {
     function hideBurgerMenu() {
         elements.burgerMenu.classList.add('hidden');
     }
+
+    /**
+     * Apply date settings from month/year inputs to preview
+     */
+    function applyDateSettings() {
+        var month = elements.settingsMonth.value.trim();
+        var year = elements.settingsYear.value.trim();
+        var parts = [];
+        if (month) parts.push(month);
+        if (year) parts.push(year);
+
+        // Restore the previous value if a field was cleared
+        if (!parts.length && lastDateStr) {
+            Preview.setDate(lastDateStr);
+        } else {
+            Preview.setDate(parts.join(' '));
+        }
+
+        lastDateStr = parts.length ? parts.join(' ') : '';
+        updatePreview();
+    }
+
+    // Store current combined date string for restore on clear
+    var lastDateStr = '';
 
     function initSortable() {
         new Sortable(elements.blockList, {
@@ -157,14 +205,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ========== Block Operationen ==========
 
-    function addBlock(type) {
+   function addBlock(type) {
+        // Singleton check: hero und intro d黵fen nur einmal vorkommen
+        if (type === 'hero' || type === 'intro') {
+            const exists = blocks.some(b => b.type === type);
+            if (exists) {
+                showToast('Dieser Block existiert bereits — bearbeite ihn stattdessen.', 'info');
+                return;
+            }
+        }
+
         const block = Blocks.createBlock(type);
         blocks.push(block);
 
         renderBlockList();
         updatePreview();
+        updatePaletteButtons();
 
-        console.log('Block hinzugefügt:', type);
+        console.log('Block hinzugef黦t:', type);
     }
 
 
@@ -224,6 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
             blocks.splice(index, 1);
             renderBlockList();
             updatePreview();
+            updatePaletteButtons();
         }
     }
 
@@ -232,6 +291,21 @@ document.addEventListener('DOMContentLoaded', function() {
         blocks.splice(toIndex, 0, removed);
         // Sortable.js hat die DOM-Elemente bereits bewegt — nur Preview aktualisieren
         updatePreview();
+    }
+
+    /**
+     * Deaktiviert Palette-Buttons fuer hero/intro wenn Block vorhanden ist
+     */
+    function updatePaletteButtons() {
+        elements.paletteItems.forEach(function(btn) {
+            var type = btn.dataset.blockType;
+            if (type === 'hero' || type === 'intro') {
+                var exists = blocks.some(b => b.type === type);
+                btn.disabled = exists;
+                btn.style.opacity = exists ? '0.4' : '1';
+                btn.style.pointerEvents = exists ? 'none' : 'auto';
+            }
+        });
     }
 
     function editBlock(id) {
@@ -284,6 +358,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ========== Draft Management ==========
 
+    function seedDefaultBlocks() {
+        blocks.push(Blocks.createBlock('hero'));
+        blocks.push(Blocks.createBlock('intro'));
+        renderBlockList();
+        updatePreview();
+        updatePaletteButtons();
+    }
+
     function createNewDraft() {
         if (blocks.length > 0 && !confirm('Der aktuelle Entwurf wird verworfen. Fortfahren?')) {
             return;
@@ -291,15 +373,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         blocks = [];
         currentDraftName = '';
-        renderBlockList();
-        updatePreview();
 
-        // Leere Vorschau anzeigen
-        elements.previewContent.innerHTML = `
-            <div class="text-center text-gray-400 py-20">
-                <p>Neuer Newsletter - füge Blöcke hinzu!</p>
-            </div>
-        `;
+        // Standard-Hero + Intro anlegen
+        seedDefaultBlocks();
     }
 
     function saveCurrentDraft() {
@@ -359,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (drafts.length === 0) {
             // Keine Entwürfe vorhanden
-            return;
+            return false;
         }
 
         // Neuesten Entwurf laden
@@ -371,7 +447,10 @@ document.addEventListener('DOMContentLoaded', function() {
             blocks = result.data;
             renderBlockList();
             updatePreview();
+            updatePaletteButtons();
+            return true;
         }
+        return false;
     }
 
     // ========== Drafts Menu ==========
@@ -426,6 +505,7 @@ document.addEventListener('DOMContentLoaded', function() {
             blocks = result.data || [];
             renderBlockList();
             updatePreview();
+            updatePaletteButtons();
             renderDraftsList();
             console.log('Entwurf geladen:', name);
         } else {
@@ -444,6 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderBlockList();
                 updatePreview();
             }
+            updatePaletteButtons();
             renderDraftsList();
             showToast('Entwurf "' + name + '" gelöscht.', 'info');
         } else {
@@ -535,6 +616,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += createSelectField('align', 'Ausrichtung', data.align || 'center', ['left', 'center', 'right']);
                 html += createNumberField('width', 'Breite (px)', data.width || 600);
                 html += createTextField('caption', 'Bildunterschrift', data.caption || '', 'text');
+                break;
+
+            case 'hero':
+                html += createTextField('title', 'Titel', data.title || '', 'text');
+                html += createTextAreaField('subtitle', 'Untertitel (HTML erlaubt: &lt;br&gt;, &amp;)', data.subtitle || '');
+                break;
+
+            case 'intro':
+                html += createTextAreaField('content', 'Einleitungstext (HTML erlaubt: &lt;strong&gt;, &lt;br/&gt;)', data.content || '');
                 break;
 
             default:
@@ -641,37 +731,73 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        console.group('[Teaser] Start für:', url);
+
         fetchBtn.textContent = '⏳ Laden...';
         fetchBtn.disabled = true;
         showToast('Teaser wird geladen...', 'info');
 
-        // Try direct fetch first, fallback to CORS proxy
-        const tryFetchWithProxy = (proxyUrl) => {
-            fetch(proxyUrl + encodeURIComponent(url))
-                .then(res => res.text())
-                .then(html => extractTeaserFromHTML(html))
-                .then(teaserText => {
-                    if (contentArea) contentArea.value = teaserText;
-                    fetchBtn.textContent = '✅ Geladen';
-                    showToast('Teaser geladen!', 'success');
-                })
-                .catch(() => {
-                    showToast('Fehler: Seite nicht erreichbar oder CORS-blockiert.', 'error');
-                    fetchBtn.textContent = '🔗 Teaser laden';
-                    fetchBtn.disabled = false;
-                });
-        };
+        var success = false;
 
-        fetch(url)
-            .then(res => res.text())
-            .then(html => extractTeaserFromHTML(html))
-            .then(teaserText => {
-                if (contentArea) contentArea.value = teaserText;
+        function onLoaded(html) {
+            if (success) return;
+            console.log('[Teaser] HTML empfangen, Länge:', html.length);
+
+            // Show first 300 chars for debugging
+            console.log('[Teaser] HTML-Vorschau (erste 300 Zeichen):', html.substring(0, 300));
+
+            success = true;
+            try {
+                var text = extractTeaserFromHTML(html);
+                console.log('[Teaser] Extrahierter Teaser:', text);
+                if (contentArea) contentArea.value = text;
                 fetchBtn.textContent = '✅ Geladen';
                 showToast('Teaser geladen!', 'success');
-                fetchBtn.disabled = false;
-            })
-            .catch(() => tryFetchWithProxy('https://api.allorigins.win/raw?url='));
+                console.groupEnd();
+            } catch (err) {
+                console.error('[Teaser] Fehler bei extractTeaserFromHTML:', err);
+                onError(err.message || String(err));
+            }
+        }
+
+        function onError(msg) {
+            if (success) return;
+            success = true;
+            fetchBtn.textContent = '🔗 Teaser laden';
+            fetchBtn.disabled = false;
+            console.error('[Teaser] Fehler:', msg);
+            showToast('Fehler: ' + (msg || 'Seite nicht erreichbar.'), 'error');
+            console.groupEnd();
+        }
+
+        // Try multiple CORS proxies in sequence
+        var proxyNames = ['allorigins.win', 'corsproxy.io'];
+        var proxyUrls = [
+            function(targetUrl) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl); },
+            function(targetUrl) { return 'https://corsproxy.io/?' + encodeURIComponent(targetUrl); },
+        ];
+
+        function tryNext(index) {
+            if (index >= proxyUrls.length) { onError('Alle Proxies fehlgeschlagen'); return; }
+
+            var name = proxyNames[index];
+            var proxyUrl = proxyUrls[index](url);
+            console.log('[Teaser] Versuche Proxy ' + (index + 1) + '/' + proxyUrls.length + ':', name, '(' + proxyUrl + ')');
+
+            fetch(proxyUrl)
+                .then(function(response) {
+                    console.log('[Teaser]', name + ' Status:', response.status);
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.text();
+                })
+                .then(onLoaded)
+                .catch(function(err) {
+                    console.warn('[Teaser]', name + ' fehlgeschlagen:', err.message || err);
+                    tryNext(index + 1);
+                });
+        }
+
+        tryNext(0);
     }
 
     function extractTeaserFromHTML(html) {
@@ -776,6 +902,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     align: getFormValue('align') || 'center',
                     width: parseInt(getFormValue('width')) || 600,
                     caption: getFormValue('caption') || ''
+                };
+            }
+            case 'hero': {
+                return {
+                    title: getFormValue('title') || '',
+                    subtitle: getFormValue('subtitle') || ''
+                };
+            }
+            case 'intro': {
+                return {
+                    content: getFormValue('content') || ''
                 };
             }
             default:
