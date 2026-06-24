@@ -21,53 +21,7 @@
                 <img src="https://asphalt.de/wp-content/uploads/2025/03/cropped-DAV_asphalt_Logo.png" alt="DAV Logo" width="60" height="60" class="object-contain">
                 <h1 class="text-xl font-bold text-gray-800 leading-none">DAV Newsletter Editor</h1>
             </div>
-            <!-- Burger Menü -->
-            <div class="relative">
-                <button id="burger-menu-btn" class="p-2 rounded hover:bg-gray-100 transition">
-                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-
-                <!-- Dropdown Menü -->
-                <div id="burger-menu" class="hidden absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                    <div class="py-1">
-                        <button id="btn-new" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition">
-                            📝 Neu
-                        </button>
-                        <button id="btn-save" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-green-50 transition">
-                            💾 Speichern
-                        </button>
-                        <button id="btn-duplicate" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 transition">
-                            📋 Duplizieren
-                        </button>
-                        <div class="border-t my-1"></div>
-                        <!-- Entwürfe Dropdown -->
-                        <div id="drafts-section" class="hidden px-2 py-1 border-t mt-1 pt-1">
-                            <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1 px-2">Gespeicherte Entwürfe</p>
-                            <div id="drafts-list" class="max-h-48 overflow-y-auto"></div>
-                        </div>
-                        <button id="btn-toggle-drafts" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 transition">
-                            📂 Entwürfe laden
-                        </button>
-                        <!-- Datum Einstellungen -->
-                        <div id="settings-section" class="hidden px-2 py-1 border-t mt-1 pt-1">
-                            <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1 px-2">Newsletter-Datum</p>
-                            <div class="px-2 pb-1 flex gap-2 items-center">
-                                <input id="settings-month" type="text" placeholder="Monat (z.B. Juni)" class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
-                                <input id="settings-year" type="number" placeholder="Jahr" min="2000" max="2099" class="w-16 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
-                            </div>
-                        </div>
-                        <button id="btn-toggle-settings" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 transition">
-                            📅 Datum einstellen
-                        </button>
-                        <div class="border-t my-1"></div>
-                        <button id="btn-export" class="block w-full text-left px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 transition">
-                            📄 HTML Export
-                        </button>
-                    </div>
-                </div>
-            </div>
+ <!-- Burger-Menü entfernt → Bottom-Bar unten mittig -->
         </div>
     </header>
 
@@ -106,10 +60,19 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Dark Mode Toggle (auskommentiert) -->
+            <!--
+            <div class="mt-auto px-3 py-2 border-t border-gray-200">
+                <button id="dark-mode-toggle" type="button" title="Dark Mode umschalten" class="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 text-xs rounded-md hover:bg-gray-100 transition cursor-pointer border-none bg-transparent text-gray-500">
+                    <span id="dark-mode-icon">🌙</span>
+                </button>
+            </div>
+            -->
         </aside>
 
         <!-- Mitte - Aktive Blöcke -->
-        <section id="blocks-panel" class="flex flex-col border-r border-gray-200 bg-gray-50 overflow-hidden" style="width: 48%; min-width: 180px; max-width: calc(100% - 300px); flex-shrink: 0;">
+        <section id="blocks-panel" class="flex flex-col border-r border-gray-200 bg-gray-50 overflow-hidden relative" style="width: 48%; min-width: 180px; max-width: calc(100% - 300px); flex-shrink: 0;">
             <div class="p-3 border-b border-gray-200 bg-white min-h-[60px]">
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Aktive Blöcke</h2>
             </div>
@@ -118,6 +81,9 @@
                     <!-- Blöcke werden per JS hier eingefügt -->
                 </div>
             </div>
+
+            <!-- Versionsanzeige unten rechts im Editor -->
+            <div id="version-badge"></div>
         </section>
 
         <!-- Split Resizer -->
@@ -169,14 +135,123 @@
         </div>
     </div>
 
+     <!-- Mailto Modal -->
+    <div id="mailto-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                <h3 id="mailto-modal-title" class="text-lg font-semibold text-gray-800">Mail öffnen</h3>
+                <button id="mailto-close-btn" class="p-1 rounded hover:bg-gray-100 transition text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="px-6 py-4 space-y-4">
+                <!-- Empfänger -->
+                <div class="block-form">
+                    <label>Empfänger (BCC)</label>
+                    <textarea id="mailto-recipients" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y text-sm font-mono" placeholder="E-Mail@beispiel.de; andere@example.com&#10;Durch Semikolon, Komma oder Zeilenumbruch getrennt"></textarea>
+                </div>
+                <!-- CSV Import -->
+                <div class="block-form">
+                    <label>CSV-Import</label>
+                    <input type="file" id="mailto-csv-input" accept=".csv,.txt" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                    <p class="text-xs text-gray-400 mt-1">CSV/Text mit E-Mail-Adressen in der ersten Spalte</p>
+                </div>
+                <!-- Betreff -->
+                <div class="block-form">
+                    <label>Betreff</label>
+                    <input type="text" id="mailto-subject" value="DAV Newsletter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 px-6 py-3 bg-gray-50 border-t border-gray-200">
+                <button type="button" id="mailto-cancel-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">Abbrechen</button>
+                <button type="button" id="mailto-copy-html-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">① 📋 HTML kopieren</button>
+                <button type="button" id="mailto-send-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">② 📧 Mail öffnen</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Hidden template für Export -->
     <textarea id="export-template" class="hidden"></textarea>
 
+    <!-- Bottom Toolbar - horizontale Button-Leiste unten mittig -->
+    <nav id="bottom-toolbar" class="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50">
+        <div class="toolbar-container flex items-center gap-1 px-2 py-2 bg-white border border-gray-200 rounded-t-xl shadow-[0_-4px_20px_rgba(0,0,0,0.12)]">
+
+            <!-- Neu -->
+            <button id="btn-new" class="toolbar-btn" title="Neuer Entwurf">
+                <span class="toolbar-icon">📝</span>
+                <span class="toolbar-label">Neu</span>
+            </button>
+
+            <!-- Speichern -->
+            <button id="btn-save" class="toolbar-btn" title="Speichern">
+                <span class="toolbar-icon">💾</span>
+                <span class="toolbar-label">Speichern</span>
+            </button>
+
+            <!-- Duplizieren -->
+            <button id="btn-duplicate" class="toolbar-btn" title="Duplizieren">
+                <span class="toolbar-icon">📋</span>
+                <span class="toolbar-label">Duplizieren</span>
+            </button>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Entwürfe laden (mit Popover) -->
+            <div id="drafts-wrapper" class="relative">
+                <button id="btn-toggle-drafts" class="toolbar-btn" title="Entwürfe laden">
+                    <span class="toolbar-icon">📂</span>
+                    <span class="toolbar-label">Entwürfe</span>
+                </button>
+                <!-- Entwürfe Popover -->
+                <div id="drafts-section" class="hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-white border border-gray-200 rounded-lg shadow-xl max-h-72 overflow-y-auto">
+                    <div class="p-2 border-b border-gray-100">
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide">Gespeicherte Entwürfe</p>
+                    </div>
+                    <div id="drafts-list" class="py-1"></div>
+                </div>
+            </div>
+
+            <!-- Datum einstellen (mit Popover) -->
+            <div id="settings-wrapper" class="relative">
+                <button id="btn-toggle-settings" class="toolbar-btn" title="Datum einstellen">
+                    <span class="toolbar-icon">📅</span>
+                    <span class="toolbar-label">Datum</span>
+                </button>
+                <!-- Datum Popover -->
+                <div id="settings-section" class="hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-white border border-gray-200 rounded-lg shadow-xl p-4 w-72">
+                    <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-2">Newsletter-Datum</p>
+                    <div class="flex gap-2 items-center">
+                        <input id="settings-month" type="text" placeholder="Monat (z.B. Juni)" class="flex-1 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                        <input id="settings-year" type="number" placeholder="Jahr" min="2000" max="2099" class="w-20 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Mail öffnen -->
+            <button id="btn-mailto" class="toolbar-btn toolbar-btn-accent" title="Mail öffnen">
+                <span class="toolbar-icon">📧</span>
+                <span class="toolbar-label">Mail</span>
+            </button>
+
+            <!-- HTML Export -->
+            <button id="btn-export" class="toolbar-btn toolbar-btn-secondary" title="HTML Export">
+                <span class="toolbar-icon">📄</span>
+                <span class="toolbar-label">Export</span>
+            </button>
+
+        </div>
+    </nav>
+
     <!-- Eigenes JavaScript -->
-    <script src="storage.js"></script>
-    <script src="blocks.js"></script>
-    <script src="preview.js"></script>
-    <script src="app.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/preview.js"></script>
+    <script src="js/app.js"></script>
 
 </body>
 </html>

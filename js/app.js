@@ -12,13 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
         blockList: document.getElementById('block-list'),
         previewContent: document.getElementById('preview-content'),
         toggleViewMode: document.getElementById('toggle-view-mode'),
-        burgerMenuBtn: document.getElementById('burger-menu-btn'),
-        burgerMenu: document.getElementById('burger-menu'),
         btnNew: document.getElementById('btn-new'),
         btnSave: document.getElementById('btn-save'),
         btnDuplicate: document.getElementById('btn-duplicate'),
+        btnMailto: document.getElementById('btn-mailto'),
         btnExport: document.getElementById('btn-export'),
         paletteItems: document.querySelectorAll('.palette-item'),
+            mailtoModal: document.getElementById('mailto-modal'),
+        btnMailtoClose: document.getElementById('mailto-close-btn'),
+        btnMailtoCancel: document.getElementById('mailto-cancel-btn'),
+        btnMailtoSend: document.getElementById('mailto-send-btn'),
+        btnMailtoCopyHtml: document.getElementById('mailto-copy-html-btn'),
+        inputMailtoCsv: document.getElementById('mailto-csv-input'),
        btnToggleDrafts: document.getElementById('btn-toggle-drafts'),
         draftsSection: document.getElementById('drafts-section'),
         draftsList: document.getElementById('drafts-list'),
@@ -46,13 +51,42 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() { t.remove(); }, 3100);
     }
 
+    const APP_VERSION = 'v0.9.0-beta';
+    const SPLIT_WIDTH_KEY = 'dav_newsletter_split_width';
+
     // Track which block is being edited
     let editingBlockId = null;
 
-    // Anwendungsstatus
+    var mailtoModalOpen = false;
     let blocks = [];
     let currentDraftName = '';
     let isMobileView = false;
+    const DARK_MODE_KEY = 'dav_newsletter_dark_mode';
+    var isDarkMode = localStorage.getItem(DARK_MODE_KEY) === 'true';
+
+    /**
+     * Dark Mode: Toggle + Persistenz in localStorage.
+     * scoped auf <main> via data-theme — Preview bleibt unverändert.
+     */
+    function initDarkMode() {
+        if (isDarkMode) {
+            document.querySelector('main').setAttribute('data-theme', 'dark');
+        }
+        var icon = document.getElementById('dark-mode-icon');
+        if (icon) icon.textContent = isDarkMode ? '☀️' : '🌙';
+
+        document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem(DARK_MODE_KEY, String(isDarkMode));
+            var mainEl = document.querySelector('main');
+            if (isDarkMode) {
+                mainEl.setAttribute('data-theme', 'dark');
+            } else {
+                mainEl.removeAttribute('data-theme');
+            }
+            icon.textContent = isDarkMode ? '☀️' : '🌙';
+        });
+    }
 
     // ========== Initialisierung ==========
 
@@ -82,6 +116,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Initiale Vorschau rendern
         updatePreview();
+
+        // Versionsanzeige einblenden
+        initVersionBadge();
+
+        // Dark Mode Initialisierung
+        initDarkMode();
     }
 
     function setupEventListeners() {
@@ -97,36 +137,48 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.btnNew.addEventListener('click', () => createNewDraft());
         elements.btnSave.addEventListener('click', () => saveCurrentDraft());
         elements.btnDuplicate.addEventListener('click', () => duplicateCurrentDraft());
+        elements.btnMailto.addEventListener('click', () => openMailModal());
         elements.btnExport.addEventListener('click', () => exportHTML());
 
-        // Drafts Menu Toggle
+        // Drafts Popover Toggle
         elements.btnToggleDrafts.addEventListener('click', (e) => {
             e.stopPropagation();
             renderDraftsList();
-            elements.draftsSection.classList.toggle('hidden');
+            const isHidden = elements.draftsSection.classList.contains('hidden');
+            hidePopovers();
+            if (!isHidden) {
+                // If it was visible, toggle keeps it hidden — now it's hidden via hidePopovers()
+            } else {
+                elements.draftsSection.classList.remove('hidden');
+            }
         });
 
-        // Settings Toggle (Date)
+        // Settings Toggle (Date Popover)
         elements.btnToggleSettings.addEventListener('click', (e) => {
             e.stopPropagation();
-            elements.settingsSection.classList.toggle('hidden');
+            const isHidden = elements.settingsSection.classList.contains('hidden');
+            hidePopovers();
+            if (!isHidden) {
+                // was visible → stays hidden
+            } else {
+                elements.settingsSection.classList.remove('hidden');
+            }
         });
+
+        // Prevent popover clicks from closing via document click handler
+        elements.draftsSection.addEventListener('click', (e) => e.stopPropagation());
+        elements.settingsSection.addEventListener('click', (e) => e.stopPropagation());
 
         // View Mode Toggle
         elements.toggleViewMode.addEventListener('click', toggleViewMode);
 
-       // Burger Menu Toggle
-        elements.burgerMenuBtn.addEventListener('click', toggleBurgerMenu);
+       // Bottom-Bar: Close popovers when clicking outside
         document.addEventListener('click', (e) => {
-            if (!elements.burgerMenu.contains(e.target) && !elements.burgerMenuBtn.contains(e.target)) {
-                hideBurgerMenu();
-            }
-            // Close drafts section when clicking outside burger menu
-            if (!elements.draftsSection.contains(e.target) && !elements.btnToggleDrafts.contains(e.target)) {
+            const toolbar = document.getElementById('bottom-toolbar');
+            if (!toolbar.contains(e.target)) {
+                // Close drafts popover
                 elements.draftsSection.classList.add('hidden');
-            }
-            // Close settings section when clicking outside
-            if (!elements.settingsSection.contains(e.target) && !elements.btnToggleSettings.contains(e.target)) {
+                // Close settings popover
                 elements.settingsSection.classList.add('hidden');
             }
         });
@@ -153,16 +205,29 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.settingsMonth.addEventListener('input', applyDateSettings);
         elements.settingsYear.addEventListener('input', applyDateSettings);
 
+    // Mailto Modal: close, cancel, backdrop click, send, CSV upload
+        elements.btnMailtoClose.addEventListener('click', closeMailModal);
+        elements.btnMailtoCancel.addEventListener('click', closeMailModal);
+        elements.btnMailtoSend.addEventListener('click', handleMailSend);
+        elements.btnMailtoCopyHtml.addEventListener('click', handleCopyHtml);
+        elements.mailtoModal.addEventListener('click', (e) => {
+            if (e.target === elements.mailtoModal) closeMailModal();
+        });
+        elements.inputMailtoCsv.addEventListener('change', handleCSVUpload);
+
+        // Prevent clicks inside mailto modal from closing the menu
+        elements.mailtoModal.addEventListener('click', (e) => e.stopPropagation());
+
         // Prevent clicks inside settings section from closing the menu
         elements.settingsSection.addEventListener('click', (e) => e.stopPropagation());
     }
 
-    function toggleBurgerMenu() {
-        elements.burgerMenu.classList.toggle('hidden');
-    }
-
-    function hideBurgerMenu() {
-        elements.burgerMenu.classList.add('hidden');
+    /**
+     * Close all bottom-bar popovers
+     */
+    function hidePopovers() {
+        elements.draftsSection.classList.add('hidden');
+        elements.settingsSection.classList.add('hidden');
     }
 
     /**
@@ -237,6 +302,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!resizer || !blocksPanel) return;
 
+        // Gespeicherte Split-Pane-Breite aus localStorage wiederherstellen
+        try {
+            var savedWidth = localStorage.getItem(SPLIT_WIDTH_KEY);
+            if (savedWidth) {
+                var parsed = parseInt(savedWidth, 10);
+                var mainRect = mainEl.getBoundingClientRect();
+                var sidebarWidth = mainEl.querySelector('aside').getBoundingClientRect().width;
+                var availableWidth = mainRect.width - sidebarWidth - 6;
+                if (!isNaN(parsed)) {
+                    blocksPanel.style.width = Math.max(180, Math.min(availableWidth - 250, parsed)) + 'px';
+                    blocksPanel.style.flexGrow = '0';
+                    blocksPanel.style.flexShrink = '0';
+                }
+            }
+        } catch (e) { /* ignorieren */ }
+
         resizer.addEventListener('mousedown', function(e) {
             isResizing = true;
             resizer.classList.add('active');
@@ -271,6 +352,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (isResizing) {
                 isResizing = false;
                 resizer.classList.remove('active');
+                // Breite persistent speichern
+                try {
+                    var currentWidth = blocksPanel.style.width || '48%';
+                    if (currentWidth && currentWidth !== '48%') {
+                        localStorage.setItem(SPLIT_WIDTH_KEY, currentWidth);
+                    }
+                } catch (e) { /* ignorieren */ }
             }
         });
     }
@@ -291,6 +379,14 @@ document.addEventListener('DOMContentLoaded', function() {
         blocks.splice(toIndex, 0, removed);
         // Sortable.js hat die DOM-Elemente bereits bewegt — nur Preview aktualisieren
         updatePreview();
+    }
+
+    function initVersionBadge() {
+        var badge = document.getElementById('version-badge');
+        if (badge) {
+            badge.className = 'version-badge';
+            badge.textContent = APP_VERSION;
+        }
     }
 
     /**
@@ -412,6 +508,141 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+   function openMailModal() {
+        var settings = Preview.getSettings();
+        var dateStr = settings.date || '';
+        var subjectDefault = 'DAV Newsletter' + (dateStr ? ' – ' + dateStr : '');
+
+        var mailtoRecipients = document.getElementById('mailto-recipients');
+        var mailtoSubject = document.getElementById('mailto-subject');
+
+        if (mailtoRecipients) mailtoRecipients.value = '';
+        if (mailtoSubject) mailtoSubject.value = subjectDefault;
+
+        elements.mailtoModal.classList.remove('hidden');
+        hidePopovers();
+    }
+
+    function closeMailModal() {
+        elements.mailtoModal.classList.add('hidden');
+    }
+
+    /**
+     * Parse email addresses from a string that may be separated by ; , or newlines
+     */
+    function parseRecipients(text) {
+        var emails = [];
+        if (!text) return emails;
+        var parts = text.split(/[;,;\n\r]+/);
+        for (var i = 0; i < parts.length; i++) {
+            var trimmed = parts[i].trim();
+            if (trimmed && trimmed.indexOf('@') > -1) {
+                // Deduplicate
+                if (emails.indexOf(trimmed.toLowerCase()) === -1) {
+                    emails.push(trimmed);
+                }
+            }
+        }
+        return emails;
+    }
+
+ 
+    function handleMailSend() {
+        var recipientsText = document.getElementById('mailto-recipients').value || '';
+        var subjectValue = document.getElementById('mailto-subject').value || 'DAV Newsletter';
+        var emails = parseRecipients(recipientsText);
+
+        if (!emails.length) {
+            showToast('Bitte mindestens eine Empfänger-E-Mail eingeben.', 'error');
+            return;
+        }
+
+       // mailto URL — recipients as BCC, kein HTML-Body (siehe "HTML kopieren")
+        var mailtoUrl = 'mailto:' +
+            '?bcc=' + encodeURIComponent(emails.join(',')) +
+            '&subject=' + encodeURIComponent(subjectValue);
+
+        window.location.href = mailtoUrl;
+        closeMailModal();
+       showToast('Mail-Programm wird geoeffnet (' + emails.length + ' Empf' + (emails.length > 1 ? 'a' : '') + 'nger)...', 'success');
+    }
+
+    /**
+     * Kopiert den vollständigen Newsletter-HTML in die Zwischenablage
+     */
+    function handleCopyHtml() {
+        var html = Preview.createPreviewHTML(blocks);
+
+        // Versuche modern Clipboard API – funktioniert nur über HTTPS / localhost
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(html).then(function() {
+                showToast('✓ HTML in Zwischenablage kopiert!', 'success');
+            }).catch(function() {
+                fallbackCopy(html);
+            });
+        } else {
+            // Fallback: execCommand über temporären Textarea
+            fallbackCopy(html);
+        }
+    }
+
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) { /* ignore */ }
+        document.body.removeChild(ta);
+        showToast('✓ HTML in Zwischenablage kopiert!', 'success');
+    }
+
+  function handleCSVUpload(e) {
+        var fileInput = e.target;
+        var file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            var text = ev.target.result || '';
+            var lines = text.split(/\r?\n/);
+            var emails = [];
+            for (var i = 0; i < lines.length; i++) {
+                // Split by comma or semicolon, take first column that looks like an email
+                var parts = lines[i].split(/[,;]/);
+                for (var j = 0; j < parts.length; j++) {
+                    var trimmed = parts[j].trim();
+                    if (trimmed.indexOf('@') > -1) {
+                        emails.push(trimmed);
+                        break; // take first email-like column per row
+                    }
+                }
+            }
+            var recipientsTextarea = document.getElementById('mailto-recipients');
+            if (recipientsTextarea && emails.length) {
+                var existing = recipientsTextarea.value || '';
+                var toAppend = emails.join('; ') + '; ';
+                if (!existing) {
+                    recipientsTextarea.value = toAppend;
+                } else {
+                    // Avoid double semicolons at boundary
+                    var existingTrimmed = existing.trimEnd();
+                    if (existingTrimmed[existingTrimmed.length - 1] !== ';' && existingTrimmed[existingTrimmed.length - 1] !== ',') {
+                        recipientsTextarea.value += '; ' + toAppend;
+                    } else {
+                        recipientsTextarea.value += toAppend;
+                    }
+                }
+                showToast(emails.length + ' E-Mail-Adresse(n) aus CSV importiert.', 'success');
+            } else if (!emails.length) {
+                showToast('Keine gültigen E-Mail-Adressen in der Datei gefunden.', 'error');
+            }
+        };
+        reader.readAsText(file);
+        fileInput.value = ''; // Reset so same file can be re-uploaded
+    }
+
     function exportHTML() {
         const html = Preview.createPreviewHTML(blocks);
 
@@ -460,41 +691,61 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.draftsList.innerHTML = '';
 
         if (drafts.length === 0) {
-            elements.draftsList.innerHTML = '<p class="text-xs text-gray-400 italic px-2 py-1">Keine gespeicherten Entwürfe</p>';
+            elements.draftsList.innerHTML = '<p class="text-xs text-gray-400 italic px-3 py-2">Keine gespeicherten Entwürfe</p>';
             return;
         }
 
         drafts.forEach(name => {
-            const row = document.createElement('div');
-            row.className = 'flex items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 group';
-
             const isCurrent = name === currentDraftName;
-            if (isCurrent) {
-                row.classList.add('bg-blue-50');
-            }
+            const row = document.createElement('div');
+            row.className = 'draft-row' + (isCurrent ? ' is-current' : '');
 
             row.innerHTML = `
-                <button class="draft-load-btn text-xs text-left flex-1 truncate font-medium ${isCurrent ? 'text-blue-700' : 'text-gray-700'}" data-name="${escapeAttr(name)}">
+                <button class="text-xs text-left flex-1 truncate font-medium ${isCurrent ? 'text-blue-700' : 'text-gray-700'}" data-name="${escapeAttr(name)}">
                     ${isCurrent ? '● ' : ''}${truncateText(name, 25)}
                 </button>
-                <button class="draft-delete-btn text-xs text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition px-1" data-name="${escapeAttr(name)}" title="Löschen">✕</button>
+                <button class="text-xs text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition px-1 ml-1" data-name="${escapeAttr(name)}" title="Löschen">✕</button>
             `;
+
+            // Make the row a group for hover effect on delete button
+            row.style.display = 'flex';
+            row.style.alignItems = 'center';
+            row.style.justifyContent = 'space-between';
+            row.style.gap = '4px';
+            row.style.position = 'relative';
+            row.onmouseenter = () => {
+                const delBtn = row.querySelector('[title="Löschen"]');
+                if (delBtn) delBtn.style.opacity = '1';
+            };
+            row.onmouseleave = () => {
+                const delBtn = row.querySelector('[title="Löschen"]');
+                if (delBtn && !row.matches(':hover')) delBtn.style.opacity = '0';
+            };
+
             elements.draftsList.appendChild(row);
         });
 
-        // Event Listeners
-        elements.draftsList.querySelectorAll('.draft-load-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                loadSpecificDraft(e.target.dataset.name);
-            });
-        });
+        // Event Listeners — wrap in a container div for proper click handling
+        const listContainer = elements.draftsList;
 
-        elements.draftsList.querySelectorAll('.draft-delete-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                deleteDraftFromMenu(e.target.dataset.name);
-            });
+        listContainer.querySelectorAll('.draft-row').forEach(row => {
+            const loadBtn = row.querySelector('[data-name]:first-child');
+            const deleteBtn = row.querySelectorAll('[data-name]')[1];
+
+            if (loadBtn) {
+                loadBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    loadSpecificDraft(loadBtn.dataset.name);
+                    elements.draftsSection.classList.add('hidden');
+                });
+            }
+
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteDraftFromMenu(deleteBtn.dataset.name);
+                });
+            }
         });
     }
 

@@ -1,3 +1,8 @@
 *.sh
 *.md
 !CLAUDE.md
+!README.md
+
+# Python cache (for local server testing)
+__pycache__/
+*.py[cod]

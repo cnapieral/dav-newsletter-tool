@@ -38,7 +38,7 @@ const Preview = (function() {
       Deutscher Asphaltverband e.V.
     </p>
     <p style="margin:0 0 4px 0;font-size:12px;color:#999999;">
-      Newsletter | Juni 2026 | Redaktion: Alex Rivera
+      Newsletter | {{DATE}} | Redaktion: Alex Rivera
     </p>
     <p style="margin:0 0 16px 0;font-size:11px;line-height:18px;color:#AAAAAA;">
       Sie erhalten diese E-Mail, weil Sie sich f&uuml;r den DAV-Newsletter angemeldet haben.
@@ -365,7 +365,7 @@ ${contentHtml}
 </body>
 </html>`;
 
-        return html.replace('{{DATE}}', dateStr);
+        return html.replace(/\{\{DATE\}\}/g, dateStr);
     }
 
     /**

@@ -206,3 +206,296 @@
 .hidden-content {
     display: none !important;
 }
+
+/* ============================================
+   Version Badge (bottom-right of Editor)
+   ============================================ */
+.version-badge {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    font-size: 10px;
+    color: #9ca3af;        /* gray-400 */
+    background: rgba(255,255,255,0.7);
+    border-radius: 4px;
+    padding: 2px 6px;
+    pointer-events: none;
+    user-select: none;
+    z-index: 5;
+}
+
+/* ============================================
+   Dark Mode (scoped to [data-theme="dark"] on <main>)
+   Does NOT affect the preview panel — only editor chrome.
+   ============================================ */
+
+/* Header */
+[data-theme="dark"] header {
+    background-color: #1f2937 !important;       /* gray-800 */
+    border-color: #374151 !important;           /* gray-700 */
+}
+[data-theme="dark"] header h1 {
+    color: #f3f4f6 !important;                  /* gray-100 */
+}
+
+/* Sidebar (Block-Palette) */
+[data-theme="dark"] aside#sidebar {
+    background-color: #1f2937 !important;       /* gray-800 */
+    border-color: #374151 !important;           /* gray-700 */
+}
+[data-theme="dark"] aside#sidebar h2 {
+    color: #d1d5db !important;                  /* gray-300 */
+}
+[data-theme="dark"] aside#sidebar > div:first-child {
+    background-color: #111827 !important;       /* gray-900 */
+    border-color: #374151 !important;
+}
+
+/* Palette buttons in dark mode */
+[data-theme="dark"] .palette-item {
+    background-color: #374151 !important;       /* gray-700 */
+    border-color: #4b5563 !important;           /* gray-600 */
+    color: #f3f4f6 !important;                  /* gray-100 */
+}
+[data-theme="dark"] .palette-item:hover {
+    background-color: #3b82f6 !important;       /* blue-500 */
+    border-color: #60a5fa !important;           /* blue-400 */
+}
+
+/* Dark-mode toggle button */
+[data-theme="dark"] #dark-mode-toggle {
+    color: #f3f4f6 !important;                  /* gray-100 */
+    background-color: transparent !important;
+}
+[data-theme="dark"] #dark-mode-toggle:hover {
+    background-color: #374151 !important;       /* gray-700 */
+}
+
+/* Blocks Panel (middle column) */
+[data-theme="dark"] #blocks-panel {
+    background-color: #111827 !important;       /* gray-900 */
+    border-color: #374151 !important;           /* gray-700 */
+}
+[data-theme="dark"] #blocks-panel > div:first-child {
+    background-color: #1f2937 !important;       /* gray-800 */
+    border-color: #374151 !important;
+}
+
+/* Block items (in the active blocks list) */
+[data-theme="dark"] .block-item {
+    background-color: #1f2937 !important;       /* gray-800 */
+    border-color: #374151 !important;           /* gray-700 */
+}
+[data-theme="dark"] .block-title {
+    color: #f3f4f6 !important;                  /* gray-100 */
+}
+[data-theme="dark"] .block-action-btn {
+    background-color: transparent !important;
+    color: #9ca3af !important;                  /* gray-400 */
+}
+[data-theme="dark"] .block-action-btn:hover {
+    background-color: #374151 !important;       /* gray-700 */
+}
+
+/* Version badge dark mode override */
+[data-theme="dark"] .version-badge {
+    color: #6b7280 !important;                  /* gray-500 */
+    background: rgba(31, 41, 55, 0.7) !important;
+}
+
+/* Split resizer visible in dark mode */
+[data-theme="dark"] #split-resizer {
+    background-color: #4b5563 !important;       /* gray-600 */
+}
+
+/* Modal overlays in dark mode — both block-editor and mailto modals */
+[data-theme="dark"] #block-editor-modal > div,
+[data-theme="dark"] #mailto-modal > div {
+    background-color: #1f2937 !important;       /* gray-800 */
+}
+
+/* Modal header border + text */
+[data-theme="dark"] #block-editor-modal .border-gray-200,
+[data-theme="dark"] #mailto-modal .border-gray-200 {
+    border-color: #374151 !important;           /* gray-700 */
+}
+
+/* Modal title text */
+[data-theme="dark"] #modal-title,
+[data-theme="dark"] #mailto-modal-title {
+    color: #f3f4f6 !important;                  /* gray-100 */
+}
+
+/* Form inputs inside modals in dark mode */
+[data-theme="dark"] #block-editor-modal input[type="text"],
+[data-theme="dark"] #block-editor-modal input[type="url"],
+[data-theme="dark"] #block-editor-modal input[type="number"],
+[data-theme="dark"] #block-editor-modal textarea,
+[data-theme="dark"] #block-editor-modal select,
+[data-theme="dark"] #mailto-modal input[type="text"],
+[data-theme="dark"] #mailto-modal input[type="file"],
+[data-theme="dark"] #mailto-modal textarea {
+    background-color: #374151 !important;       /* gray-700 */
+    border-color: #4b5563 !important;           /* gray-600 */
+    color: #f3f4f6 !important;                  /* gray-100 */
+}
+
+/* Block-form labels in dark mode */
+[data-theme="dark"] #block-editor-modal .block-form label,
+[data-theme="dark"] #mailto-modal .block-form label {
+    color: #d1d5db !important;                  /* gray-300 */
+}
+
+/* Modal buttons (Abbrechen/Speichern) in dark mode */
+[data-theme="dark"] #block-editor-modal button.bg-blue-600,
+[data-theme="dark"] #mailto-modal button.bg-blue-600 {
+    background-color: #2563eb !important;       /* blue-600 (unchanged but explicit) */
+}
+
+/* Modal backdrop text color for help-text inside modals */
+[data-theme="dark"] #block-editor-modal p.text-gray-400,
+[data-theme="dark"] #mailto-modal p.text-gray-400 {
+    color: #9ca3af !important;                  /* gray-400 → brighter in dark */
+}
+
+/* Modal cancel/save button border+text in dark mode */
+[data-theme="dark"] #block-editor-modal .border-gray-300,
+[data-theme="dark"] #mailto-modal .border-gray-300 {
+    border-color: #4b5563 !important;           /* gray-600 */
+}
+
+/* ============================================
+   Bottom Toolbar — horizontale Button-Leiste
+   ============================================ */
+
+.toolbar-container {
+    min-width: 320px;
+    justify-content: center;
+}
+
+.toolbar-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.toolbar-btn:hover {
+    background-color: #f3f4f6;                  /* gray-100 */
+}
+
+.toolbar-btn:active {
+    background-color: #e5e7eb;                  /* gray-200 */
+}
+
+.toolbar-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.toolbar-label {
+    font-size: 10px;
+    color: #6b7280;                             /* gray-500 */
+    font-weight: 500;
+}
+
+.toolbar-btn-accent .toolbar-label {
+    color: #2563eb !important;                  /* blue-600 */
+}
+
+.toolbar-btn-secondary .toolbar-label {
+    color: #4f46e5 !important;                  /* indigo-600 */
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 28px;
+    background-color: #e5e7eb;                  /* gray-200 */
+    margin: 0 4px;
+}
+
+/* Popover close on outside click handled in JS */
+
+/* ============================================
+   Dark Mode — Bottom Toolbar
+   ============================================ */
+
+[data-theme="dark"] .toolbar-container {
+    background-color: #1f2937 !important;       /* gray-800 */
+    border-color: #374151 !important;           /* gray-700 */
+}
+
+[data-theme="dark"] .toolbar-btn:hover {
+    background-color: #374151 !important;       /* gray-700 */
+}
+
+[data-theme="dark"] .toolbar-label {
+    color: #d1d5db !important;                  /* gray-300 */
+}
+
+[data-theme="dark"] .toolbar-divider {
+    background-color: #4b5563 !important;       /* gray-600 */
+}
+
+/* Dark mode — drafts popover */
+[data-theme="dark"] #drafts-section {
+    background-color: #1f2937 !important;       /* gray-800 */
+    border-color: #374151 !important;           /* gray-700 */
+}
+
+[data-theme="dark"] #drafts-section p.text-gray-500 {
+    color: #9ca3af !important;                  /* gray-400 */
+}
+
+/* Dark mode — settings popover */
+[data-theme="dark"] #settings-section {
+    background-color: #1f2937 !important;       /* gray-800 */
+    border-color: #374151 !important;           /* gray-700 */
+}
+
+[data-theme="dark"] #settings-section p.text-gray-500 {
+    color: #9ca3af !important;                  /* gray-400 */
+}
+
+[data-theme="dark"] #settings-month,
+[data-theme="dark"] #settings-year {
+    background-color: #374151 !important;       /* gray-700 */
+    border-color: #4b5563 !important;           /* gray-600 */
+    color: #f3f4f6 !important;                  /* gray-100 */
+}
+
+/* ============================================
+   Drafts list items in popover
+   ============================================ */
+
+.draft-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.draft-row:hover {
+    background-color: #f3f4f6;
+}
+
+.draft-row.is-current {
+    background-color: #eff6ff;
+}
+
+[data-theme="dark"] .draft-row:hover {
+    background-color: #374151 !important;
+}
+
+[data-theme="dark"] .draft-row.is-current {
+    background-color: #1e3a5f !important;
+}
