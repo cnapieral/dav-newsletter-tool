@@ -112,6 +112,35 @@ const Blocks = (function() {
             createBlockElement: function(id, data) {
                 return createIntroBlock(id, data);
             }
+        },
+        // --- Themenfeld-Blöcke (fixe Optionen) ---
+        'wirtschaft-recht': {
+            id: 'wirtschaft-recht',
+            label: 'Wirtschaft und Recht',
+            icon: '🔖',
+            defaultData: { title: 'Wirtschaft und Recht' },
+            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
+        },
+        'dav-dai': {
+            id: 'dav-dai',
+            label: 'DAV | DAI',
+            icon: '🔖',
+            defaultData: { title: 'DAV | DAI' },
+            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
+        },
+        'maschinen-umwelt': {
+            id: 'maschinen-umwelt',
+            label: 'Maschinen und Umwelt',
+            icon: '🔖',
+            defaultData: { title: 'Maschinen und Umwelt' },
+            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
+        },
+        'asphaltakademie': {
+            id: 'asphaltakademie',
+            label: 'Asphaltakademie',
+            icon: '🔖',
+            defaultData: { title: 'Asphaltakademie' },
+            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
         }
     };
 
@@ -342,7 +371,42 @@ const Blocks = (function() {
         return wrapper;
     }
 
+    /**
+     * Themenfeld-Block (Sektions-Titel, keine Bearbeitung nötig)
+     */
+    function createSectionHeaderBlock(id, data) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'block-item block-section-header';
+        wrapper.setAttribute('data-block-id', id);
+        wrapper.setAttribute('draggable', 'true');
+
+        var title = data.title || '';
+
+        wrapper.innerHTML = `
+            <div class="block-header">
+                <span class="block-title">🔖 ${escapeHtml(title)}</span>
+                <div class="block-actions">
+                    <button class="block-action-btn btn-delete" title="Löschen">🗑️</button>
+                </div>
+            </div>
+            <div class="block-content text-sm text-gray-600">
+                Themenfeld: ${escapeHtml(title)}
+            </div>
+        `;
+
+        return wrapper;
+    }
+
     // Hilfsfunktionen
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
     function truncate(str, maxLength) {
         if (!str) return '';
         if (str.length <= maxLength) return str;

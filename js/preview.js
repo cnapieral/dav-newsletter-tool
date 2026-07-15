@@ -262,6 +262,19 @@ const Preview = (function() {
     }
 
     /**
+     * Wandelt einen Themenfeld-Block in HTML um (minimalistisch: fett, Großbuchstaben)
+     */
+    function sectionHeaderToHTML(data) {
+        const title = data.title || '';
+        return `
+<tr>
+  <td style="padding:24px 32px 8px 32px;">
+    <h3 class="section-title" style="margin:0;font-size:16px;line-height:22px;color:#E30613;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">${title}</h3>
+  </td>
+</tr>`;
+    }
+
+    /**
      * Konvertiert alle Blocks in HTML
      */
     function blocksToHTML(blocks) {
@@ -276,6 +289,10 @@ const Preview = (function() {
                 case 'image': return imageToHTML(data);
                 case 'hero': return heroToHTML(data);
                 case 'intro': return introToHTML(data);
+                case 'wirtschaft-recht':
+                case 'dav-dai':
+                case 'maschinen-umwelt':
+                case 'asphaltakademie': return sectionHeaderToHTML(data);
                 default: return '';
             }
         }).join('\n');
