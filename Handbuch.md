@@ -34,7 +34,9 @@ Einen Block-Typ aus der Linkspalette anklicken. Der Block erscheint unten im „
 
 ### Block bearbeiten
 
-Auf den ✏️-Benutzen-Button neben einem Block klicken. Es öffnet sich ein Dialog mit allen editierbaren Feldern dieses Blocks. Änderungen werden sofort in der Vorschau übernommen.
+Auf den ✏️-Bearbeiten-Button neben einem Block klicken. Es öffnet sich ein Dialog mit allen editierbaren Feldern dieses Blocks. Änderungen werden sofort in der Vorschau übernommen.
+
+> **Ausnahme:** Rubrik-Blöcke (🔖) haben keinen Bearbeiten-Button – ihre Themen sind fest vorgegeben.
 
 ### Block löschen
 
@@ -81,7 +83,7 @@ Ein Artikel mit Titel, Teaser-Text und „Zum Artikel"-Button.
 
 | Feld | Beschreibung |
 |------|-------------|
-| **Titel** | Artikeltitel (wird fett und hervorgehoben dargestellt) |
+| **Titel** | Artikeltitel (Pflichtfeld – darf nicht leer sein) |
 | **URL** | Ziel-URL des Artikels |
 | **Inhalt** | Kurzer Teaser-Text (1–3 Sätze) |
 
@@ -125,17 +127,63 @@ Einzelnes Bild mit URL, Alternativtext und optionaler Beschriftung.
 
 ---
 
+## Rubrik-Blöcke (Themenfelder)
+
+Die vier Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie erscheinen in der Linkspalette unter dem Abschnitt **„Rubriken"**.
+
+| Block | Vorschau-Anzeige |
+|-------|----------------|
+| 🔖 Wirtschaft und Recht | **WIRTSCHAFT UND RECHT** (fett, rot) |
+| 🔖 DAV \| DAI | **DAV \| DAI** (fett, rot) |
+| 🔖 Maschinen und Umwelt | **MASCHINEN UND UMWELT** (fett, rot) |
+| 🔖 Asphaltakademie | **ASPHALTAKADEMIE** (fett, rot) |
+
+Diese Blöcke sind **fest vorgegeben** – sie können nicht bearbeitet oder umbenannt werden. Einfach anklicken zum Hinzufügen und bei Bedarf mit 🗑️ löschen.
+
+> **Tipp:** Kombiniere Rubrik-Blöcke mit Trennlinien für eine klare optische Struktur: Trennlinie → Rubrik → Inhalt → Trennlinie → nächste Rubrik.
+
+---
+
+## Einstellungen (⚙️)
+
+Über den **„Einstellungen"**-Button in der unteren Leiste erreichst du globale Newsletter-Einstellungen:
+
+### Datum (Header & Footer)
+
+Freitext-Feld für das Erscheinungsdatum – beliebiger Text möglich.
+
+| Beispiel | Anzeige im Header |
+|----------|-------------------|
+| `Juni 2026` | Juni 2026 |
+| `15. Juli 2026` | 15. Juli 2026 |
+| `Sommerausgabe 2026` | Sommerausgabe 2026 |
+
+Das Datum erscheint **rechts im Header** neben dem DAV-Logo.
+
+### Redaktion (Footer)
+
+Name der redaktionellen Einheit – wird im Footer angezeigt.
+
+| Standardwert | `Deutscher Asphaltverband` |
+|---|---|
+
+Beispiel-Footer: `Juni 2026 \| Redaktion: Deutscher Asphaltverband`
+
+> **Hinweis:** Beide Einstellungen werden automatisch mit dem Entwurf gespeichert und beim Laden wiederhergestellt.
+
+---
+
 ## Entwurf speichern und laden
 
 Alle Entwürfe werden im Browser (localStorage) gespeichert.
 
 ### Speichern
 
-Burger-Menü ☰ → **„Speichern"** klicken. Der aktuelle Stand wird unter dem aktuellen Namen gespeichert.
+Burger-Menü ☰ → **„Speichern"** klicken. Der aktuelle Stand wird unter dem aktuellen Namen gespeichert (inklusive Datum und Redaktion).
 
 ### Neuen Entwurf anlegen
 
-Burger-Menü → **„Neu"** klicken. Alle Blöcke werden zurückgesetzt auf den Standardzustand (Hero + Einleitung). Der vorherige Entwwurf bleibt erhalten und kann geladen werden.
+Burger-Menü → **„Neu"** klicken. Alle Blöcke werden zurückgesetzt auf den Standardzustand (Hero + Einleitung). Der vorherige Entwurf bleibt erhalten und kann geladen werden.
 
 ### Entwurf duplizieren
 
@@ -146,16 +194,6 @@ Burger-Menü → **„Duplizieren"**. Eine Kopie des aktuellen Newsletters wird 
 Burger-Menü → **„Entwürfe laden"** → Aus der Liste den gewünschten Entwurf auswählen.
 
 > **Wichtig:** Entwürfe sind an den Browser und das Gerät gebunden. Ein Wechsel des Browsers oder ein Cache-Löschen entfernt gespeicherte Entwürfe.
-
----
-
-## Newsletter-Datum einstellen
-
-Das Datum erscheint in Header und Footer (z. B. „Juni 2026").
-
-Burger-Menü → **„Datum einstellen"** → Monat und Jahr eingeben.
-
-Beispiel: Monat `März`, Jahr `2027` → Anzeige „März 2027".
 
 ---
 
@@ -203,6 +241,16 @@ Den vertikalen Trenner zwischen „Aktive Blöcke" und „Live-Vorschau" ziehen,
 
 ---
 
+## Header & Footer im Überblick
+
+| Element | Position | Konfigurierbar über |
+|---------|----------|---------------------|
+| DAV-Logo (lokal) | Links oben | – (fest, `images/dav-logo.png`) |
+| Datum | Rechts oben | Einstellungen → Datum |
+| Redaktion | Unten (Footer) | Einstellungen → Redaktion |
+
+---
+
 ## Häufige Fragen
 
 **Wo werden meine Entwürfe gespeichert?**
@@ -215,7 +263,10 @@ Nein – Bilder werden nur per URL eingebettet. Nutze Links von asphalt.de, eine
 E-Mail-Clients unterstützen keinen HTML-Body über `mailto:`-Links. Der Kopier-Schritt umgeht diese Beschränkung sauber und gibt volle Kontrolle über das Ergebnis.
 
 **Kann ich den Editor offline nutzen?**
-Nein – Tailwind CSS und Sortable.js werden von einem CDN geladen. Ohne Internet sind die Styles und Drag & Drop nicht verfügbar.
+Nein – Tailwind CSS und Sortable.js werden von einem CDN geladen. Ohne Internet sind die Styles und Drag & Drop nicht verfügbar. Das DAV-Logo wird jedoch lokal aus `images/dav-logo.png` geladen.
+
+**Wie ändere ich das DAV-Logo im Header?**
+Die Datei `images/dav-logo.png` durch ein eigenes Bild ersetzen (gleicher Dateiname, Format PNG). Die Vorschau aktualisiert sich beim Neuladen der Seite.
 
 ---
 
@@ -227,6 +278,6 @@ Nein – Tailwind CSS und Sortable.js werden von einem CDN geladen. Ohne Interne
 | 💾 Speichern | Aktuellen Entwurf speichern |
 | 📋 Duplizieren | Kopie des aktuellen Entwurfs erstellen |
 | 📂 Entwürfe laden | Gespeicherte Entwürfe anzeigen und laden |
-| 📅 Datum einstellen | Monat/Jahr für Header & Footer setzen |
+| ⚙️ Einstellungen | Datum & Redaktion konfigurieren |
 | 📧 Mail öffnen | HTML kopieren + E-Mail-Clients vorbereiten |
 | 📄 HTML Export | Vollständigen Newsletter als HTML-Datei herunterladen |
