@@ -36,8 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modalSaveBtn: document.getElementById('modal-save-btn'),
         btnToggleSettings: document.getElementById('btn-toggle-settings'),
         settingsSection: document.getElementById('settings-section'),
-        settingsMonth: document.getElementById('settings-month'),
-        settingsYear: document.getElementById('settings-year'),
+        settingsDate: document.getElementById('settings-date'),
         settingsRedaktion: document.getElementById('settings-redaktion')
     };
 
@@ -202,9 +201,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Auto-teaser fetch button (added dynamically for artikel blocks)
         document.addEventListener('click', handleTeaserFetch);
 
-        // Date settings inputs – update preview on change
-        elements.settingsMonth.addEventListener('input', applyDateSettings);
-        elements.settingsYear.addEventListener('input', applyDateSettings);
+        // Date settings input – update preview on change
+        elements.settingsDate.addEventListener('input', function() {
+            var val = elements.settingsDate.value.trim();
+            Preview.setDate(val);
+            updatePreview();
+        });
 
         // Redaktion input – update preview on change
         elements.settingsRedaktion.addEventListener('input', function() {
@@ -239,28 +241,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * Apply date settings from month/year inputs to preview
+     * Apply date settings from input to preview (called via inline listener)
      */
-    function applyDateSettings() {
-        var month = elements.settingsMonth.value.trim();
-        var year = elements.settingsYear.value.trim();
-        var parts = [];
-        if (month) parts.push(month);
-        if (year) parts.push(year);
-
-        // Restore the previous value if a field was cleared
-        if (!parts.length && lastDateStr) {
-            Preview.setDate(lastDateStr);
-        } else {
-            Preview.setDate(parts.join(' '));
-        }
-
-        lastDateStr = parts.length ? parts.join(' ') : '';
-        updatePreview();
-    }
-
-    // Store current combined date string for restore on clear
-    var lastDateStr = '';
 
     function initSortable() {
         new Sortable(elements.blockList, {
@@ -705,9 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 Preview.setRedaktion(draftData.redaktion || 'Deutscher Asphaltverband');
                 // Inputs füllen
                 if (draftData.date) {
-                    var parts = (draftData.date || '').split(' ');
-                    elements.settingsMonth.value = parts[0] || '';
-                    elements.settingsYear.value = parts[1] || '';
+                    elements.settingsDate.value = draftData.date;
                 }
                 if (draftData.redaktion) {
                     elements.settingsRedaktion.value = draftData.redaktion;
@@ -800,9 +780,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 Preview.setRedaktion(draftData.redaktion || 'Deutscher Asphaltverband');
                 // Inputs füllen
                 if (draftData.date) {
-                    var parts = (draftData.date || '').split(' ');
-                    elements.settingsMonth.value = parts[0] || '';
-                    elements.settingsYear.value = parts[1] || '';
+                    elements.settingsDate.value = draftData.date;
                 }
                 if (draftData.redaktion) {
                     elements.settingsRedaktion.value = draftData.redaktion;
