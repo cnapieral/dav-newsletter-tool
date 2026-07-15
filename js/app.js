@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         btnToggleSettings: document.getElementById('btn-toggle-settings'),
         settingsSection: document.getElementById('settings-section'),
         settingsMonth: document.getElementById('settings-month'),
-        settingsYear: document.getElementById('settings-year')
+        settingsYear: document.getElementById('settings-year'),
+        settingsRedaktion: document.getElementById('settings-redaktion')
     };
 
     // Toast notification system — replaces alert() for non-blocking feedback
@@ -204,6 +205,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Date settings inputs – update preview on change
         elements.settingsMonth.addEventListener('input', applyDateSettings);
         elements.settingsYear.addEventListener('input', applyDateSettings);
+
+        // Redaktion input – update preview on change
+        elements.settingsRedaktion.addEventListener('input', function() {
+            var name = elements.settingsRedaktion.value.trim();
+            Preview.setRedaktion(name);
+            updatePreview();
+        });
 
     // Mailto Modal: close, cancel, backdrop click, send, CSV upload
         elements.btnMailtoClose.addEventListener('click', closeMailModal);
@@ -480,7 +488,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!currentDraftName) return;
         }
 
-        const result = Storage.saveDraft(currentDraftName, blocks);
+        const draftData = {
+            blocks: blocks,
+            date: Preview.getSettings().date || '',
+            redaktion: Preview.getSettings().redaktion || 'Deutscher Asphaltverband'
+        };
+        const result = Storage.saveDraft(currentDraftName, draftData);
 
         if (result.success) {
             showToast('Entwurf "' + currentDraftName + '" gespeichert!', 'success');
@@ -675,7 +688,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (result.success) {
             currentDraftName = result.name;
-            blocks = result.data;
+            var draftData = result.data;
+            // Backward compat: alte Entwürfe speichern nur ein Array
+            if (Array.isArray(draftData)) {
+                blocks = draftData;
+            } else {
+                blocks = draftData.blocks || [];
+                Preview.setDate(draftData.date || '');
+                Preview.setRedaktion(draftData.redaktion || 'Deutscher Asphaltverband');
+                // Inputs füllen
+                if (draftData.date) {
+                    var parts = (draftData.date || '').split(' ');
+                    elements.settingsMonth.value = parts[0] || '';
+                    elements.settingsYear.value = parts[1] || '';
+                }
+                if (draftData.redaktion) {
+                    elements.settingsRedaktion.value = draftData.redaktion;
+                }
+            }
             renderBlockList();
             updatePreview();
             updatePaletteButtons();
@@ -753,7 +783,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const result = Storage.loadDraft(name);
         if (result.success) {
             currentDraftName = result.name;
-            blocks = result.data || [];
+            var draftData = result.data;
+            // Backward compat: alte Entwürfe speichern nur ein Array
+            if (Array.isArray(draftData)) {
+                blocks = draftData;
+            } else {
+                blocks = draftData.blocks || [];
+                Preview.setDate(draftData.date || '');
+                Preview.setRedaktion(draftData.redaktion || 'Deutscher Asphaltverband');
+                // Inputs füllen
+                if (draftData.date) {
+                    var parts = (draftData.date || '').split(' ');
+                    elements.settingsMonth.value = parts[0] || '';
+                    elements.settingsYear.value = parts[1] || '';
+                }
+                if (draftData.redaktion) {
+                    elements.settingsRedaktion.value = draftData.redaktion;
+                }
+            }
             renderBlockList();
             updatePreview();
             updatePaletteButtons();

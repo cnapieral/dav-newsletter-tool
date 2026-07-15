@@ -38,7 +38,7 @@ const Preview = (function() {
       Deutscher Asphaltverband e.V.
     </p>
     <p style="margin:0 0 4px 0;font-size:12px;color:#999999;">
-      {{DATE}} | Redaktion: Alex Rivera
+      {{DATE}} | Redaktion: {{REDAKTION}}
     </p>
     <p style="margin:0 0 16px 0;font-size:11px;line-height:18px;color:#AAAAAA;">
       Sie erhalten diese E-Mail, weil Sie sich f&uuml;r den DAV-Newsletter angemeldet haben.
@@ -285,7 +285,8 @@ const Preview = (function() {
      * Newsletter-Einstellungen (global, per Setter konfigurierbar)
      */
     var settings = {
-        date: 'Juni 2026'
+        date: '',
+        redaktion: 'Deutscher Asphaltverband'
     };
 
     /**
@@ -293,6 +294,13 @@ const Preview = (function() {
      */
     function setDate(dateStr) {
         settings.date = dateStr || '';
+    }
+
+    /**
+     * Setzt den Redaktionsnamen (Footer)
+     */
+    function setRedaktion(name) {
+        settings.redaktion = name || 'Deutscher Asphaltverband';
     }
 
     /**
@@ -365,7 +373,10 @@ ${contentHtml}
 </body>
 </html>`;
 
-        return html.replace(/\{\{DATE\}\}/g, dateStr);
+        const redaktionStr = settings.redaktion || 'Deutscher Asphaltverband';
+        return html
+            .replace(/\{\{DATE\}\}/g, dateStr)
+            .replace(/\{\{REDAKTION\}\}/g, redaktionStr);
     }
 
     /**
