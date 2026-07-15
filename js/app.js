@@ -428,13 +428,20 @@ document.addEventListener('DOMContentLoaded', function() {
         blocks.forEach((block, index) => {
             const el = Blocks.createBlockElement(block);
 
-            // Event Listeners für Bearbeiten/Löschen
-            el.querySelector('.btn-edit').addEventListener('click', () => editBlock(block.id));
-            el.querySelector('.btn-delete').addEventListener('click', () => {
-                if (confirm('Möchten Sie diesen Block wirklich löschen?')) {
-                    deleteBlock(block.id);
-                }
-            });
+            // Event Listeners für Bearbeiten/Löschen (nur falls vorhanden)
+            var editBtn = el.querySelector('.btn-edit');
+            if (editBtn) {
+                editBtn.addEventListener('click', () => editBlock(block.id));
+            }
+
+            var deleteBtn = el.querySelector('.btn-delete');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => {
+                    if (confirm('Möchten Sie diesen Block wirklich löschen?')) {
+                        deleteBlock(block.id);
+                    }
+                });
+            }
 
             elements.blockList.appendChild(el);
         });
