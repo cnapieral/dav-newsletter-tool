@@ -10,11 +10,11 @@ const Preview = (function() {
     // Header/Footer aus newsletter_dav.html (stripped down)
     const HEADER = `<!-- HEADER / LOGO -->
 <tr>
-  <td class="content-padding" style="padding:28px 32px 20px 32px;background-color:#FFFFFF;text-align:center;border-bottom:1px solid #EEEEEE;">
+  <td class="content-padding" style="padding:28px 32px 20px 32px;background-color:#FFFFFF;border-bottom:1px solid #EEEEEE;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td style="vertical-align:middle;">
-          <img src="https://asphalt.de/wp-content/uploads/2025/03/cropped-DAV_asphalt_Logo.png" alt="DAV Logo" width="200" style="display:block;margin:0 auto;" />
+        <td style="vertical-align:middle;text-align:left;">
+          <img src="images/dav-logo.png" alt="DAV Logo" width="200" style="display:block;" />
         </td>
         <td align="right" style="vertical-align:middle;font-size:12px;color:#999999;padding-top:8px;">
           {{DATE}}
