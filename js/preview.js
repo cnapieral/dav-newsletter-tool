@@ -398,6 +398,7 @@ ${contentHtml}
         blocksToHTML,
         escapeHtml,
         setDate,
+        setRedaktion,
         getSettings,
         HEADER,
         FOOTER
