@@ -826,7 +826,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             <button type="button" id="fetch-teaser-btn" class="px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition whitespace-nowrap" title="Teaser automatisch laden">🔗 Teaser laden</button>
                         </div>
                     </div>`;
-                html += createTextField('title', 'Artikel-Titel', data.title || '', 'text');
+                html += `
+                    <div class="block-form">
+                        <label>Artikel-Titel <span class="text-red-500">*</span></label>
+                        <input type="text" name="title" value="${escapeAttr(data.title || '')}" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>`;
                 html += createNumberField('teaserLength', 'Teaser-Länge (Zeichen)', data.teaserLength || 160);
                 html += `<p class="text-xs text-gray-400">Klicke auf "Teaser laden" um den Text automatisch aus der URL zu extrahieren.</p>`;
                 html += createTextAreaField('content', 'Teaser-Text (wird automatisch gefüllt)', data.content || '');
@@ -1100,9 +1105,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
             }
             case 'artikel': {
+                const artikelTitle = (getFormValue('title') || '').trim();
+                if (!artikelTitle) {
+                    alert('Bitte gib einen Artikel-Titel ein. Dieses Feld ist Pflicht.');
+                    return null;
+                }
                 return {
                     url: getFormValue('url') || '',
-                    title: getFormValue('title') || '',
+                    title: artikelTitle,
                     teaserLength: parseInt(getFormValue('teaserLength')) || 160,
                     showImage: true,
                     content: getFormValue('content') || ''

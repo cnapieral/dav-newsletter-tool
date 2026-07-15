@@ -17,7 +17,7 @@ const Preview = (function() {
           <img src="https://asphalt.de/wp-content/uploads/2025/03/cropped-DAV_asphalt_Logo.png" alt="DAV Logo" width="200" style="display:block;margin:0 auto;" />
         </td>
         <td align="right" style="vertical-align:middle;font-size:12px;color:#999999;padding-top:8px;">
-          Newsletter | {{DATE}}
+          {{DATE}}
         </td>
       </tr>
     </table>
@@ -38,7 +38,7 @@ const Preview = (function() {
       Deutscher Asphaltverband e.V.
     </p>
     <p style="margin:0 0 4px 0;font-size:12px;color:#999999;">
-      Newsletter | {{DATE}} | Redaktion: Alex Rivera
+      {{DATE}} | Redaktion: Alex Rivera
     </p>
     <p style="margin:0 0 16px 0;font-size:11px;line-height:18px;color:#AAAAAA;">
       Sie erhalten diese E-Mail, weil Sie sich f&uuml;r den DAV-Newsletter angemeldet haben.

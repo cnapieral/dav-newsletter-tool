@@ -2,7 +2,14 @@
 *.md
 !CLAUDE.md
 !README.md
+!Handbuch.md
 
 # Python cache (for local server testing)
 __pycache__/
 *.py[cod]
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
