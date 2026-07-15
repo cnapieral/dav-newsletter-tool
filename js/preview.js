@@ -292,7 +292,7 @@ const Preview = (function() {
                 case 'wirtschaft-recht':
                 case 'dav-dai':
                 case 'maschinen-umwelt':
-                case 'asphaltakademie': return sectionHeaderToHTML(data);
+                case 'asphalttechnik': return sectionHeaderToHTML(data);
                 default: return '';
             }
         }).join('\n');

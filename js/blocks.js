@@ -114,6 +114,20 @@ const Blocks = (function() {
             }
         },
         // --- Themenfeld-Blöcke (fixe Optionen) ---
+        'maschinen-umwelt': {
+            id: 'maschinen-umwelt',
+            label: 'Maschinen und Umwelt',
+            icon: '🔖',
+            defaultData: { title: 'Maschinen und Umwelt' },
+            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
+        },
+        'asphalttechnik': {
+            id: 'asphalttechnik',
+            label: 'Asphalttechnik',
+            icon: '🔖',
+            defaultData: { title: 'Asphalttechnik' },
+            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
+        },
         'wirtschaft-recht': {
             id: 'wirtschaft-recht',
             label: 'Wirtschaft und Recht',
@@ -123,23 +137,9 @@ const Blocks = (function() {
         },
         'dav-dai': {
             id: 'dav-dai',
-            label: 'DAV | DAI',
+            label: 'DAV / DAI',
             icon: '🔖',
-            defaultData: { title: 'DAV | DAI' },
-            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
-        },
-        'maschinen-umwelt': {
-            id: 'maschinen-umwelt',
-            label: 'Maschinen und Umwelt',
-            icon: '🔖',
-            defaultData: { title: 'Maschinen und Umwelt' },
-            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
-        },
-        'asphaltakademie': {
-            id: 'asphaltakademie',
-            label: 'Asphaltakademie',
-            icon: '🔖',
-            defaultData: { title: 'Asphaltakademie' },
+            defaultData: { title: 'DAV / DAI' },
             createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
         }
     };
