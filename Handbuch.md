@@ -133,10 +133,10 @@ Die vier Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie ersch
 
 | Block | Vorschau-Anzeige |
 |-------|----------------|
-| 🔖 Wirtschaft und Recht | **WIRTSCHAFT UND RECHT** (fett, rot) |
-| 🔖 DAV \| DAI | **DAV \| DAI** (fett, rot) |
 | 🔖 Maschinen und Umwelt | **MASCHINEN UND UMWELT** (fett, rot) |
-| 🔖 Asphaltakademie | **ASPHALTAKADEMIE** (fett, rot) |
+| 🔖 Asphalttechnik | **ASPHALTTECHNIK** (fett, rot) |
+| 🔖 Wirtschaft und Recht | **WIRTSCHAFT UND RECHT** (fett, rot) |
+| 🔖 DAV / DAI | **DAV / DAI** (fett, rot) |
 
 Diese Blöcke sind **fest vorgegeben** – sie können nicht bearbeitet oder umbenannt werden. Einfach anklicken zum Hinzufügen und bei Bedarf mit 🗑️ löschen.
 
@@ -217,7 +217,15 @@ Der Editor unterstützt kein direktes Versenden, aber den kompletten Workflow de
 - Dein E-Mail-Programm (Outlook, Thunderbird etc.) öffnet sich mit BCC-Empfängern und Betreff vorbelegt
 - Den kopierten HTML-Inhalt manuell in den Mail-Body einfügen
 
-> **Tipp:** In Outlook: Nachrichtenfenster öffnen → „HTML-Quellcode" oder direkt pasten. Die meisten Clients rendern den HTML-Code automatisch korrekt.
+### HTML als Datei herunterladen
+
+Im Mail-Dialog steht zusätzlich der Button **„📎 HTML runterladen"** zur Verfügung:
+
+- Klickt darauf, um den Newsletter als vollständige `.html`-Datei herunterzuladen
+- Die Datei enthält alle eingebetteten Ressourcen (Logo als Base64) – sie ist vollständig selbstständig
+- Diese Datei kannst du dann manuell als Anhang an deine E-Mail hinzufügen
+
+> **Vorteil:** Im Gegensatz zum Kopieren in den Mail-Body bleibt das Format beim Anhang garantiert erhalten, auch bei Empfängern mit restriktiven E-Mail-Clients.
 
 ---
 
@@ -260,13 +268,13 @@ Im Browser-LocalStorage. Sie bleiben erhalten, solange du denselben Browser und 
 Nein – Bilder werden nur per URL eingebettet. Nutze Links von asphalt.de, einem CDN oder einem Bilderdienst wie imgur.com.
 
 **Warum muss ich den HTML-Code manuell in die Mail einfügen?**
-E-Mail-Clients unterstützen keinen HTML-Body über `mailto:`-Links. Der Kopier-Schritt umgeht diese Beschränkung sauber und gibt volle Kontrolle über das Ergebnis.
+E-Mail-Clients unterstützen keinen HTML-Body über `mailto:`-Links. Der Kopier-Schritt umgeht diese Beschränkung sauber und gibt volle Kontrolle über das Ergebnis. Alternativ kannst du den Newsletter als `.html`-Datei herunterladen und als Anhang versenden.
 
 **Kann ich den Editor offline nutzen?**
-Nein – Tailwind CSS und Sortable.js werden von einem CDN geladen. Ohne Internet sind die Styles und Drag & Drop nicht verfügbar. Das DAV-Logo wird jedoch lokal aus `images/dav-logo.png` geladen.
+Nein – Tailwind CSS und Sortable.js werden von einem CDN geladen. Ohne Internet sind die Styles und Drag & Drop nicht verfügbar. Das DAV-Logo wird jedoch lokal aus `images/dav-logo.png` geladen und im Newsletter-HTML als Base64 eingebettet.
 
 **Wie ändere ich das DAV-Logo im Header?**
-Die Datei `images/dav-logo.png` durch ein eigenes Bild ersetzen (gleicher Dateiname, Format PNG). Die Vorschau aktualisiert sich beim Neuladen der Seite.
+Die Datei `images/dav-logo.png` durch ein eigenes Bild ersetzen (gleicher Dateiname, Format PNG). Die Vorschau aktualisiert sich beim Neuladen der Seite. Für den HTML-Export/Mail wird das Logo als Base64 in `js/preview.js` (`LOGO_SRC` Konstante) definiert – dort muss die Base64-Zeichenkette entsprechend aktualisiert werden.
 
 ---
 
@@ -280,4 +288,5 @@ Die Datei `images/dav-logo.png` durch ein eigenes Bild ersetzen (gleicher Datein
 | 📂 Entwürfe laden | Gespeicherte Entwürfe anzeigen und laden |
 | ⚙️ Einstellungen | Datum & Redaktion konfigurieren |
 | 📧 Mail öffnen | HTML kopieren + E-Mail-Clients vorbereiten |
+| 📎 HTML runterladen | Newsletter als .html-Datei herunterladen (im Mail-Dialog) |
 | 📄 HTML Export | Vollständigen Newsletter als HTML-Datei herunterladen |
