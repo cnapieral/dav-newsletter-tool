@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btnMailtoCancel: document.getElementById('mailto-cancel-btn'),
         btnMailtoSend: document.getElementById('mailto-send-btn'),
         btnMailtoCopyHtml: document.getElementById('mailto-copy-html-btn'),
+        btnMailtoDownload: document.getElementById('mailto-download-btn'),
         inputMailtoCsv: document.getElementById('mailto-csv-input'),
        btnToggleDrafts: document.getElementById('btn-toggle-drafts'),
         draftsSection: document.getElementById('drafts-section'),
@@ -220,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.btnMailtoCancel.addEventListener('click', closeMailModal);
         elements.btnMailtoSend.addEventListener('click', handleMailSend);
         elements.btnMailtoCopyHtml.addEventListener('click', handleCopyHtml);
+        elements.btnMailtoDownload.addEventListener('click', handleDownloadHtml);
         elements.mailtoModal.addEventListener('click', (e) => {
             if (e.target === elements.mailtoModal) closeMailModal();
         });
@@ -598,6 +600,35 @@ document.addEventListener('DOMContentLoaded', function() {
         try { document.execCommand('copy'); } catch (e) { /* ignore */ }
         document.body.removeChild(ta);
         showToast('✓ HTML in Zwischenablage kopiert!', 'success');
+    }
+
+    /**
+     * Lädt den vollständigen Newsletter als eigenstaendige HTML-Datei herunter.
+     * Enthaeftet Logo (Base64), Datum und Redaktion – offline/browser-kompatibel.
+     */
+   function handleDownloadHtml() {
+        var html = Preview.createPreviewHTML(blocks);
+        var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+
+        // Dateiname mit aktuellem Datum (z.B. newsletter_20260715.html)
+        var now = new Date();
+        var dateStr = now.getFullYear() +
+            String(now.getMonth() + 1).padStart(2, '0') +
+            String(now.getDate()).padStart(2, '0');
+
+        var filename = 'newsletter_' + dateStr + '.html';
+
+        // Erstelle temporären Download-Link und klicke ihn an
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast('✓ ' + filename + ' wird heruntergeladen...', 'success');
     }
 
   function handleCSVUpload(e) {
