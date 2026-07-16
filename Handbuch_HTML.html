@@ -4,66 +4,30 @@
 <meta charset="UTF-8">
 <title>DAV Newsletter Editor – Benutzerhandbuch</title>
 <style>
-  /* === GRUNDLAGEN === */
   *, *::before, *::after { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6; color: #2d3748; max-width: 900px; margin: 0 auto; padding: 2rem 2rem 4rem;
-    background: #fff;
-  }
-  /* === HEADER MIT LOGO === */
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #2d3748; max-width: 900px; margin: 0 auto; padding: 2rem 2rem 4rem; background: #fff; }
   .cover { text-align: center; padding: 3rem 0 2rem; border-bottom: 4px solid #E30613; margin-bottom: 2rem; }
   .cover img { height: 80px; margin-bottom: 1.5rem; }
   .cover h1 { font-size: 2rem; color: #1a202c; margin: 0 0 0.25rem; letter-spacing: -0.5px; }
   .cover .subtitle { font-size: 1.1rem; color: #718096; margin: 0; }
-
-  /* === INHALTSVERZEICHNIS === */
   .toc { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 3rem; }
   .toc h2 { font-size: 1.25rem; color: #E30613; margin: 0 0 1rem; text-transform: uppercase; letter-spacing: 1px; }
   .toc ul { list-style: none; padding: 0; margin: 0; column-count: 2; column-gap: 2rem; }
   .toc li { margin-bottom: 0.35rem; break-inside: avoid; }
   .toc a { text-decoration: none; color: #4a5568; font-size: 0.95rem; display: flex; justify-content: space-between; }
   .toc a:hover { color: #E30613; }
-  .toc .page-num { color: #a0aec0; margin-left: auto; padding-left: 1rem; font-size: 0.85rem; }
-
-  /* === ÜBERSCHRIFTEN === */
-  h2.section-title {
-    font-size: 1.5rem; color: #1a202c; border-bottom: 2px solid #E30613; padding-bottom: 0.3rem;
-    margin-top: 3rem; margin-bottom: 1rem; page-break-after: avoid;
-  }
+  h2.section-title { font-size: 1.5rem; color: #1a202c; border-bottom: 2px solid #E30613; padding-bottom: 0.3rem; margin-top: 3rem; margin-bottom: 1rem; page-break-after: avoid; }
   h3 { font-size: 1.15rem; color: #2d3748; margin-top: 1.8rem; margin-bottom: 0.6rem; page-break-after: avoid; }
-
-  /* === TABELLLEN === */
   table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.25rem; font-size: 0.93rem; page-break-inside: avoid; }
   th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
   th { background: #edf2f7; font-weight: 600; color: #4a5568; white-space: nowrap; }
-
-  /* === HINWEISE === */
-  blockquote {
-    border-left: 4px solid #E30613; background: #fff5f5; padding: 0.75rem 1rem; margin: 1rem 0;
-    border-radius: 0 6px 6px 0; color: #742a2a; font-size: 0.93rem;
-  }
+  blockquote { border-left: 4px solid #E30613; background: #fff5f5; padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; color: #742a2a; font-size: 0.93rem; }
   blockquote p { margin: 0; }
-
-  /* === CODE / INLINE === */
   code { background: #edf2f7; padding: 0.15em 0.4em; border-radius: 3px; font-size: 0.88em; color: #c53030; }
   strong { color: #1a202c; }
-
-  /* === AUFLISTUNGEN === */
-  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
-  li { margin-bottom: 0.3rem; }
-
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; } li { margin-bottom: 0.3rem; }
   p { margin: 0.6rem 0; }
-
-  /* === DRUCK-ANPASSUNGEN === */
-  @media print {
-    body { max-width: none; padding: 0; font-size: 11pt; color: #222; }
-    .toc ul { column-count: 3; }
-    h2.section-title { page-break-before: auto; border-bottom-color: #E30613; }
-    h2.section-title:first-of-type { page-break-before: avoid; }
-    table, blockquote, li { page-break-inside: avoid; }
-    a { text-decoration: none; color: inherit; }
-  }
+  @media print { body { max-width: none; padding: 0; font-size: 11pt; color: #222; } .toc ul { column-count: 3; } h2.section-title { page-break-before: auto; } table, blockquote, li { page-break-inside: avoid; } a { text-decoration: none; color: inherit; } }
 </style>
 </head>
 <body>
@@ -74,7 +38,6 @@
 <p class="subtitle">Benutzerhandbuch · Stand Juli 2026</p>
 </div>
 
-<!-- INHALTSVERZEICHNIS -->
 <nav class="toc" id="toc">
   <h2>Inhaltsverzeichnis</h2>
   <ul>
@@ -96,28 +59,21 @@
 </nav>
 
 
-<!-- ==================== INHALT ==================== -->
-
 <h2 class="section-title" id="uebersicht">Übersicht</h2>
 <p>Der Newsletter Editor ist ein webbasiertes Werkzeug zum Erstellen von DAV-Newslettern per Drag &amp; Drop. Keine Installation nötig – einfach die <code>index.html</code> im Browser öffnen.</p>
-<p><strong>Voraussetzung:</strong> Internetverbindung (für Tailwind CSS und Sortable.js aus dem CDN).</p>
+<p><strong>Voraussetzung:</strong> Keiner – der Editor funktioniert komplett offline. Alle Abhängigkeiten (Tailwind CSS, Sortable.js) liegen lokal vor.</p>
 
 <h2 class="section-title" id="erste-schritte">Erste Schritte</h2>
-
 <h3>Starten</h3>
 <p>Die Datei <strong><code>index.html</code></strong> mit einem beliebigen Browser öffnen (Chrome, Firefox, Edge empfohlen).</p>
 <p>Der Editor besteht nach dem Start aus drei Bereichen:</p>
-<table>
-  <thead><tr><th>Bereich</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Linkspalette</strong></td><td>Verfügbare Block-Typen zum Hinzufügen</td></tr>
-    <tr><td><strong>Aktive Blöcke</strong></td><td>Deine aktuellen Newsletter-Blöcke (mit Drag &amp; Drop)</td></tr>
-    <tr><td><strong>Live-Vorschau</strong></td><td>Echtzeit-Ansicht des fertigen Newsletters</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Bereich</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Linkspalette</strong></td><td>Verfügbare Block-Typen zum Hinzufügen</td></tr>
+<tr><td><strong>Aktive Blöcke</strong></td><td>Deine aktuellen Newsletter-Blöcke (mit Drag &amp; Drop)</td></tr>
+<tr><td><strong>Live-Vorschau</strong></td><td>Echtzeit-Ansicht des fertigen Newsletters</td></tr>
+</tbody></table>
 
 <h2 class="section-title" id="blocke-verwalten">Blöcke verwalten</h2>
-
 <h3>Block hinzufügen</h3>
 <p>Einen Block-Typ aus der Linkspalette anklicken. Der Block erscheint unten im „Aktive Blöcke"-Panel.</p>
 <blockquote><p><strong>Hinweis:</strong> Hero Section und Einleitung sind Singleton-Blöcke – es kann jeweils nur einen davon geben. Sie werden beim Start automatisch angelegt.</p></blockquote>
@@ -133,58 +89,42 @@
 <p>Einen Block im „Aktive Blöcke"-Panel ergreifen und an die gewünschte Position ziehen. Die Vorschau aktualisiert sich in Echtzeit.</p>
 
 <h2 class="section-title" id="block-typen">Block-Typen im Detail</h2>
-
 <h3>🎯 Hero Section</h3>
 <p>Der Header-Banner des Newsletters – dunkler Hintergrund mit Titel und Untertitel.</p>
-<table>
-  <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Titel</strong></td><td>Großer Überschriftentext (z. B. „Aus der Verbandswelt")</td></tr>
-    <tr><td><strong>Untertitel</strong></td><td>Kurzer Beschreibungstext darunter</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Titel</strong></td><td>Großer Überschriftentext (z. B. „Aus der Verbandswelt")</td></tr>
+<tr><td><strong>Untertitel</strong></td><td>Kurzer Beschreibungstext darunter</td></tr>
+</tbody></table>
 
 <h3>✉️ Einleitung</h3>
 <p>Personalisierter Begrüßungstext nach dem Hero-Banner.</p>
-<table>
-  <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Inhalt</strong></td><td>Freitext mit HTML-Unterstützung (<code>&lt;strong&gt;</code>, <code>&lt;br /&gt;</code>, <code>&lt;em&gt;</code> usw.)</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Inhalt</strong></td><td>Freitext mit HTML-Unterstützung (<code>&lt;strong&gt;</code>, <code>&lt;br /&gt;</code>, <code>&lt;em&gt;</code> usw.)</td></tr>
+</tbody></table>
 
 <h3>📝 Freitext</h3>
 <p>Freier Textblock mit optionalem Titel.</p>
-<table>
-  <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Titel anzeigen</strong></td><td>Haken setzen, um eine Überschrift über den Text zu zeigen</td></tr>
-    <tr><td><strong>Titel</strong></td><td>Überschriftentitel (wenn aktiviert)</td></tr>
-    <tr><td><strong>Inhalt</strong></td><td>Freier Text, Zeilenumbrüche werden automatisch erkannt</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Titel anzeigen</strong></td><td>Haken setzen, um eine Überschrift über den Text zu zeigen</td></tr>
+<tr><td><strong>Titel</strong></td><td>Überschriftentitel (wenn aktiviert)</td></tr>
+<tr><td><strong>Inhalt</strong></td><td>Freier Text, Zeilenumbrüche werden automatisch erkannt</td></tr>
+</tbody></table>
 
 <h3>📰 Artikel-Link</h3>
 <p>Ein Artikel mit Titel, Teaser-Text und „Zum Artikel"-Button.</p>
-<table>
-  <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Titel</strong></td><td>Artikeltitel (Pflichtfeld – darf nicht leer sein)</td></tr>
-    <tr><td><strong>URL</strong></td><td>Ziel-URL des Artikels</td></tr>
-    <tr><td><strong>Inhalt</strong></td><td>Kurzer Teaser-Text (1–3 Sätze)</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Titel</strong></td><td>Artikeltitel (Pflichtfeld – darf nicht leer sein)</td></tr>
+<tr><td><strong>URL</strong></td><td>Ziel-URL des Artikels</td></tr>
+<tr><td><strong>Inhalt</strong></td><td>Kurzer Teaser-Text (1–3 Sätze)</td></tr>
+</tbody></table>
 
 <h3>📅 Termin-Liste</h3>
 <p>Event-Kalender-Sektion mit einem oder mehreren Terminen.</p>
-<table>
-  <thead><tr><th>Feld pro Termin</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Datum</strong></td><td>Datum des Events (z. B. „15.07.2026")</td></tr>
-    <tr><td><strong>Titel</strong></td><td>Event-Titel</td></tr>
-    <tr><td><strong>Link</strong></td><td>Optional: URL für mehr Informationen</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Feld pro Termin</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Datum</strong></td><td>Datum des Events (z. B. „15.07.2026")</td></tr>
+<tr><td><strong>Titel</strong></td><td>Event-Titel</td></tr>
+<tr><td><strong>Link</strong></td><td>Optional: URL für mehr Informationen</td></tr>
+</tbody></table>
 <p>Termine können beliebig hinzugefügt oder entfernt werden. Leere Termine werden in der Vorschau nicht angezeigt.</p>
 
 <h3>➖ Trennlinie</h3>
@@ -192,114 +132,75 @@
 
 <h3>🌐 Social-Media</h3>
 <p>Links zu Social-Media-Profilen als Buttons.</p>
-<table>
-  <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Name</strong></td><td>Anzeigetext (z. B. „LinkedIn")</td></tr>
-    <tr><td><strong>URL</strong></td><td>Ziel-URL des Profils</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Name</strong></td><td>Anzeigetext (z. B. „LinkedIn")</td></tr>
+<tr><td><strong>URL</strong></td><td>Ziel-URL des Profils</td></tr>
+</tbody></table>
 <p>Mehrere Links können hinzugefügt werden. Leere Einträge werden ausgeblendet.</p>
 
 <h3>🖼️ Bild</h3>
 <p>Einzelnes Bild mit URL, Alternativtext und optionaler Beschriftung.</p>
-<table>
-  <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Bild-URL</strong></td><td>Vollständige URL zum Bild (z. B. von asphalt.de oder einem CDN)</td></tr>
-    <tr><td><strong>Alternativtext</strong></td><td>Kurzbeschreibung für Barrierefreiheit</td></tr>
-    <tr><td><strong>Ausrichtung</strong></td><td>Links, Zentriert oder Rechts</td></tr>
-    <tr><td><strong>Beschriftung</strong></td><td>Optionaler Bildunterschrift-Text</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td><strong>Bild-URL</strong></td><td>Vollständige URL zum Bild (z. B. von asphalt.de oder einem CDN)</td></tr>
+<tr><td><strong>Alternativtext</strong></td><td>Kurzbeschreibung für Barrierefreiheit</td></tr>
+<tr><td><strong>Ausrichtung</strong></td><td>Links, Zentriert oder Rechts</td></tr>
+<tr><td><strong>Beschriftung</strong></td><td>Optionaler Bildunterschrift-Text</td></tr>
+</tbody></table>
 
 <h2 class="section-title" id="rubriken">Rubrik-Blöcke (Themenfelder)</h2>
 <p>Die vier Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie erscheinen in der Linkspalette unter dem Abschnitt <strong>„Rubriken"</strong>.</p>
-<table>
-  <thead><tr><th>Block</th><th>Vorschau-Anzeige</th></tr></thead>
-  <tbody>
-    <tr><td>🔖 Maschinen und Umwelt</td><td><strong>MASCHINEN UND UMWELT</strong> (fett, rot)</td></tr>
-    <tr><td>🔖 Asphalttechnik</td><td><strong>ASPHALTTECHNIK</strong> (fett, rot)</td></tr>
-    <tr><td>🔖 Wirtschaft und Recht</td><td><strong>WIRTSCHAFT UND RECHT</strong> (fett, rot)</td></tr>
-    <tr><td>🔖 DAV / DAI</td><td><strong>DAV / DAI</strong> (fett, rot)</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Block</th><th>Vorschau-Anzeige</th></tr></thead><tbody>
+<tr><td>🔖 Maschinen und Umwelt</td><td><strong>MASCHINEN UND UMWELT</strong> (fett, rot)</td></tr>
+<tr><td>🔖 Asphalttechnik</td><td><strong>ASPHALTTECHNIK</strong> (fett, rot)</td></tr>
+<tr><td>🔖 Wirtschaft und Recht</td><td><strong>WIRTSCHAFT UND RECHT</strong> (fett, rot)</td></tr>
+<tr><td>🔖 DAV / DAI</td><td><strong>DAV / DAI</strong> (fett, rot)</td></tr>
+</tbody></table>
 <p>Diese Blöcke sind <strong>fest vorgegeben</strong> – sie können nicht bearbeitet oder umbenannt werden. Einfach anklicken zum Hinzufügen und bei Bedarf mit 🗑️ löschen.</p>
 <blockquote><p><strong>Tipp:</strong> Kombiniere Rubrik-Blöcke mit Trennlinien für eine klare optische Struktur: Trennlinie → Rubrik → Inhalt → Trennlinie → nächste Rubrik.</p></blockquote>
 
 <h2 class="section-title" id="einstellungen">Einstellungen (⚙️)</h2>
 <p>Über den <strong>„Einstellungen"</strong>-Button in der unteren Leiste erreichst du globale Newsletter-Einstellungen:</p>
-
 <h3>Datum (Header &amp; Footer)</h3>
 <p>Freitext-Feld für das Erscheinungsdatum – beliebiger Text möglich.</p>
-<table>
-  <thead><tr><th>Beispiel</th><th>Anzeige im Header</th></tr></thead>
-  <tbody>
-    <tr><td><code>Juni 2026</code></td><td>Juni 2026</td></tr>
-    <tr><td><code>15. Juli 2026</code></td><td>15. Juli 2026</td></tr>
-    <tr><td><code>Sommerausgabe 2026</code></td><td>Sommerausgabe 2026</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Beispiel</th><th>Anzeige im Header</th></tr></thead><tbody>
+<tr><td><code>Juni 2026</code></td><td>Juni 2026</td></tr>
+<tr><td><code>15. Juli 2026</code></td><td>15. Juli 2026</td></tr>
+<tr><td><code>Sommerausgabe 2026</code></td><td>Sommerausgabe 2026</td></tr>
+</tbody></table>
 <p>Das Datum erscheint <strong>rechts im Header</strong> neben dem DAV-Logo.</p>
 
 <h3>Redaktion (Footer)</h3>
 <p>Name der redaktionellen Einheit – wird im Footer angezeigt.</p>
-<table>
-  <thead><tr><th>Standardwert</th><th>Anzeige</th></tr></thead>
-  <tbody>
-    <tr><td><code>Deutscher Asphaltverband</code></td><td>Juni 2026 | Redaktion: Deutscher Asphaltverband</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Standardwert</th><th>Anzeige</th></tr></thead><tbody>
+<tr><td><code>Deutscher Asphaltverband</code></td><td>Juni 2026 | Redaktion: Deutscher Asphaltverband</td></tr>
+</tbody></table>
 <blockquote><p><strong>Hinweis:</strong> Beide Einstellungen werden automatisch mit dem Entwurf gespeichert und beim Laden wiederhergestellt.</p></blockquote>
 
 <h2 class="section-title" id="entwurf-speichern">Entwurf speichern und laden</h2>
 <p>Alle Entwürfe werden im Browser (localStorage) gespeichert.</p>
-
 <h3>Speichern</h3>
 <p>Burger-Menü ☰ → <strong>„Speichern"</strong> klicken. Der aktuelle Stand wird unter dem aktuellen Namen gespeichert (inklusive Datum und Redaktion).</p>
-
 <h3>Neuen Entwurf anlegen</h3>
 <p>Burger-Menü → <strong>„Neu"</strong> klicken. Alle Blöcke werden zurückgesetzt auf den Standardzustand (Hero + Einleitung). Der vorherige Entwurf bleibt erhalten und kann geladen werden.</p>
-
 <h3>Entwurf duplizieren</h3>
 <p>Burger-Menü → <strong>„Duplizieren"</strong>. Eine Kopie des aktuellen Newsletters wird erstellt, die du unabhängig bearbeiten kannst.</p>
-
 <h3>Gespeicherte Entwürfe laden</h3>
 <p>Burger-Menü → <strong>„Entwürfe laden"</strong> → Aus der Liste den gewünschten Entwurf auswählen.</p>
 <blockquote><p><strong>Wichtig:</strong> Entwürfe sind an den Browser und das Gerät gebunden. Ein Wechsel des Browsers oder ein Cache-Löschen entfernt gespeicherte Entwürfe.</p></blockquote>
 
 <h2 class="section-title" id="mail-vorbereiten">Mail vorbereiten &amp; Versenden</h2>
 <p>Der Editor unterstützt kein direktes Versenden, aber den kompletten Workflow der E-Mail-Vorbereitung.</p>
-
 <h3>Schritt-für-Schritt</h3>
-
 <p><strong>① HTML kopieren</strong></p>
-<ul>
-  <li>Burger-Menü → <strong>„Mail öffnen"</strong></li>
-  <li>Klick auf „① 📋 HTML kopieren"</li>
-  <li>Der komplette Newsletter-HTML-Code wird in die Zwischenablage kopiert (Bestätigungsnachricht erscheint)</li>
-</ul>
-
+<ul><li>Burger-Menü → <strong>„Mail öffnen"</strong></li><li>Klick auf „① 📋 HTML kopieren"</li><li>Der komplette Newsletter-HTML-Code wird in die Zwischenablage kopiert (Bestätigungsnachricht erscheint)</li></ul>
 <p><strong>② Empfänger eingeben</strong></p>
-<ul>
-  <li>E-Mail-Adressen direkt in das Empfängerfeld eingeben, getrennt durch Semikolon <code>;</code>, Komma <code>,</code> oder Zeilenumbruch</li>
-  <li>Oder eine <strong>CSV-Datei hochladen</strong>, die E-Mail-Adressen in der ersten Spalte enthält</li>
-</ul>
-
+<ul><li>E-Mail-Adressen direkt in das Empfängerfeld eingeben, getrennt durch Semikolon <code>;</code>, Komma <code>,</code> oder Zeilenumbruch</li><li>Oder eine <strong>CSV-Datei hochladen</strong>, die E-Mail-Adressen in der ersten Spalte enthält</li></ul>
 <p><strong>③ Mail öffnen</strong></p>
-<ul>
-  <li>Klick auf „② 📧 Mail öffnen"</li>
-  <li>Dein E-Mail-Programm (Outlook, Thunderbird etc.) öffnet sich mit BCC-Empfängern und Betreff vorbelegt</li>
-  <li>Den kopierten HTML-Inhalt manuell in den Mail-Body einfügen</li>
-</ul>
+<ul><li>Klick auf „② 📧 Mail öffnen"</li><li>Dein E-Mail-Programm (Outlook, Thunderbird etc.) öffnet sich mit BCC-Empfängern und Betreff vorbelegt</li><li>Den kopierten HTML-Inhalt manuell in den Mail-Body einfügen</li></ul>
 
 <h3>HTML als Datei herunterladen</h3>
 <p>Im Mail-Dialog steht zusätzlich der Button <strong>„📎 HTML runterladen"</strong> zur Verfügung:</p>
-<ul>
-  <li>Klickt darauf, um den Newsletter als vollständige <code>.html</code>-Datei herunterzuladen</li>
-  <li>Die Datei enthält alle eingebetteten Ressourcen (Logo als Base64) – sie ist vollständig selbstständig</li>
-  <li>Diese Datei kannst du dann manuell als Anhang an deine E-Mail hinzufügen</li>
-</ul>
+<ul><li>Klickt darauf, um den Newsletter als vollständige <code>.html</code>-Datei herunterzuladen</li><li>Die Datei enthält alle eingebetteten Ressourcen (Logo als Base64) – sie ist vollständig selbstständig</li><li>Diese Datei kannst du dann manuell als Anhang an deine E-Mail hinzufügen</li></ul>
 <blockquote><p><strong>Vorteil:</strong> Im Gegensatz zum Kopieren in den Mail-Body bleibt das Format beim Anhang garantiert erhalten, auch bei Empfängern mit restriktiven E-Mail-Clients.</p></blockquote>
 
 <h2 class="section-title" id="html-export">HTML Export</h2>
@@ -307,54 +208,39 @@
 
 <h2 class="section-title" id="live-vorschau">Live-Vorschau umschalten</h2>
 <p>Oben rechts in der Vorschau:</p>
-<ul>
-  <li><strong>„📱 Mobile"</strong> – Vorschau im Smartphone-Format (375px Breite)</li>
-  <li>Wiederholen für Desktop-Ansicht zurückwechseln</li>
-</ul>
+<ul><li><strong>„📱 Mobile"</strong> – Vorschau im Smartphone-Format (375px Breite)</li><li>Wiederholen für Desktop-Ansicht zurückwechseln</li></ul>
 
 <h2 class="section-title" id="split-pane">Split-Pane anpassen</h2>
 <p>Den vertikalen Trenner zwischen „Aktive Blöcke" und „Live-Vorschau" ziehen, um die Breite beider Bereiche anzupassen. Die Einstellung wird automatisch gespeichert und beim nächsten Start wiederhergestellt.</p>
 
 <h2 class="section-title" id="header-footer">Header &amp; Footer im Überblick</h2>
-<table>
-  <thead><tr><th>Element</th><th>Position</th><th>Konfigurierbar über</th></tr></thead>
-  <tbody>
-    <tr><td>DAV-Logo (lokal)</td><td>Links oben</td><td>– (fest, <code>images/dav-logo.png</code>)</td></tr>
-    <tr><td>Datum</td><td>Rechts oben</td><td>Einstellungen → Datum</td></tr>
-    <tr><td>Redaktion</td><td>Unten (Footer)</td><td>Einstellungen → Redaktion</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Element</th><th>Position</th><th>Konfigurierbar über</th></tr></thead><tbody>
+<tr><td>DAV-Logo (lokal)</td><td>Links oben</td><td>– (fest, <code>images/dav-logo.png</code>)</td></tr>
+<tr><td>Datum</td><td>Rechts oben</td><td>Einstellungen → Datum</td></tr>
+<tr><td>Redaktion</td><td>Unten (Footer)</td><td>Einstellungen → Redaktion</td></tr>
+</tbody></table>
 
 <h2 class="section-title" id="faq">Häufige Fragen</h2>
+<p><strong>Wo werden meine Entwürfe gespeichert?</strong><br>Im Browser-LocalStorage. Sie bleiben erhalten, solange du denselben Browser und dasselbe Gerät verwendest. Cache löschen entfernt sie.</p>
 
-<p><strong>Wo werden meine Entwürfe gespeichert?</strong><br>
-Im Browser-LocalStorage. Sie bleiben erhalten, solange du denselben Browser und dasselbe Gerät verwendest. Cache löschen entfernt sie.</p>
+<p><strong>Kann ich Bilder direkt hochladen?</strong><br>Nein – Bilder werden nur per URL eingebettet. Nutze Links von asphalt.de, einem CDN oder einem Bilderdienst wie imgur.com.</p>
 
-<p><strong>Kann ich Bilder direkt hochladen?</strong><br>
-Nein – Bilder werden nur per URL eingebettet. Nutze Links von asphalt.de, einem CDN oder einem Bilderdienst wie imgur.com.</p>
+<p><strong>Warum muss ich den HTML-Code manuell in die Mail einfügen?</strong><br>E-Mail-Clients unterstützen keinen HTML-Body über <code>mailto:</code>-Links. Der Kopier-Schritt umgeht diese Beschränkung sauber und gibt volle Kontrolle über das Ergebnis. Alternativ kannst du den Newsletter als <code>.html</code>-Datei herunterladen und als Anhang versenden.</p>
 
-<p><strong>Warum muss ich den HTML-Code manuell in die Mail einfügen?</strong><br>
-E-Mail-Clients unterstützen keinen HTML-Body über <code>mailto:</code>-Links. Der Kopier-Schritt umgeht diese Beschränkung sauber und gibt volle Kontrolle über das Ergebnis. Alternativ kannst du den Newsletter als <code>.html</code>-Datei herunterladen und als Anhang versenden.</p>
+<p><strong>Kann ich den Editor offline nutzen?</strong><br>Ja – Tailwind CSS und Sortable.js liegen lokal im Verzeichnis <code>lib/</code>. Der Editor benötigt keine Internetverbindung mehr. Das DAV-Logo wird ebenfalls lokal aus <code>images/dav-logo.png</code> geladen.</p>
 
-<p><strong>Kann ich den Editor offline nutzen?</strong><br>
-Nein – Tailwind CSS und Sortable.js werden von einem CDN geladen. Ohne Internet sind die Styles und Drag &amp; Drop nicht verfügbar. Das DAV-Logo wird jedoch lokal aus <code>images/dav-logo.png</code> geladen und im Newsletter-HTML als Base64 eingebettet.</p>
-
-<p><strong>Wie ändere ich das DAV-Logo im Header?</strong><br>
-Die Datei <code>images/dav-logo.png</code> durch ein eigenes Bild ersetzen (gleicher Dateiname, Format PNG). Die Vorschau aktualisiert sich beim Neuladen der Seite. Für den HTML-Export/Mail wird das Logo als Base64 in <code>js/preview.js</code> (<code>LOGO_SRC</code> Konstante) definiert – dort muss die Base64-Zeichenkette entsprechend aktualisiert werden.</p>
+<p><strong>Wie ändere ich das DAV-Logo im Header?</strong><br>Die Datei <code>images/dav-logo.png</code> durch ein eigenes Bild ersetzen (gleicher Dateiname, Format PNG). Die Vorschau aktualisiert sich beim Neuladen der Seite. Für den HTML-Export/Mail wird das Logo als Base64 in <code>js/preview.js</code> (<code>LOGO_SRC</code> Konstante) definiert – dort muss die Base64-Zeichenkette entsprechend aktualisiert werden.</p>
 
 <h2 class="section-title" id="menue">Menü-Übersicht (Burger-Menü ☰)</h2>
-<table>
-  <thead><tr><th>Aktion</th><th>Beschreibung</th></tr></thead>
-  <tbody>
-    <tr><td>📝 Neu</td><td>Leeren Newsletter erstellen</td></tr>
-    <tr><td>💾 Speichern</td><td>Aktuellen Entwurf speichern</td></tr>
-    <tr><td>📋 Duplizieren</td><td>Kopie des aktuellen Entwurfs erstellen</td></tr>
-    <tr><td>📂 Entwürfe laden</td><td>Gespeicherte Entwürfe anzeigen und laden</td></tr>
-    <tr><td>⚙️ Einstellungen</td><td>Datum &amp; Redaktion konfigurieren</td></tr>
-    <tr><td>📧 Mail öffnen</td><td>HTML kopieren + E-Mail-Clients vorbereiten</td></tr>
-    <tr><td>📎 HTML runterladen</td><td>Newsletter als .html-Datei herunterladen (im Mail-Dialog)</td></tr>
-    <tr><td>📄 HTML Export</td><td>Vollständigen Newsletter als HTML-Datei herunterladen</td></tr>
-  </tbody>
-</table>
+<table><thead><tr><th>Aktion</th><th>Beschreibung</th></tr></thead><tbody>
+<tr><td>📝 Neu</td><td>Leeren Newsletter erstellen</td></tr>
+<tr><td>💾 Speichern</td><td>Aktuellen Entwurf speichern</td></tr>
+<tr><td>📋 Duplizieren</td><td>Kopie des aktuellen Entwurfs erstellen</td></tr>
+<tr><td>📂 Entwürfe laden</td><td>Gespeicherte Entwürfe anzeigen und laden</td></tr>
+<tr><td>⚙️ Einstellungen</td><td>Datum &amp; Redaktion konfigurieren</td></tr>
+<tr><td>📧 Mail öffnen</td><td>HTML kopieren + E-Mail-Clients vorbereiten</td></tr>
+<tr><td>📎 HTML runterladen</td><td>Newsletter als .html-Datei herunterladen (im Mail-Dialog)</td></tr>
+<tr><td>📄 HTML Export</td><td>Vollständigen Newsletter als HTML-Datei herunterladen</td></tr>
+</tbody></table>
 
 </body></html>
