@@ -4,7 +4,7 @@
 
 Der Newsletter Editor ist ein webbasiertes Werkzeug zum Erstellen von DAV-Newslettern per Drag & Drop. Keine Installation nötig – einfach die `index.html` im Browser öffnen.
 
-**Voraussetzung:** Internetverbindung (für Tailwind CSS und Sortable.js aus dem CDN).
+**Voraussetzung:** Keiner – der Editor funktioniert komplett offline. Alle Abhängigkeiten (Tailwind CSS, Sortable.js) liegen lokal vor.
 
 ---
 
@@ -271,7 +271,7 @@ Nein – Bilder werden nur per URL eingebettet. Nutze Links von asphalt.de, eine
 E-Mail-Clients unterstützen keinen HTML-Body über `mailto:`-Links. Der Kopier-Schritt umgeht diese Beschränkung sauber und gibt volle Kontrolle über das Ergebnis. Alternativ kannst du den Newsletter als `.html`-Datei herunterladen und als Anhang versenden.
 
 **Kann ich den Editor offline nutzen?**
-Nein – Tailwind CSS und Sortable.js werden von einem CDN geladen. Ohne Internet sind die Styles und Drag & Drop nicht verfügbar. Das DAV-Logo wird jedoch lokal aus `images/dav-logo.png` geladen und im Newsletter-HTML als Base64 eingebettet.
+Ja – seit Version 2026-07 sind Tailwind CSS und Sortable.js lokal in `lib/` gespeichert. Der Editor benötigt keine Internetverbindung mehr. Das DAV-Logo wird ebenfalls lokal aus `images/dav-logo.png` geladen.
 
 **Wie ändere ich das DAV-Logo im Header?**
 Die Datei `images/dav-logo.png` durch ein eigenes Bild ersetzen (gleicher Dateiname, Format PNG). Die Vorschau aktualisiert sich beim Neuladen der Seite. Für den HTML-Export/Mail wird das Logo als Base64 in `js/preview.js` (`LOGO_SRC` Konstante) definiert – dort muss die Base64-Zeichenkette entsprechend aktualisiert werden.
