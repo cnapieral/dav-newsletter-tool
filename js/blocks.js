@@ -141,6 +141,13 @@ const Blocks = (function() {
             icon: '🔖',
             defaultData: { title: 'DAV / DAI' },
             createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
+        },
+        'allgemeines': {
+            id: 'allgemeines',
+            label: 'Allgemeines',
+            icon: '🔖',
+            defaultData: { title: 'ALLGEMEINES' },
+            createBlockElement: function(id, data) { return createSectionHeaderBlock(id, data); }
         }
     };
 

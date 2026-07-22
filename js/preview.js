@@ -80,10 +80,16 @@ const Preview = (function() {
         return `
 <tr>
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
-    ${data.showTitle ? `<h2 style="margin:0 0 16px 0;font-size:20px;line-height:26px;color:#2D2D2D;font-weight:bold;">${escapeHtml(data.title || '')}</h2>` : ''}
-    <p style="font-size:14px;line-height:22px;color:#333333;margin:0;">
-      ${content.replace(/\n/g, '<br />')}
-    </p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="border-left:4px solid #E30613;padding-left:16px;">
+          ${data.showTitle ? `<h2 style="margin:0 0 8px 0;font-size:20px;line-height:26px;color:#2D2D2D;font-weight:bold;">${escapeHtml(data.title || '')}</h2>` : ''}
+          <p style="font-size:14px;line-height:22px;color:#333333;margin:0;">
+            ${content.replace(/\n/g, '<br />')}
+          </p>
+        </td>
+      </tr>
+    </table>
   </td>
 </tr>`;
     }
@@ -115,7 +121,7 @@ const Preview = (function() {
     <table role="presentation" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td style="padding-top:12px;">
-          <a href="${url}" style="display:inline-block;padding:10px 24px;font-size:13px;font-weight:bold;color:#FFFFFF;text-decoration:none;background-color:#E30613;border-radius:3px;">Zum Artikel &rarr;</a>
+          <a href="${url}" style="display:inline-block;padding:10px 24px;font-size:13px;font-weight:bold;color:#FFFFFF;text-decoration:none;background-color:#E30613;border-radius:3px;">Weiterlesen &rarr;</a>
         </td>
       </tr>
     </table>
@@ -133,8 +139,8 @@ const Preview = (function() {
         let html = `
 <tr>
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
-    <h2 class="section-title" style="margin:0;font-size:18px;line-height:24px;color:#2D2D2D;font-weight:bold;padding-bottom:16px;border-bottom:2px solid #E30613;">
-      Termine & Veranstaltungen
+    <h2 class="section-title" style="margin:0 0 16px 0;font-size:18px;line-height:24px;color:#2D2D2D;font-weight:bold;">
+      Termine &amp; Veranstaltungen
     </h2>
   </td>
 </tr>`;
@@ -295,7 +301,8 @@ const Preview = (function() {
                 case 'wirtschaft-recht':
                 case 'dav-dai':
                 case 'maschinen-umwelt':
-                case 'asphalttechnik': return sectionHeaderToHTML(data);
+                case 'asphalttechnik':
+                case 'allgemeines': return sectionHeaderToHTML(data);
                 default: return '';
             }
         }).join('\n');
