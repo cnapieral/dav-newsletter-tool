@@ -69,7 +69,7 @@ Personalisierter Begrüßungstext nach dem Hero-Banner.
 
 ### 📝 Freitext
 
-Freier Textblock mit optionalem Titel.
+Freier Textblock mit optionalem Titel. Der Block hat einen roten linken Indikator (rote Seitenleiste), der ihn optisch von anderen Blöcken abhebt — analog zu Artikel-Teasern.
 
 | Feld | Beschreibung |
 |------|-------------|
@@ -79,7 +79,7 @@ Freier Textblock mit optionalem Titel.
 
 ### 📰 Artikel-Link
 
-Ein Artikel mit Titel, Teaser-Text und „Zum Artikel"-Button.
+Ein Artikel mit Titel, Teaser-Text und „Weiterlesen"-Button. Der Block hat einen roten linken Indikator (wie ein Teaser).
 
 | Feld | Beschreibung |
 |------|-------------|
@@ -129,7 +129,7 @@ Einzelnes Bild mit URL, Alternativtext und optionaler Beschriftung.
 
 ## Rubrik-Blöcke (Themenfelder)
 
-Die vier Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie erscheinen in der Linkspalette unter dem Abschnitt **„Rubriken"**.
+Die fünf Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie erscheinen in der Linkspalette unter dem Abschnitt **„Rubriken"**.
 
 | Block | Vorschau-Anzeige |
 |-------|----------------|
@@ -137,6 +137,7 @@ Die vier Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie ersch
 | 🔖 Asphalttechnik | **ASPHALTTECHNIK** (fett, rot) |
 | 🔖 Wirtschaft und Recht | **WIRTSCHAFT UND RECHT** (fett, rot) |
 | 🔖 DAV / DAI | **DAV / DAI** (fett, rot) |
+| 🔖 Allgemeines | **ALLGEMEINES** (fett, rot) |
 
 Diese Blöcke sind **fest vorgegeben** – sie können nicht bearbeitet oder umbenannt werden. Einfach anklicken zum Hinzufügen und bei Bedarf mit 🗑️ löschen.
 
