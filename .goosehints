@@ -1,0 +1,116 @@
+# DAV Newsletter Editor – Projekt-Hinweise für goose
+
+## Überblick
+Rein clientseitiger Newsletter-Editor für den Deutschen Asphaltverband (DAV).
+Keine Build-Tools, kein Framework – vanilla HTML/CSS/JS. Direkt im Browser öffnen → fertig.
+
+**Branch:** `master` | **Push:** nach jedem Commit obligatorisch  
+**Sprache:** Deutsch (UI, Kommentare, Handbuch)  
+**Akzentfarbe:** `#E30613` (DAV-Rot)
+
+---
+
+## Dateistruktur
+
+```
+index.html          – Haupteingabepunkt; lädt alle Scripte + Tailwind CDN (lokal in lib/)
+styles.css          – Globale Layout-, Editor- und Modal-Stile
+js/app.js           – Hauptanwendung: Event-Handler, UI-Steuerung, Modal, Mail-Workflow
+js/blocks.js        – Block-Typen-Definitionen + DOM-Erzeugung für Editor-Blöcke
+js/preview.js       – HTML-Mail-Vorlagen (Table-baseline) + Vorschau-Renderlogik
+js/storage.js       – localStorage-Persistenz (Entwürfe speichern/laden/duplizieren)
+lib/tailwindcss.js  – Tailwind Browser-Build (lokal, offline-fähig)
+lib/sortable.min.js – SortableJS Drag & Drop (lokal)
+images/dav-logo.png – DAV-Logo (Header + Base64 in preview.js als LOGO_SRC)
+Handbuch.md         – Markdown-Handbuch
+Handbuch_HTML.html  – Print-ready HTML-Handbuch (mit eingebettetem Logo, @media print CSS)
+```
+
+---
+
+## Architektur
+
+### Block-System (`js/blocks.js`)
+`BLOCK_TYPES` ist das zentrale Register aller Block-Typen. Jeder Eintrag hat:
+- `id`, `label`, `icon`, `defaultData`
+- `createBlockElement(id, data)` → erzeugt die DOM-Repräsentation im Editor
+
+**Aktuelle Block-Typen:**
+| id | label | Beschreibung |
+|---|---|---|
+| `hero` | Hero Section | Singleton – Header-Banner (max. 1) |
+| `intro` | Einleitung | Singleton – Begrüßungstext (max. 1) |
+| `freitext` | Freitext | Freier Text mit optionalem Titel + roter linker Indikator |
+| `artikel` | Artikel-Link | Teaser mit „Weiterlesen"-Button + rotem linken Indikator |
+| `termin` | Termin-Liste | Mehrere Events (Datum, Titel, Link) |
+| `divider` | Trennlinie | Horizontale Linie (solid/dashed/dotted) |
+| `social` | Social-Media | Links als Buttons |
+| `image` | Bild | URL-basiert mit Alternativtext + Ausrichtung |
+| `maschinen-umwelt` | Maschinen und Umwelt | Rubrik-Sektion (fester Titel) |
+| `asphalttechnik` | Asphalttechnik | Rubrik-Sektion |
+| `wirtschaft-recht` | Wirtschaft und Recht | Rubrik-Sektion |
+| `dav-dai` | DAV / DAI | Rubrik-Sektion |
+| `allgemeines` | Allgemeines | Rubrik-Sektion |
+
+**Neue Block-Typen hinzufügen:**
+1. `BLOCK_TYPES` in `blocks.js` ergänzen (id, label, icon, defaultData, createBlockElement)
+2. Palette-Button `<button data-block-type="...">` in `index.html` einfügen
+3. `case '...'` im switch von `preview.js` (`blockToHTML`) hinzufügen
+4. Handbuch.md + Handbuch_HTML.html aktualisieren
+
+### Vorschau & HTML-Mail (`js/preview.js`)
+- Generiert **table-basiertes HTML** für E-Mail-Clients (keine modernen CSS-Features)
+- Jeder Block-Typ hat eine `xxxToHTML(data)` Funktion (z.B. `artikelToHTML`, `freitextToHTML`)
+- `blockToHTML(data)` dispatcht per switch auf die passende Funktion
+- `generateFullPreview(blocks, settings)` baut komplette Mail mit Header/Footer zusammen
+- Logo ist als Base64 in `LOGO_SRC` eingebettet (aus `images/dav-logo.png`)
+- **Wichtig:** Inline-Stile verwenden – keine externen CSS-Referenzen im Export
+
+### App-Steuerung (`js/app.js`)
+- IIFE-basiert, DOMContentLoaded als Entry Point
+- `renderBlockList()` → rendert Editor-Blöcke (linke Seite)
+- `updatePreview()` → rendert Live-Vorschau (rechte Seite)
+- `openModal(id)` / `closeModal()` → Bearbeitungsdialog mit dynamischen Form-Feldern
+- `seedDefaultBlocks()` → initialisiert Hero + Intro beim Start
+- `saveCurrentDraft()` / `loadLatestDraft()` → persistiert via Storage-Modul
+- Drag & Drop über SortableJS auf dem Block-Container
+
+### Persistenz (`js/storage.js`)
+- localStorage mit Key-Prefix `dav_newsletter_`
+- Entwurf-Namen in separatem Index (`dav_newsletter_drafts`)
+- Max. 20 Entwürfe (älteste werden gelöscht)
+- Enthält: blocks array + settings (Datum, Redaktion)
+
+---
+
+## Wichtige Konventionen
+
+1. **Keine externen CDN-Abhängigkeiten** – alles lokal in `lib/`
+2. **E-Mail-kompatibles HTML** – table-basiert, inline styles, keine `<style>` im Body
+3. **Deutsch überall** – UI-Texte, Kommentare, Variablennamen wo sinnvoll
+4. **Kein Build-Schritt** – direkte Dateibearbeitung, sofort sichtbar im Browser
+5. **Git:** commit nach jeder logischen Änderung → `git push origin master`
+6. **Handbuch immer synchronisieren** – Handbuch.md + Handbuch_HTML.html parallel pflegen
+
+---
+
+## Häufige Änderungsstellen
+
+| Aufgabe | Datei(en) |
+|---------|-----------|
+| Block-Typ hinzufügen/ändern | `blocks.js`, `index.html` (Palette), `preview.js` (switch) |
+| E-Mail-HTML-Anpassung | `preview.js` (`xxxToHTML` Funktionen, Header/Footer Templates) |
+| Editor-Styling | `styles.css` |
+| UI-Layout / neue Buttons | `index.html` + Event-Handler in `app.js` |
+| Drag & Drop Verhalten | `app.js` (`initSortable`) |
+| Mail-Versand-Workflow | `app.js` (handleMailSend, handleCopyHtml) |
+| Logo austauschen | `images/dav-logo.png` ersetzen + Base64 in `preview.js` LOGO_SRC aktualisieren |
+| Handbuch aktualisieren | `Handbuch.md` + `Handbuch_HTML.html` parallel |
+
+---
+
+## Git-Workflow
+```bash
+git add -A && git commit -m "Beschreibung" && git push origin master
+```
+Immer alle 3 Handbücher synchron halten: Code → Handbuch.md → Handbuch_HTML.html
