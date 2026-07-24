@@ -246,9 +246,14 @@
 [data-theme="dark"] aside#sidebar h2 {
     color: #d1d5db !important;                  /* gray-300 */
 }
-[data-theme="dark"] aside#sidebar > div:first-child {
+[data-theme="dark"] #sidebar-header {
     background-color: #111827 !important;       /* gray-900 */
     border-color: #374151 !important;
+}
+
+/* Palette-Bereich im Dark Mode */
+[data-theme="dark"] #block-palette {
+    background-color: #1f2937 !important;       /* gray-800 */
 }
 
 /* Palette buttons in dark mode */
@@ -498,4 +503,143 @@
 
 [data-theme="dark"] .draft-row.is-current {
     background-color: #1e3a5f !important;
+}
+
+
+/* ============================================================
+   RESPONSIVE DESIGN — Sidebar scrollbar + progressive scaling
+   ============================================================ */
+
+/* --- Sidebar Layout: Header fix, Palette scrollt --- */
+#sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Header bleibt fix oben (kein Scroll) */
+#sidebar-header {
+    flex-shrink: 0 !important;
+}
+
+/* Block-Palette nimmt restlichen Platz + scrollt vertikal */
+#block-palette {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 0 !important;          /* CRITICAL für flex+scroll */
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+}
+
+/* Webkit Scrollbar dünn und dezent */
+#block-palette::-webkit-scrollbar { width: 4px; }
+#block-palette::-webkit-scrollbar-track { background: transparent; }
+#block-palette::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 2px;
+}
+
+/* --- Palette-Buttons passen sich an --- */
+.palette-item { width: 100%; box-sizing: border-box; }
+
+/* Label-Span: Standard sichtbar, Short-Label versteckt */
+.palette-label { display: inline; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.palette-short-label { display: none !important; }
+
+/* --- Breakpoint ≤1399px — Sidebar leicht schmaler, Text kleiner --- */
+@media (max-width: 1399px) {
+    #sidebar { width: 105px !important; min-width: 105px !important; max-width: 105px !important; }
+    .palette-item { font-size: 12px; padding-left: 6px; padding-right: 6px; }
+}
+
+/* --- Breakpoint ≤1279px (Tablet) — Kurzlabels aktivieren --- */
+@media (max-width: 1279px) {
+    #sidebar { width: 88px !important; min-width: 88px !important; max-width: 88px !important; }
+    .palette-item { font-size: 11px; padding-left: 5px; padding-right: 5px; gap: 2px; }
+
+    /* Volles Label verstecken, Kurzlabel anzeigen */
+    .palette-label { display: none !important; }
+    .palette-short-label {
+        display: inline !important;
+        font-size: 10px;
+        line-height: 1.1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Kurzlabel via data-Attribut einblenden */
+    .palette-item::after {
+        display: none !important;
+    }
+}
+
+/* --- Breakpoint ≤1023px (nur Emoji sichtbar) --- */
+@media (max-width: 1023px) {
+    #sidebar { width: 68px !important; min-width: 68px !important; max-width: 68px !important; }
+
+    /* Text komplett verstecken — nur Emoji + Icon sichtbar */
+    .palette-label,
+    .palette-short-label { display: none !important; }
+
+    .palette-item span:first-child { font-size: 18px; flex-shrink: 0; }
+    .palette-item { padding-left: 4px; padding-right: 4px; justify-content: center; }
+
+    /* Group-Labels ausblenden */
+    .palette-group-label { display: none !important; }
+
+    #bottom-toolbar button span.btn-label { display: none; }
+}
+
+/* --- Breakpoint ≤899px (Minimum) --- */
+@media (max-width: 899px) {
+    #bottom-toolbar .toolbar-btn { padding: 6px 10px !important; }
+    #bottom-toolbar .toolbar-btn svg,
+    #bottom-toolbar .toolbar-btn span.btn-icon { width: 15px; height: 15px; font-size: 15px; }
+}
+
+/* --- Block-Elemente skalieren mit Sidebar-Breite --- */
+.block-item { min-width: 0; overflow: hidden; }
+.block-header h3, .block-header span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* --- Split Resizer immer sichtbar und funktionsfähig --- */
+#split-resizer { flex-shrink: 0 !important; min-width: 6px !important; max-width: 6px !important; }
+
+/* --- Preview Panel füllt Rest --- */
+#preview-panel { flex-grow: 1; min-width: 250px; }
+
+
+/* --- Blocks Panel vertikal scrollbar (Tailwind CDN fix) --- */
+#blocks-panel,
+section#blocks-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    min-width: 180px !important;
+}
+
+/* Header (fix oben) */
+#blocks-panel > :nth-child(1) {
+    flex-shrink: 0 !important;
+}
+
+/* Scrollbarer Bereich (nimmt den Rest ein) */
+#block-list,
+#blocks-panel > :nth-child(2),
+#blocks-panel > div.overflow-y-auto {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 0 !important;   /* CRITICAL für flex+scroll */
+}
+
+/* Dünne Scrollbar */
+#blocks-panel > :nth-child(2)::-webkit-scrollbar,
+#block-list::-webkit-scrollbar { width: 4px; }
+#blocks-panel > :nth-child(2)::-webkit-scrollbar-track,
+#block-list::-webkit-scrollbar-track { background: transparent; }
+#blocks-panel > :nth-child(2)::-webkit-scrollbar-thumb,
+#block-list::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 2px;
 }
