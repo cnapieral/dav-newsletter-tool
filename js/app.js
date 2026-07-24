@@ -412,6 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    function deleteBlock(id) {
         const index = blocks.findIndex(b => b.id === id);
         if (index > -1) {
             blocks.splice(index, 1);
