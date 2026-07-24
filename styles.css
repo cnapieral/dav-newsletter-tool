@@ -313,6 +313,15 @@
     background-color: #4b5563 !important;       /* gray-600 */
 }
 
+/* Sidebar resizer in dark mode */
+[data-theme="dark"] #sidebar-resizer {
+    background-color: #4b5563 !important;       /* gray-600 */
+}
+[data-theme="dark"] #sidebar-resizer:hover,
+[data-theme="dark"] #sidebar-resizer.active {
+    background-color: #3b82f6 !important;       /* blue-500 */
+}
+
 /* Modal overlays in dark mode — both block-editor and mailto modals */
 [data-theme="dark"] #block-editor-modal > div,
 [data-theme="dark"] #mailto-modal > div {
@@ -516,6 +525,40 @@
     flex-direction: column !important;
 }
 
+/* --- Sidebar Resizer (zwischen Palette und Editor) --- */
+#sidebar-resizer {
+    width: 6px;
+    background-color: #d1d5db;
+    cursor: col-resize;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+}
+
+#sidebar-resizer:hover,
+#sidebar-resizer.active {
+    background-color: #3b82f6;
+}
+
+/* Kleiner Griff-Indikator in der Mitte */
+#sidebar-resizer::after {
+    content: '';
+    width: 2px;
+    height: 24px;
+    background-color: #9ca3af;
+    border-radius: 1px;
+    pointer-events: none;
+}
+
+#sidebar-resizer:hover::after,
+#sidebar-resizer.active::after {
+    background-color: #fff;
+}
+
 /* Header bleibt fix oben (kein Scroll) */
 #sidebar-header {
     flex-shrink: 0 !important;
@@ -546,15 +589,13 @@
 .palette-label { display: inline; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .palette-short-label { display: none !important; }
 
-/* --- Breakpoint ≤1399px — Sidebar leicht schmaler, Text kleiner --- */
+/* --- Breakpoint ≤1399px — Text kleiner, Sidebar-Breite bleibt (User-Resizer) --- */
 @media (max-width: 1399px) {
-    #sidebar { width: 140px !important; min-width: 140px !important; max-width: 140px !important; }
     .palette-item { font-size: 12px; padding-left: 6px; padding-right: 6px; }
 }
 
 /* --- Breakpoint ≤1279px (Tablet) — Kurzlabels aktivieren --- */
 @media (max-width: 1279px) {
-    #sidebar { width: 115px !important; min-width: 115px !important; max-width: 115px !important; }
     .palette-item { font-size: 11px; padding-left: 5px; padding-right: 5px; gap: 2px; }
 
     /* Volles Label verstecken, Kurzlabel anzeigen */

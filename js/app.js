@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Resizable split pane initialisieren
         initResizableSplit();
+        initSidebarResizer();
 
         // Preview responsiv anpassen bei Fenster-Resize
         window.addEventListener('resize', function() {
@@ -356,7 +357,61 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    function deleteBlock(id) {
+    // ========== Sidebar Resizer (Palette-Breite manuell anpassen) ==========
+
+    const SIDEBAR_WIDTH_KEY = 'dav_newsletter_sidebar_width';
+
+    function initSidebarResizer() {
+        var resizer = document.getElementById('sidebar-resizer');
+        var sidebar = document.getElementById('sidebar');
+        var mainEl = document.querySelector('main');
+        var isResizing = false;
+
+        if (!resizer || !sidebar) return;
+
+        // Gespeicherte Sidebar-Breite aus localStorage wiederherstellen
+        try {
+            var savedWidth = localStorage.getItem(SIDEBAR_WIDTH_KEY);
+            if (savedWidth) {
+                var parsed = parseInt(savedWidth, 10);
+                if (!isNaN(parsed)) {
+                    sidebar.style.width = Math.max(80, Math.min(400, parsed)) + 'px';
+                }
+            }
+        } catch (e) { /* ignorieren */ }
+
+        resizer.addEventListener('mousedown', function(e) {
+            isResizing = true;
+            resizer.classList.add('active');
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isResizing) return;
+
+            var mainRect = mainEl.getBoundingClientRect();
+            var offsetX = e.clientX - mainRect.left;
+
+            // Clamp: minimum 80px, maximum 400px für Sidebar
+            var newSidebarWidth = Math.max(80, Math.min(400, offsetX));
+
+            sidebar.style.width = newSidebarWidth + 'px';
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (isResizing) {
+                isResizing = false;
+                resizer.classList.remove('active');
+                // Breite persistent speichern
+                try {
+                    var currentWidth = sidebar.style.width || '160px';
+                    localStorage.setItem(SIDEBAR_WIDTH_KEY, currentWidth);
+                } catch (e) { /* ignorieren */ }
+            }
+        });
+    }
+
+
         const index = blocks.findIndex(b => b.id === id);
         if (index > -1) {
             blocks.splice(index, 1);
