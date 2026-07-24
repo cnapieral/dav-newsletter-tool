@@ -548,13 +548,13 @@
 
 /* --- Breakpoint ≤1399px — Sidebar leicht schmaler, Text kleiner --- */
 @media (max-width: 1399px) {
-    #sidebar { width: 105px !important; min-width: 105px !important; max-width: 105px !important; }
+    #sidebar { width: 140px !important; min-width: 140px !important; max-width: 140px !important; }
     .palette-item { font-size: 12px; padding-left: 6px; padding-right: 6px; }
 }
 
 /* --- Breakpoint ≤1279px (Tablet) — Kurzlabels aktivieren --- */
 @media (max-width: 1279px) {
-    #sidebar { width: 88px !important; min-width: 88px !important; max-width: 88px !important; }
+    #sidebar { width: 115px !important; min-width: 115px !important; max-width: 115px !important; }
     .palette-item { font-size: 11px; padding-left: 5px; padding-right: 5px; gap: 2px; }
 
     /* Volles Label verstecken, Kurzlabel anzeigen */
