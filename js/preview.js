@@ -51,11 +51,11 @@ const Preview = (function() {
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
       <tr>
         <td style="padding:4px;text-align:center;">
-          <a href="https://asphalt.de/impressum/" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Impressum</a>
+          <a href="https://asphalt.de/impressum/" style="font-size:12px;color:#AF0A23;text-decoration:none;margin:0 8px;">Impressum</a>
         </td>
         <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
         <td style="padding:4px;text-align:center;">
-          <a href="https://asphalt.de/direktkontakt/" style="font-size:12px;color:#E30613;text-decoration:none;margin:0 8px;">Kontakt</a>
+          <a href="https://asphalt.de/direktkontakt/" style="font-size:12px;color:#AF0A23;text-decoration:none;margin:0 8px;">Kontakt</a>
         </td>
       </tr>
     </table>
@@ -82,7 +82,7 @@ const Preview = (function() {
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td style="border-left:4px solid #E30613;padding-left:16px;">
+        <td style="border-left:4px solid #AF0A23;padding-left:16px;">
           ${data.showTitle ? `<h2 style="margin:0 0 8px 0;font-size:20px;line-height:26px;color:#2D2D2D;font-weight:bold;">${escapeHtml(data.title || '')}</h2>` : ''}
           <p style="font-size:14px;line-height:22px;color:#333333;margin:0;">
             ${content.replace(/\n/g, '<br />')}
@@ -107,7 +107,7 @@ const Preview = (function() {
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td style="border-left:4px solid #E30613;padding-left:16px;">
+        <td style="border-left:4px solid #AF0A23;padding-left:16px;">
           <h2 class="article-title" style="margin:0 0 4px 0;font-size:20px;line-height:26px;color:#2D2D2D;font-weight:bold;">
             ${title}
           </h2>
@@ -121,7 +121,7 @@ const Preview = (function() {
     <table role="presentation" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td style="padding-top:12px;">
-          <a href="${url}" style="display:inline-block;padding:10px 24px;font-size:13px;font-weight:bold;color:#FFFFFF;text-decoration:none;background-color:#E30613;border-radius:3px;">Weiterlesen &rarr;</a>
+          <a href="${url}" style="display:inline-block;padding:10px 24px;font-size:13px;font-weight:bold;color:#FFFFFF;text-decoration:none;background-color:#AF0A23;border-radius:3px;">Weiterlesen &rarr;</a>
         </td>
       </tr>
     </table>
@@ -154,8 +154,8 @@ const Preview = (function() {
       <tr>
         <td style="padding:16px 20px;">
           <p style="margin:0 0 2px 0;font-size:11px;color:#999999;text-transform:uppercase;">${escapeHtml(event.date || '')}</p>
-          <p style="margin:0 0 6px 0;font-size:14px;font-weight:bold;color:#E30613;">${escapeHtml(event.title)}</p>
-          ${event.link ? `<a href="${escapeHtml(event.link)}" style="font-size:12px;color:#E30613;text-decoration:none;font-weight:bold;">Weiterlesen &rarr;</a>` : ''}
+          <p style="margin:0 0 6px 0;font-size:14px;font-weight:bold;color:#AF0A23;">${escapeHtml(event.title)}</p>
+          ${event.link ? `<a href="${escapeHtml(event.link)}" style="font-size:12px;color:#AF0A23;text-decoration:none;font-weight:bold;">Weiterlesen &rarr;</a>` : ''}
         </td>
       </tr>
     </table>
@@ -190,7 +190,7 @@ const Preview = (function() {
         let html = `
 <tr>
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
-    <h2 class="section-title" style="margin:0;font-size:18px;line-height:24px;color:#2D2D2D;font-weight:bold;padding-bottom:16px;border-bottom:2px solid #E30613;">
+    <h2 class="section-title" style="margin:0;font-size:18px;line-height:24px;color:#2D2D2D;font-weight:bold;padding-bottom:16px;border-bottom:2px solid #AF0A23;">
       Folgen Sie uns
     </h2>
   </td>
@@ -201,7 +201,7 @@ const Preview = (function() {
         links.forEach(link => {
             if (link.name && link.url) {
                 html += `
-    <a href="${escapeHtml(link.url)}" style="display:inline-block;padding:8px 16px;font-size:14px;color:#E30613;text-decoration:none;margin:4px;background-color:#FAFAFA;border-radius:3px;">${escapeHtml(link.name)}</a>`;
+    <a href="${escapeHtml(link.url)}" style="display:inline-block;padding:8px 16px;font-size:14px;color:#AF0A23;text-decoration:none;margin:4px;background-color:#FAFAFA;border-radius:3px;">${escapeHtml(link.name)}</a>`;
             }
         });
 
@@ -278,7 +278,7 @@ const Preview = (function() {
         return `
 <tr>
   <td style="padding:24px 32px 8px 32px;">
-    <h3 class="section-title" style="margin:0;font-size:16px;line-height:22px;color:#E30613;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">${title}</h3>
+    <h3 class="section-title" style="margin:0;font-size:16px;line-height:22px;color:#AF0A23;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">${title}</h3>
   </td>
 </tr>`;
     }
@@ -382,7 +382,7 @@ const Preview = (function() {
         <table role="presentation" class="email-container" width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#FFFFFF;max-width:600px;margin:auto;">
           <!-- Top Accent Bar -->
           <tr>
-            <td style="height:5px;background-color:#E30613;font-size:0;line-height:0;">&nbsp;</td>
+            <td style="height:5px;background-color:#AF0A23;font-size:0;line-height:0;">&nbsp;</td>
           </tr>
 
 ${HEADER}
@@ -394,7 +394,7 @@ ${contentHtml}
       </td>
     </tr>
     <tr>
-      <td style="height:5px;background-color:#E30613;font-size:0;line-height:0;">&nbsp;</td>
+      <td style="height:5px;background-color:#AF0A23;font-size:0;line-height:0;">&nbsp;</td>
     </tr>
   </table>
 </body>
