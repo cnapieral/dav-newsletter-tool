@@ -139,8 +139,8 @@ const Preview = (function() {
         let html = `
 <tr>
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
-    <h2 class="section-title" style="margin:0 0 16px 0;font-size:18px;line-height:24px;color:#2D2D2D;font-weight:bold;">
-      Termine &amp; Veranstaltungen
+    <h2 class="section-title" style="margin:0 0 16px 0;font-size:18px;line-height:24px;color:#AF0A23;font-weight:bold;">
+      Termine und Allgemeines
     </h2>
   </td>
 </tr>`;
