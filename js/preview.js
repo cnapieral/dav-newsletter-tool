@@ -149,12 +149,12 @@ const Preview = (function() {
             if (event.title) {
                 html += `
 <tr>
-  <td class="content-padding" style="padding:16px 32px 8px 32px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;background-color:#FAFAFA;border-radius:4px;">
+  <td class="content-padding" style="padding:8px 32px 4px 32px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:4px;background-color:#FAFAFA;border-radius:4px;">
       <tr>
-        <td style="padding:16px 20px;">
-          <p style="margin:0 0 2px 0;font-size:11px;color:#999999;text-transform:uppercase;">${escapeHtml(event.date || '')}</p>
-          <p style="margin:0 0 6px 0;font-size:14px;font-weight:bold;color:#AF0A23;">${escapeHtml(event.title)}</p>
+        <td style="padding:8px 20px;">
+          <p style="margin:0 0 1px 0;font-size:11px;color:#999999;text-transform:uppercase;">${escapeHtml(event.date || '')}</p>
+          <p style="margin:0 0 3px 0;font-size:14px;font-weight:bold;color:#AF0A23;">${escapeHtml(event.title)}</p>
           ${event.link ? `<a href="${escapeHtml(event.link)}" style="font-size:12px;color:#AF0A23;text-decoration:none;font-weight:bold;">Weiterlesen &rarr;</a>` : ''}
         </td>
       </tr>
