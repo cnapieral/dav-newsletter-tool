@@ -154,7 +154,7 @@ const Preview = (function() {
       <tr>
         <td style="padding:8px 20px;">
           <p style="margin:0 0 1px 0;font-size:11px;color:#999999;text-transform:uppercase;">${escapeHtml(event.date || '')}</p>
-          <p style="margin:0 0 3px 0;font-size:14px;font-weight:bold;color:#AF0A23;">${escapeHtml(event.title)}</p>
+          <p style="margin:0 0 3px 0;font-size:14px;font-weight:bold;color:#000000;">${escapeHtml(event.title)}</p>
           ${event.link ? `<a href="${escapeHtml(event.link)}" style="font-size:12px;color:#AF0A23;text-decoration:none;font-weight:bold;">Weiterlesen &rarr;</a>` : ''}
         </td>
       </tr>
