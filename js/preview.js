@@ -44,12 +44,12 @@ const Preview = (function() {
     <!-- Footer Links -->
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
       <tr>
-        <td style="padding:4px;text-align:center;">
-          <a href="https://asphalt.de/impressum/" style="font-size:12px;color:#AF0A23;text-decoration:none;margin:0 8px;">Impressum</a>
+        <td style="padding:2px;text-align:center;">
+          <a href="https://asphalt.de/impressum/" style="font-size:12px;color:#AF0A23;text-decoration:none;margin:0 4px;">Impressum</a>
         </td>
-        <td style="padding:4px;color:#CCCCCC;text-align:center;">|</td>
-        <td style="padding:4px;text-align:center;">
-          <a href="https://asphalt.de/direktkontakt/" style="font-size:12px;color:#AF0A23;text-decoration:none;margin:0 8px;">Kontakt</a>
+        <td style="padding:2px;color:#CCCCCC;text-align:center;">|</td>
+        <td style="padding:2px;text-align:center;">
+          <a href="https://asphalt.de/direktkontakt/" style="font-size:12px;color:#AF0A23;text-decoration:none;margin:0 4px;">Kontakt</a>
         </td>
       </tr>
     </table>
