@@ -109,12 +109,12 @@ const Preview = (function() {
       </tr>
     </table>
     ${data.content ? `
-    <p class="content-padding" style="padding:0 32px 16px 32px;font-size:14px;line-height:22px;color:#333333;margin:0;">
+    <p class="content-padding" style="padding:0 32px 16px 20px;font-size:14px;line-height:22px;color:#333333;margin:0;">
       ${content.replace(/\n/g, '<br />')}
     </p>` : ''}
     <table role="presentation" cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td style="padding-top:12px;">
+        <td style="padding:12px 32px 0 20px;">
           <a href="${url}" style="display:inline-block;padding:10px 24px;font-size:13px;font-weight:bold;color:#FFFFFF;text-decoration:none;background-color:#AF0A23;border-radius:3px;">Weiterlesen &rarr;</a>
         </td>
       </tr>
