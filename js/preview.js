@@ -60,7 +60,13 @@ const Preview = (function() {
       <a href="https://asphalt.de/" style="color:#999999;text-decoration:none;">asphalt.de</a>
     </p>
 
-    <p style="margin:16px 0 0 0;font-size:11px;color:#CCCCCC;">
+    <!-- Eigenwerbung -->
+    <p style="margin:16px 0 0 0;font-size:10px;color:#CCCCCC;">
+      Entwickelt mit freundlicher Unterstützung von
+      <a href="https://lab.christian-napierala.de" style="color:#999999;text-decoration:none;">CNA&nbsp;Lab</a>.
+    </p>
+
+    <p style="margin:8px 0 0 0;font-size:11px;color:#CCCCCC;">
       &copy; 2026 Deutscher Asphaltverband e.V. | Alle Rechte vorbehalten.
     </p>
   </td>
