@@ -934,6 +934,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += createCheckboxField('showTitle', 'Titel anzeigen', data.showTitle || false);
                 html += `<div id="field-title-wrap">${createTextField('title', 'Titel', data.title || '', 'text')}</div>`;
                 html += createTextAreaField('content', 'Inhalt', data.content || '');
+                html += createCheckboxField('blocksatz', 'Blocksatz (bündig links u. rechts)', data.blocksatz || false);
                 break;
 
             case 'artikel':
@@ -954,6 +955,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += createNumberField('teaserLength', 'Teaser-Länge (Zeichen)', data.teaserLength || 160);
                 html += `<p class="text-xs text-gray-400">Klicke auf "Teaser laden" um den Text automatisch aus der URL zu extrahieren.</p>`;
                 html += createTextAreaField('content', 'Teaser-Text (wird automatisch gefüllt)', data.content || '');
+                html += createCheckboxField('blocksatz', 'Blocksatz (bündig links u. rechts)', data.blocksatz || false);
                 break;
 
             case 'termin':
@@ -1220,7 +1222,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return {
                     content: getFormValue('content') || '',
                     showTitle: document.querySelector('[name="showTitle"]')?.checked || false,
-                    title: getFormValue('title') || ''
+                    title: getFormValue('title') || '',
+                    blocksatz: document.querySelector('[name="blocksatz"]')?.checked || false
                 };
             }
             case 'artikel': {
@@ -1234,7 +1237,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: artikelTitle,
                     teaserLength: parseInt(getFormValue('teaserLength')) || 160,
                     showImage: true,
-                    content: getFormValue('content') || ''
+                    content: getFormValue('content') || '',
+                    blocksatz: document.querySelector('[name="blocksatz"]')?.checked || false
                 };
             }
             case 'termin': {

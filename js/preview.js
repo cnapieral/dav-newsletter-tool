@@ -71,6 +71,7 @@ const Preview = (function() {
      */
     function freitextToHTML(data) {
         const content = escapeHtml(data.content || '');
+        const textAlign = data.blocksatz ? 'text-align:justify;' : '';
         return `
 <tr>
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
@@ -78,7 +79,7 @@ const Preview = (function() {
       <tr>
         <td style="border-left:4px solid #AF0A23;padding-left:16px;">
           ${data.showTitle ? `<h2 style="margin:0 0 8px 0;font-size:20px;line-height:26px;color:#2D2D2D;font-weight:bold;">${escapeHtml(data.title || '')}</h2>` : ''}
-          <p style="font-size:14px;line-height:22px;color:#333333;margin:0;">
+          <p style="font-size:14px;line-height:22px;color:#333333;margin:0;${textAlign}">
             ${content.replace(/\n/g, '<br />')}
           </p>
         </td>
@@ -95,6 +96,7 @@ const Preview = (function() {
         const url = data.url || '#';
         const title = escapeHtml(data.title || 'Artikel');
         const content = escapeHtml(data.content || '');
+        const textAlign = data.blocksatz ? 'text-align:justify;' : '';
 
         return `
 <tr>
@@ -109,7 +111,7 @@ const Preview = (function() {
       </tr>
     </table>
     ${data.content ? `
-    <p class="content-padding" style="padding:0 32px 16px 20px;font-size:14px;line-height:22px;color:#333333;margin:0;">
+    <p class="content-padding" style="padding:0 32px 16px 20px;font-size:14px;line-height:22px;color:#333333;margin:0;${textAlign}">
       ${content.replace(/\n/g, '<br />')}
     </p>` : ''}
     <table role="presentation" cellpadding="0" cellspacing="0" border="0">

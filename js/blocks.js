@@ -210,6 +210,7 @@ const Blocks = (function() {
             <div class="block-content text-sm text-gray-600">
                 ${type === 'artikel' && data.url ? 'URL: ' + truncate(data.url, 40) : ''}
                 ${data.content ? truncate(data.content, 100) : ''}
+                ${data.blocksatz ? '<span class="text-xs text-gray-400 ml-2" title="Blocksatz aktiv">[⫘ Blocksatz]</span>' : ''}
             </div>
         `;
 
