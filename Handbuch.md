@@ -126,7 +126,7 @@ Einzelnes Bild mit URL, Alternativtext und optionaler Beschriftung.
 | **Beschriftung** | Optionaler Bildunterschrift-Text |
 
 ---
-
+- **Speichern / Laden:** Burger-Menю (dreipunkt-Symbol oben rechts) → Entw黵fe werden im Browser (localStorage) gespeichert
 ## Rubrik-Blöcke (Themenfelder)
 
 Die fünf Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie erscheinen in der Linkspalette unter dem Abschnitt **„Rubriken"**.
@@ -279,7 +279,7 @@ Die Datei `images/dav-logo.png` durch ein eigenes Bild ersetzen (gleicher Datein
 
 ---
 
-## Menü-Übersicht (Burger-Menü ☰)
+## Menü-Übersicht
 
 | Aktion | Beschreibung |
 |--------|-------------|

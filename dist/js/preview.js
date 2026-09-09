@@ -74,20 +74,13 @@ const Preview = (function() {
     function freitextToHTML(data) {
         const content = escapeHtml(data.content || '');
         const textAlign = data.blocksatz ? 'text-align:justify;' : '';
-        const titleHtml = data.showTitle
-            ? `<tr>
-              <td style="border-left:4px solid #AF0A23;padding:0 0 8px 16px;">
-                <h2 style="margin:0;font-size:20px;line-height:26px;color:#2D2D2D;font-weight:bold;">${escapeHtml(data.title || '')}</h2>
-              </td>
-            </tr>`
-            : '';
         return `
 <tr>
   <td class="content-padding" style="padding:32px 32px 8px 32px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-      ${titleHtml}
       <tr>
-        <td style="padding-left:${data.showTitle ? '20px' : '0'};">
+        <td style="border-left:4px solid #AF0A23;padding-left:16px;">
+          ${data.showTitle ? `<h2 style="margin:0 0 8px 0;font-size:20px;line-height:26px;color:#2D2D2D;font-weight:bold;">${escapeHtml(data.title || '')}</h2>` : ''}
           <p style="font-size:14px;line-height:22px;color:#333333;margin:0;${textAlign}">
             ${content.replace(/\n/g, '<br />')}
           </p>

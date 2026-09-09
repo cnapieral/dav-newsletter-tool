@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() { t.remove(); }, 3100);
     }
 
-    const APP_VERSION = 'v1.0';
+    const APP_VERSION = 'v1.0.0';
     const SPLIT_WIDTH_KEY = 'dav_newsletter_split_width';
 
     // Track which block is being edited

@@ -54,7 +54,7 @@
     <li><a href="#split-pane">Split-Pane anpassen</a></li>
     <li><a href="#header-footer">Header &amp; Footer im Überblick</a></li>
     <li><a href="#faq">Häufige Fragen</a></li>
-    <li><a href="#menue">Menü-Übersicht (Burger-Menü)</a></li>
+    <li><a href="#menue">Menü-Übersicht</a></li>
   </ul>
 </nav>
 
@@ -108,6 +108,7 @@
 <tr><td><strong>Titel anzeigen</strong></td><td>Haken setzen, um eine Überschrift über den Text zu zeigen</td></tr>
 <tr><td><strong>Titel</strong></td><td>Überschriftentitel (wenn aktiviert)</td></tr>
 <tr><td><strong>Inhalt</strong></td><td>Freier Text, Zeilenumbrüche werden automatisch erkannt</td></tr>
+<tr><td><strong>Blocksatz</strong></td><td>Der Text wird in Blocksatz formatiert</td></tr>
 </tbody></table>
 
 <h3>📰 Artikel-Link</h3>
@@ -116,6 +117,7 @@
 <tr><td><strong>Titel</strong></td><td>Artikeltitel (Pflichtfeld – darf nicht leer sein)</td></tr>
 <tr><td><strong>URL</strong></td><td>Ziel-URL des Artikels</td></tr>
 <tr><td><strong>Inhalt</strong></td><td>Kurzer Teaser-Text (1–3 Sätze)</td></tr>
+<tr><td><strong>Blocksatz</strong></td><td>Der Text wird in Blocksatz formatiert</td></tr>
 </tbody></table>
 
 <h3>📅 Termin-Liste</h3>
@@ -180,20 +182,20 @@
 <h2 class="section-title" id="entwurf-speichern">Entwurf speichern und laden</h2>
 <p>Alle Entwürfe werden im Browser (localStorage) gespeichert.</p>
 <h3>Speichern</h3>
-<p>Burger-Menü ☰ → <strong>„Speichern"</strong> klicken. Der aktuelle Stand wird unter dem aktuellen Namen gespeichert (inklusive Datum und Redaktion).</p>
+<p><strong>„Speichern"</strong> klicken. Der aktuelle Stand wird unter dem aktuellen Namen gespeichert (inklusive Datum und Redaktion).</p>
 <h3>Neuen Entwurf anlegen</h3>
-<p>Burger-Menü → <strong>„Neu"</strong> klicken. Alle Blöcke werden zurückgesetzt auf den Standardzustand (Hero + Einleitung). Der vorherige Entwurf bleibt erhalten und kann geladen werden.</p>
+<p><strong>„Neu"</strong> klicken. Alle Blöcke werden zurückgesetzt auf den Standardzustand (Hero + Einleitung). Der vorherige Entwurf bleibt erhalten und kann geladen werden.</p>
 <h3>Entwurf duplizieren</h3>
-<p>Burger-Menü → <strong>„Duplizieren"</strong>. Eine Kopie des aktuellen Newsletters wird erstellt, die du unabhängig bearbeiten kannst.</p>
+<p><strong>„Duplizieren"</strong>. Eine Kopie des aktuellen Newsletters wird erstellt, die du unabhängig bearbeiten kannst.</p>
 <h3>Gespeicherte Entwürfe laden</h3>
-<p>Burger-Menü → <strong>„Entwürfe laden"</strong> → Aus der Liste den gewünschten Entwurf auswählen.</p>
+<p>strong>„Entwürfe laden"</strong> → Aus der Liste den gewünschten Entwurf auswählen.</p>
 <blockquote><p><strong>Wichtig:</strong> Entwürfe sind an den Browser und das Gerät gebunden. Ein Wechsel des Browsers oder ein Cache-Löschen entfernt gespeicherte Entwürfe.</p></blockquote>
 
 <h2 class="section-title" id="mail-vorbereiten">Mail vorbereiten &amp; Versenden</h2>
 <p>Der Editor unterstützt kein direktes Versenden, aber den kompletten Workflow der E-Mail-Vorbereitung.</p>
 <h3>Schritt-für-Schritt</h3>
 <p><strong>① HTML kopieren</strong></p>
-<ul><li>Burger-Menü → <strong>„Mail öffnen"</strong></li><li>Klick auf „① 📋 HTML kopieren"</li><li>Der komplette Newsletter-HTML-Code wird in die Zwischenablage kopiert (Bestätigungsnachricht erscheint)</li></ul>
+<ul><li><strong>„Mail öffnen"</strong></li><li>Klick auf „① 📋 HTML kopieren"</li><li>Der komplette Newsletter-HTML-Code wird in die Zwischenablage kopiert (Bestätigungsnachricht erscheint)</li></ul>
 <p><strong>② Empfänger eingeben</strong></p>
 <ul><li>E-Mail-Adressen direkt in das Empfängerfeld eingeben, getrennt durch Semikolon <code>;</code>, Komma <code>,</code> oder Zeilenumbruch</li><li>Oder eine <strong>CSV-Datei hochladen</strong>, die E-Mail-Adressen in der ersten Spalte enthält</li></ul>
 <p><strong>③ Mail öffnen</strong></p>
@@ -205,7 +207,7 @@
 <blockquote><p><strong>Vorteil:</strong> Im Gegensatz zum Kopieren in den Mail-Body bleibt das Format beim Anhang garantiert erhalten, auch bei Empfängern mit restriktiven E-Mail-Clients.</p></blockquote>
 
 <h2 class="section-title" id="html-export">HTML Export</h2>
-<p>Burger-Menü → <strong>„HTML Export"</strong> lädt eine vollständige, responsive HTML-Datei des Newsletters herunter. Diese kann als Archiv gespeichert oder an Dritte weitergegeben werden.</p>
+<p><strong>„HTML Export"</strong> lädt eine vollständige, responsive HTML-Datei des Newsletters herunter. Diese kann als Archiv gespeichert oder an Dritte weitergegeben werden.</p>
 
 <h2 class="section-title" id="live-vorschau">Live-Vorschau umschalten</h2>
 <p>Oben rechts in der Vorschau:</p>
@@ -232,7 +234,7 @@
 
 <p><strong>Wie ändere ich das DAV-Logo im Header?</strong><br>Die Datei <code>images/dav-logo.png</code> durch ein eigenes Bild ersetzen (gleicher Dateiname, Format PNG). Die Vorschau aktualisiert sich beim Neuladen der Seite. Für den HTML-Export/Mail wird das Logo als Base64 in <code>js/preview.js</code> (<code>LOGO_SRC</code> Konstante) definiert – dort muss die Base64-Zeichenkette entsprechend aktualisiert werden.</p>
 
-<h2 class="section-title" id="menue">Menü-Übersicht (Burger-Menü ☰)</h2>
+<h2 class="section-title" id="menue">Menü-Übersicht</h2>
 <table><thead><tr><th>Aktion</th><th>Beschreibung</th></tr></thead><tbody>
 <tr><td>📝 Neu</td><td>Leeren Newsletter erstellen</td></tr>
 <tr><td>💾 Speichern</td><td>Aktuellen Entwurf speichern</td></tr>

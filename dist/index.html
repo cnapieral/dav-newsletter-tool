@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Editor – DAV</title>
+    <!-- Tailwind CSS (lokal) -->
+    <script src="lib/tailwindcss.js"></script>
+    <!-- Sortable.js für Drag & Drop (lokal) -->
+    <script src="lib/sortable.min.js"></script>
+    <!-- Eigenes CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 h-screen flex flex-col overflow-hidden">
+
+    <!-- Header mit Burger-Menü und Logo -->
+    <header class="bg-white border-b border-gray-200 px-4 py-3 shadow-sm z-10">
+        <div class="flex items-center justify-between">
+            <!-- DAV Logo und Titel -->
+            <div class="flex items-center gap-4">
+                <img src="https://asphalt.de/wp-content/uploads/2025/03/cropped-DAV_asphalt_Logo.png" alt="DAV Logo" width="60" height="60" class="object-contain">
+                <h1 class="text-xl font-bold text-gray-800 leading-none">DAV Newsletter Editor</h1>
+            </div>
+ <!-- Burger-Menü entfernt → Bottom-Bar unten mittig -->
+        </div>
+    </header>
+
+    <!-- Main Content – 3 Spalten Layout -->
+    <main class="flex flex-1 overflow-hidden">
+
+        <!-- Sidebar Links - Block Palette -->
+        <aside id="sidebar" style="width: 160px; min-width: 80px; max-width: 400px; flex-shrink: 0;" class="flex flex-col border-r border-gray-200 bg-white overflow-hidden">
+            <!-- Header (fix oben) -->
+            <div id="sidebar-header" class="p-3 border-b border-gray-200 bg-gray-50 min-h-[60px] flex-shrink-0">
+                <h2 class="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">Blöcke</h2>
+            </div>
+            <!-- Scrollbare Block-Palette -->
+            <div id="block-palette" class="flex-1 overflow-y-auto overflow-x-hidden p-3">
+                <div id="palette-grid" class="grid grid-cols-1 gap-2">
+                    <button data-block-type="hero" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🎯</span><span class="palette-label">Hero Section</span><span class="palette-short-label">Hero</span>
+                    </button>
+                    <button data-block-type="intro" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>✉️</span><span class="palette-label">Einleitung</span><span class="palette-short-label">Intro</span>
+                    </button>
+                    <div class="border-t border-gray-200 my-1"></div>
+                    <button data-block-type="freitext" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>📝</span><span class="palette-label">Freitext</span><span class="palette-short-label">Text</span>
+                    </button>
+                    <button data-block-type="artikel" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>📰</span><span class="palette-label">Artikel-Link</span><span class="palette-short-label">Artikel</span>
+                    </button>
+                    <button data-block-type="termin" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>📅</span><span class="palette-label">Termin-Liste</span><span class="palette-short-label">Termin</span>
+                    </button>
+                    <button data-block-type="divider" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>➖</span><span class="palette-label">Trennlinie</span><span class="palette-short-label">Linie</span>
+                    </button>
+                    <button data-block-type="social" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🌐</span><span class="palette-label">Social-Media</span><span class="palette-short-label">Social</span>
+                    </button>
+                    <button data-block-type="image" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🖼️</span><span class="palette-label">Bild</span><span class="palette-short-label">Bild</span>
+                    </button>
+                    <!-- Rubriken -->
+                    <div class="border-t border-gray-200 my-1"></div>
+                    <div class="palette-group-label text-xs font-semibold text-gray-400 uppercase tracking-wider px-1 py-1">Rubriken</div>
+                    <button data-block-type="maschinen-umwelt" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🔖</span><span class="palette-label">Maschinen und Umwelt</span><span class="palette-short-label">Maschinen</span>
+                    </button>
+                    <button data-block-type="asphalttechnik" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🔖</span><span class="palette-label">Asphalttechnik</span><span class="palette-short-label">Asphalt</span>
+                    </button>
+                    <button data-block-type="wirtschaft-recht" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🔖</span><span class="palette-label">Wirtschaft und Recht</span><span class="palette-short-label">Recht</span>
+                    </button>
+                    <button data-block-type="dav-dai" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🔖</span><span class="palette-label">DAV / DAI</span><span class="palette-short-label">DAV/DAI</span>
+                    </button>
+                    <button data-block-type="allgemeines" class="palette-item px-3 py-2 bg-white border border-gray-300 rounded text-sm hover:border-blue-500 hover:bg-blue-50 transition cursor-pointer text-left font-medium flex items-center gap-2">
+                        <span>🔖</span><span class="palette-label">Allgemeines</span><span class="palette-short-label">Allgemein</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dark Mode Toggle (auskommentiert) -->
+            <!--
+            <div class="mt-auto px-3 py-2 border-t border-gray-200">
+                <button id="dark-mode-toggle" type="button" title="Dark Mode umschalten" class="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 text-xs rounded-md hover:bg-gray-100 transition cursor-pointer border-none bg-transparent text-gray-500">
+                    <span id="dark-mode-icon">🌙</span>
+                </button>
+            </div>
+            -->
+        </aside>
+
+        <!-- Sidebar Resizer (drag to resize palette) -->
+        <div id="sidebar-resizer"></div>
+
+        <!-- Mitte - Aktive Blöcke -->
+        <section id="blocks-panel" class="flex flex-col border-r border-gray-200 bg-gray-50 overflow-hidden relative" style="width: 48%; min-width: 180px; max-width: calc(100% - 300px); flex-shrink: 0;">
+            <div class="p-3 border-b border-gray-200 bg-white min-h-[60px]">
+                <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Aktive Blöcke</h2>
+            </div>
+            <div class="flex-1 overflow-y-auto p-3">
+                <div id="block-list" class="space-y-2">
+                    <!-- Blöcke werden per JS hier eingefügt -->
+                </div>
+            </div>
+
+            <!-- Versionsanzeige unten rechts im Editor -->
+            <div id="version-badge"></div>
+        </section>
+
+        <!-- Split Resizer -->
+        <div id="split-resizer"></div>
+
+        <!-- Preview Rechts -->
+        <section id="preview-panel" class="flex flex-col bg-gray-100 overflow-hidden" style="min-width: 250px; flex-grow: 1;">
+            <!-- Preview Header mit Toggle -->
+            <div class="p-3 border-b border-gray-200 bg-white flex items-center justify-between min-h-[60px]">
+                <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Live-Vorschau</h2>
+                <button id="toggle-view-mode" class="px-2 py-1 bg-gray-800 text-white text-xs rounded hover:bg-gray-900 transition">
+                    📱 Mobile
+                </button>
+            </div>
+
+            <!-- Preview Container -->
+            <div class="flex-1 overflow-auto p-4 flex flex-col items-center bg-gray-50">
+                <div id="preview-container" class="bg-white shadow-lg w-full preview-desktop">
+                    <!-- Vorschau-Inhalt hier (mit Header/Footer) -->
+                     <div id="preview-content" class="p-8">
+                        <div class="text-center text-gray-400 py-20">
+                            <p>Der Newsletter ist noch leer.<br>Füge Blöcke hinzu, um zu beginnen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Block Editor Modal -->
+    <div id="block-editor-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                <h3 id="modal-title" class="text-lg font-semibold text-gray-800">Block bearbeiten</h3>
+                <button id="modal-close-btn" class="p-1 rounded hover:bg-gray-100 transition text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form id="modal-form" class="px-6 py-4">
+                <div id="modal-form-fields" class="space-y-4"></div>
+            </form>
+            <div class="flex items-center justify-end gap-3 px-6 py-3 bg-gray-50 border-t border-gray-200">
+                <button type="button" id="modal-cancel-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">Abbrechen</button>
+                <button type="submit" id="modal-save-btn" form="modal-form" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+     <!-- Mailto Modal -->
+    <div id="mailto-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                <h3 id="mailto-modal-title" class="text-lg font-semibold text-gray-800">Mail öffnen</h3>
+                <button id="mailto-close-btn" class="p-1 rounded hover:bg-gray-100 transition text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="px-6 py-4 space-y-4">
+                <!-- Empfänger -->
+                <div class="block-form">
+                    <label>Empfänger (BCC)</label>
+                    <textarea id="mailto-recipients" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y text-sm font-mono" placeholder="E-Mail@beispiel.de; andere@example.com&#10;Durch Semikolon, Komma oder Zeilenumbruch getrennt"></textarea>
+                </div>
+                <!-- CSV Import -->
+                <div class="block-form">
+                    <label>CSV-Import</label>
+                    <input type="file" id="mailto-csv-input" accept=".csv,.txt" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                    <p class="text-xs text-gray-400 mt-1">CSV/Text mit E-Mail-Adressen in der ersten Spalte</p>
+                </div>
+                <!-- Betreff -->
+                <div class="block-form">
+                    <label>Betreff</label>
+                    <input type="text" id="mailto-subject" value="DAV Newsletter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 px-6 py-3 bg-gray-50 border-t border-gray-200">
+                <button type="button" id="mailto-cancel-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">Abbrechen</button>
+                <button type="button" id="mailto-copy-html-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">① 📋 HTML kopieren</button>
+                <button type="button" id="mailto-download-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">📎 HTML runterladen</button>
+                <button type="button" id="mailto-send-btn" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">② 📧 Mail öffnen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden template für Export -->
+    <textarea id="export-template" class="hidden"></textarea>
+
+    <!-- Bottom Toolbar - horizontale Button-Leiste unten mittig -->
+    <nav id="bottom-toolbar" class="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50">
+        <div class="toolbar-container flex items-center gap-1 px-2 py-2 bg-white border border-gray-200 rounded-t-xl shadow-[0_-4px_20px_rgba(0,0,0,0.12)]">
+
+            <!-- Neu -->
+            <button id="btn-new" class="toolbar-btn" title="Neuer Entwurf">
+                <span class="toolbar-icon">📝</span>
+                <span class="toolbar-label">Neu</span>
+            </button>
+
+            <!-- Speichern -->
+            <button id="btn-save" class="toolbar-btn" title="Speichern">
+                <span class="toolbar-icon">💾</span>
+                <span class="toolbar-label">Speichern</span>
+            </button>
+
+            <!-- Duplizieren -->
+            <button id="btn-duplicate" class="toolbar-btn" title="Duplizieren">
+                <span class="toolbar-icon">📋</span>
+                <span class="toolbar-label">Duplizieren</span>
+            </button>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Entwürfe laden (mit Popover) -->
+            <div id="drafts-wrapper" class="relative">
+                <button id="btn-toggle-drafts" class="toolbar-btn" title="Entwürfe laden">
+                    <span class="toolbar-icon">📂</span>
+                    <span class="toolbar-label">Entwürfe</span>
+                </button>
+                <!-- Entwürfe Popover -->
+                <div id="drafts-section" class="hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-white border border-gray-200 rounded-lg shadow-xl max-h-72 overflow-y-auto">
+                    <div class="p-2 border-b border-gray-100">
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide">Gespeicherte Entwürfe</p>
+                    </div>
+                    <div id="drafts-list" class="py-1"></div>
+                </div>
+            </div>
+
+            <!-- Datum einstellen (mit Popover) -->
+            <div id="settings-wrapper" class="relative">
+                <button id="btn-toggle-settings" class="toolbar-btn" title="Einstellungen">
+                    <span class="toolbar-icon">⚙️</span>
+                    <span class="toolbar-label">Einstellungen</span>
+                </button>
+                <!-- Einstellungen Popover -->
+                <div id="settings-section" class="hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-white border border-gray-200 rounded-lg shadow-xl p-4 w-72">
+                    <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-2">Einstellungen</p>
+                    <div class="flex flex-col gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-500 mb-1">Datum (Header &amp; Footer)</label>
+                            <input id="settings-date" type="text" placeholder="z.B. Juni 2026" class="w-full px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-500 mb-1">Redaktion (Footer)</label>
+                            <input id="settings-redaktion" type="text" placeholder="z.B. Deutscher Asphaltverband" value="Deutscher Asphaltverband" class="w-full px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Mail öffnen -->
+            <button id="btn-mailto" class="toolbar-btn toolbar-btn-accent" title="Mail öffnen">
+                <span class="toolbar-icon">📧</span>
+                <span class="toolbar-label">Mail</span>
+            </button>
+
+            <!-- HTML Export -->
+            <button id="btn-export" class="toolbar-btn toolbar-btn-secondary" title="HTML Export">
+                <span class="toolbar-icon">📄</span>
+                <span class="toolbar-label">Export</span>
+            </button>
+
+        </div>
+    </nav>
+
+    <!-- Eigenes JavaScript -->
+    <script src="js/storage.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/preview.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
