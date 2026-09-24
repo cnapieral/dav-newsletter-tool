@@ -38,15 +38,12 @@ const Blocks = (function() {
         },
         termin: {
             id: 'termin',
-            label: 'Termin-Liste',
-            icon: '📅',
-            defaultData: {
-                events: [
-                    { date: '', title: '', link: '' }
-                ]
-            },
+            label: 'Termine und Allgemeines',
+            icon: '🔖',
+            defaultData: { title: 'Termine und Allgemeines' },
             createBlockElement: function(id, data) {
-                return createTerminBlock(id, data);
+                // Kompatibilität: alte Entwürfe haben noch ein events-Array ohne title
+                return createSectionHeaderBlock(id, (data && data.title) ? data : { title: 'Termine und Allgemeines' });
             }
         },
         divider: {
@@ -217,35 +214,7 @@ const Blocks = (function() {
         return wrapper;
     }
 
-    /**
-     * Termin-Block
-     */
-    function createTerminBlock(id, data) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'block-item block-termin';
-        wrapper.setAttribute('data-block-id', id);
-        wrapper.setAttribute('draggable', 'true');
 
-        const eventCount = (data.events || []).filter(e => e.title).length;
-        const previewText = eventCount > 0
-            ? data.events.slice(0, 2).map(e => `${e.date} ${e.title}`).join('<br>')
-            : 'Keine Termine';
-
-        wrapper.innerHTML = `
-            <div class="block-header">
-                <span class="block-title">Termin-Liste</span>
-                <div class="block-actions">
-                    <button class="block-action-btn btn-edit" title="Bearbeiten">✏️</button>
-                    <button class="block-action-btn btn-delete" title="Löschen">🗑️</button>
-                </div>
-            </div>
-            <div class="block-content text-sm text-gray-600">
-                ${previewText}
-            </div>
-        `;
-
-        return wrapper;
-    }
 
     /**
      * Trennlinien-Block

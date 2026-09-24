@@ -87,18 +87,6 @@ Ein Artikel mit Titel, Teaser-Text und „Weiterlesen"-Button. Der Block hat ein
 | **URL** | Ziel-URL des Artikels |
 | **Inhalt** | Kurzer Teaser-Text (1–3 Sätze) |
 
-### 📅 Termin-Liste
-
-Event-Kalender-Sektion mit einem oder mehreren Terminen.
-
-| Feld pro Termin | Beschreibung |
-|-----------------|-------------|
-| **Datum** | Datum des Events (z. B. „15.07.2026") |
-| **Titel** | Event-Titel |
-| **Link** | Optional: URL für mehr Informationen |
-
-Termine können beliebig hinzugefügt oder entfernt werden. Leere Termine werden in der Vorschau nicht angezeigt.
-
 ### ➖ Trennlinie
 
 Einfache horizontale Linie zur optischen Trennung von Bereichen. Keine Bearbeitung nötig.
@@ -137,6 +125,7 @@ Die fünf Rubrik-Blöcke markieren thematische Sektionen im Newsletter. Sie ersc
 | 🔖 Asphalttechnik | **ASPHALTTECHNIK** (fett, rot) |
 | 🔖 Wirtschaft und Recht | **WIRTSCHAFT UND RECHT** (fett, rot) |
 | 🔖 DAV / DAI | **DAV / DAI** (fett, rot) |
+| 🔖 Termine und Allgemeines | **TERMINE UND ALLGEMEINES** (fett, rot) |
 | 🔖 Allgemeines | **ALLGEMEINES** (fett, rot) |
 
 Diese Blöcke sind **fest vorgegeben** – sie können nicht bearbeitet oder umbenannt werden. Einfach anklicken zum Hinzufügen und bei Bedarf mit 🗑️ löschen.
