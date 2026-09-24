@@ -134,7 +134,44 @@ const Preview = (function() {
 </tr>`;
     }
 
+    /**
+     * Wandelt einen Termin-Block in HTML um
+     */
+    function terminToHTML(data) {
+        const events = data.events || [];
+        if (!events.length) return '';
 
+        // Header im Rubrik-Stil (wie sectionHeaderToHTML)
+        let html = `
+<tr>
+  <td class="content-padding" style="padding:24px 32px 8px 32px;">
+    <h3 class="section-title" style="margin:0;font-size:16px;line-height:22px;color:#AF0A23;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">
+      Termine und Allgemeines
+    </h3>
+  </td>
+</tr>`;
+
+        events.forEach(event => {
+            if (event.title) {
+                html += `
+<tr>
+  <td class="content-padding" style="padding:8px 32px 4px 32px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:4px;background-color:#FAFAFA;border-radius:4px;">
+      <tr>
+        <td style="padding:8px 20px;">
+          <p style="margin:0 0 1px 0;font-size:11px;color:#999999;text-transform:uppercase;">${escapeHtml(event.date || '')}</p>
+          <p style="margin:0 0 3px 0;font-size:14px;font-weight:bold;color:#000000;">${escapeHtml(event.title)}</p>
+          ${event.link ? `<a href="${escapeHtml(event.link)}" style="font-size:12px;color:#AF0A23;text-decoration:none;font-weight:bold;">Weiterlesen &rarr;</a>` : ''}
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>`;
+            }
+        });
+
+        return html;
+    }
 
     /**
      * Wandelt einen Divider-Block in HTML um
@@ -261,6 +298,7 @@ const Preview = (function() {
             switch (block.type) {
                 case 'freitext': return freitextToHTML(data);
                 case 'artikel': return artikelToHTML(data);
+                case 'termin': return terminToHTML(data);
                 case 'divider': return dividerToHTML(data);
                 case 'social': return socialToHTML(data);
                 case 'image': return imageToHTML(data);
@@ -271,11 +309,6 @@ const Preview = (function() {
                 case 'maschinen-umwelt':
                 case 'asphalttechnik':
                 case 'allgemeines': return sectionHeaderToHTML(data);
-                case 'termin': {
-                    // Kompatibilität: alte Entwürfe haben noch events statt title
-                    const tData = (data && data.title) ? data : { title: 'Termine und Allgemeines' };
-                    return sectionHeaderToHTML(tData);
-                }
                 default: return '';
             }
         }).join('\n');

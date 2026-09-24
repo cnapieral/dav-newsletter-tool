@@ -958,6 +958,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += createCheckboxField('blocksatz', 'Blocksatz (bündig links u. rechts)', data.blocksatz || false);
                 break;
 
+            case 'termin':
+                html += '<div id="events-container">';
+                (data.events || []).forEach((ev, i) => {
+                    html += renderEventRow(ev, i);
+                });
+                if (!(data.events || []).length) {
+                    html += renderEventRow({ date: '', title: '', link: '' }, 0);
+                }
+                html += '</div>';
+                html += '<button type="button" id="add-event-btn" class="text-sm text-blue-600 hover:text-blue-700 font-medium">+ Termin hinzufügen</button>';
+                break;
 
             case 'divider':
                 html += createSelectField('style', 'Stil', data.style || 'solid', ['solid', 'dashed', 'dotted']);
@@ -1001,6 +1012,16 @@ document.addEventListener('DOMContentLoaded', function() {
         attachFormFieldListeners(block);
     }
 
+    function renderEventRow(ev, index) {
+        return `
+            <div class="flex gap-2 items-start event-row" data-index="${index}">
+                <input type="text" name="event_date_${index}" value="${escapeAttr(ev.date || '')}" placeholder="Datum (z.B. 15.07.)" class="w-32 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" name="event_title_${index}" value="${escapeAttr(ev.title || '')}" placeholder="Titel" class="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="url" name="event_link_${index}" value="${escapeAttr(ev.link || '')}" placeholder="Link (optional)" class="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="button" class="remove-event-btn text-red-400 hover:text-red-600 p-1" data-index="${index}">✕</button>
+            </div>`;
+    }
+
     function renderSocialRow(link, index) {
         return `
             <div class="flex gap-2 items-start social-row" data-index="${index}">
@@ -1022,6 +1043,20 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleTitleVisibility();
         }
 
+        // Add event row button
+        const addEventBtn = document.getElementById('add-event-btn');
+        if (addEventBtn) {
+            addEventBtn.addEventListener('click', () => {
+                const container = document.getElementById('events-container');
+                const index = container.children.length;
+                const div = document.createElement('div');
+                div.innerHTML = renderEventRow({ date: '', title: '', link: '' }, index);
+                container.appendChild(div.firstElementChild);
+                attachEventRemoveListeners();
+            });
+        }
+        attachEventRemoveListeners();
+
         // Add social row button
         const addSocialBtn = document.getElementById('add-social-btn');
         if (addSocialBtn) {
@@ -1041,6 +1076,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (fetchTeaserBtn) {
             fetchTeaserBtn.addEventListener('click', handleFetchTeaser);
         }
+    }
+
+    function attachEventRemoveListeners() {
+        document.querySelectorAll('.remove-event-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const row = btn.closest('.event-row');
+                if (row) row.remove();
+            });
+        });
     }
 
     function attachSocialRemoveListeners() {
@@ -1196,6 +1240,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     content: getFormValue('content') || '',
                     blocksatz: document.querySelector('[name="blocksatz"]')?.checked || false
                 };
+            }
+            case 'termin': {
+                const rows = document.querySelectorAll('.event-row');
+                const events = [];
+                rows.forEach(row => {
+                    const dateInput = row.querySelector('[name^="event_date_"]');
+                    const titleInput = row.querySelector('[name^="event_title_"]');
+                    const linkInput = row.querySelector('[name^="event_link_"]');
+                    if (dateInput || titleInput) {
+                        events.push({
+                            date: dateInput ? dateInput.value.trim() : '',
+                            title: titleInput ? titleInput.value.trim() : '',
+                            link: linkInput ? linkInput.value.trim() : ''
+                        });
+                    }
+                });
+                return { events };
             }
             case 'divider': {
                 return {
